@@ -1,29 +1,11 @@
-package com.bwjf.createpdf.service;
-
-import com.bwjf.createpdf.test.Img2Base64Util;
-import com.bwjf.createpdf.utils.*;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.BarcodeQRCode;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfCopy;
-import com.itextpdf.text.pdf.PdfImportedPage;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.PdfWriter;
+package com.bwjf.createpdf.service.impl;
 
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
-import sun.misc.BASE64Decoder;
+import com.bwjf.createpdf.test.Img2Base64Util;
+import com.bwjf.createpdf.utils.*;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,27 +24,18 @@ public class CreatePdfServiceImlp {
 	// private static Logger logger = Logger.getLogger(PdfUtil.class);
 	// static String qdmbPath = FileOperation.getAbsoPath("template" +
 	// File.separator + "fp" + File.separator + "qd.pdf");
-
-	//生成随机数
+	
 	static long randomTime = System.currentTimeMillis();
-
-//	//pfx文件路径
-//	static  String pfx = "E:\\PDFFileTest\\1.pfx";
-//	//印章地址
-//	static  String gif = "E:\\PDFFileTest\\1.gif";
-//	//pdf模板地址
-//	static String tmpPath = "E:\\PDFFileTest\\Jiangsu(2).pdf";
-//	//创建的pdf路径
-//	static String tempPdf1 = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID() + ".pdf");
-//	//签名后的pdf路径
-//	static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
-//	//签章密码
-//	static  String password = "111111";
-
-	//清单模板
 	static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
-	//二维码图片地址
-	static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
+	 static  String password = "111111";
+	 static  String pfx = "E:\\PDFFileTest\\1.pfx";
+	 static  String gif = "E:\\PDFFileTest\\1.gif";
+	 static String tempPdf1 = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
+				 + ".pdf");
+	 static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
+
+	 static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
+
 	// static String qdmbPath = ("E:\\PDFFileTest" + File.separator +
 	// "Jiangsu.pdf");
 
@@ -90,8 +63,8 @@ public class CreatePdfServiceImlp {
 	 * @return
 	 */
 	static long startTime = System.currentTimeMillis(); // 获取开始时间
-	public static boolean createPdf(String tmpPath, String expPath, String pfx, String gif,String password,
-									Xxfp xxfp,List<Xxfpmx> xxfpmx, boolean isQz) {
+	public static boolean createPdf(String tmpPath, String expPath, String ewmPth, String qygzUrl, Xxfp xxfp,
+			List<Xxfpmx> xxfpmx, boolean isQz) {
 		boolean bo = true;
 		try {
 			File nf = new File(expPath);
@@ -102,7 +75,7 @@ public class CreatePdfServiceImlp {
 				nf.delete();
 			}
 
-			createFp(tmpPath, expPath, xxfp, xxfpmx, pfx, gif,password,isQz);
+			createFp(tmpPath, expPath, xxfp, xxfpmx, ewmPth, qygzUrl, isQz);
 			// createSpfp(pdfTemp, expPath, xxfp, mxlist, qygzUrl);
 		} catch (FileNotFoundException e) {
 			bo = false;
@@ -130,19 +103,22 @@ public class CreatePdfServiceImlp {
 	 * @param xxfp
 	 *            商品发票
 	 * @param mxlist
-
+	 *            明细集合
+	 * @param ewmPth
+	 *            二维码路径
+	 * @param qygzUrl
 	 * @param isQz
 	 *            是否签章
 	 * @throws IOException
 	 * @throws DocumentException
 	 */
-	private static void createFp(String tmpPath, String expPath, Xxfp xxfp, List<Xxfpmx> mxlist, String pfx,
-			String gif,String password, boolean isQz) throws IOException, DocumentException {
+	private static void createFp(String tmpPath, String expPath, Xxfp xxfp, List<Xxfpmx> mxlist, String ewmPth,
+			String qygzUrl, boolean isQz) throws IOException, DocumentException {
 		// 读模板PDF路径
 		PdfReader reader = new PdfReader(tmpPath);
 		// 创建临时生成PDF路径
 		String pdfTemp = "";
-		String pdfTemp1 = expPath;
+		String pdfTemp1 = expPath1;
 		pdfTemp = expPath;
 
 		new File(pdfTemp).getParentFile().mkdirs();
@@ -155,7 +131,7 @@ public class CreatePdfServiceImlp {
 		tempFile.close();
 		
 		pdfTemp = handleTempalteSpfp(xxfp, mxlist, pdfTemp);
-		createCommonSpTest(pdfTemp, expPath, xxfp, mxlist,gif);
+		createCommonSpTest(pdfTemp, expPath, xxfp, mxlist);
 		SignPDF.sign(pfx, expPath, pdfTemp1, gif, password);
 		
 	}
@@ -206,7 +182,7 @@ public class CreatePdfServiceImlp {
 	 * @throws IOException
 	 * @throws DocumentException
 	 */
-	private static void createCommonSpTest(String tmpPath, String expPath, Xxfp xxfp, List<Xxfpmx> mxlist,String gif)
+	private static void createCommonSpTest(String tmpPath, String expPath, Xxfp xxfp, List<Xxfpmx> mxlist)
 			throws IOException, DocumentException {
 		
 		PdfReader reader = new PdfReader(tmpPath);
@@ -612,13 +588,13 @@ public class CreatePdfServiceImlp {
 	}
 
 	public static void main(String[] args) throws IOException, DocumentException {
+		String tmpPath = "E:\\PDFFileTest\\Jiangsu(2).pdf";
 
-
-//		long randomTime = System.currentTimeMillis();
+		long randomTime = System.currentTimeMillis();
 		// String tempPdf = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
 		// + ".pdf");
 //		String expPath = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
-//		String expPath = tempPdf1;
+		String expPath = tempPdf1;
 //		String expPath = "E:\\PDFFileTest" + File.separator +  "h30.pdf";
 
 		Xxfp fp = new Xxfp();
@@ -875,13 +851,13 @@ public class CreatePdfServiceImlp {
 		fp.setEwmPath("http://www.baidu.com");
 		fp.setEwm("iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAIAAAD6XpeDAAAC/UlEQVR42u3cy26DUAwFwPz/T6frLqoK8LENDMuIUPDc6PqB+vkEju+C46/7qbrno9/93OWABw8evJfgJYJ1NKBVGAmkK9dPxBkePHjw4NXgHb3Rqs+v3ENV0K8kI4nFBw8ePHjw7odXdU46uUgU/vDgwYMH7114iZtOBL0zqYEHDx48ePN46c08EaCqBGdD4b9iqgAPHjx4D8arOhIN6yd9vvqABA8evAfjfcPHhnvbMIyNxBYePHjw4J1+rnTQEw3xzkVz5Zx4POHBgwcP3mm8qWNzglMFGWmsw4MHDx68f69flSx0viCUSIgSSUp6QcCDBw8evJr3aNIwVQ82lVAkFk1ZgQ8PHjx48EYazVOJQKJAroIZ+xXCgwcP3svxOpOCDQPYK6v4No1pePDgwYN3Gm9q0+4ckFYFOn0P8YeHBw8evJfgJQakVwLU2cDtHOqW1dnw4MGDB6/keaeK8XQh34nU2UCABw8ePHh9g8rEwLNzKNrZEChL0ODBgwcPXhSvs/Dc0AhOD34v/V148ODBg1eCl37BJrGBVzUEEg36xDnw4MGDB68GL7Fpdzap02CJpvzhvwUPHjx48E7PBasK8wRSZ+IzNfuM/wrhwYMHD155QzlRvN/xpal4YxoePHjw4FXEIf6PczYnMonrJJrg8ODBgwfvfD8zHdB0Q6CqaT716ykrzOHBgwcP3ul5XlUgruy72xoC6cVaNlWABw8ePHgleFWN4A2LY9tQOp6wwIMHDx688oI93WjubBpMNa/Hui3w4MGD90K8sU040EBIL5TOmMCDBw8evGPX3LBRT2346WFporHw63N48ODBg1fyPku6iZxIgtKD5XihHU4S4cGDBw9eNqFIDHsTG3hiwbUmLPDgwYMHLzqMTWzI6WBVFdStGeDUNBwePHjw4I00TxPFctU5iThcKtLhwYMHD94t8NLfTTSFVyRE8ODBgwfvNF7ni0ZTQ9eqZ0/EYcUwFh48ePAejNfZI93Q2N0wcF7X7IYHDx685+L9ACpql2Icyp6DAAAAAElFTkSuQmCC");
 //		fp.setEwm();
-//		createPdf(tmpPath, tempPdf1, null, null, fp, mxlist, true);
+		createPdf(tmpPath, expPath, null, null, fp, mxlist, true);
 
 		long endTime = System.currentTimeMillis(); // 获取结束时间
 		System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); // 输出程序运行时间
 
 		System.out.println("success");
-//		System.out.println("tempPdf1  :"+tempPdf1);
-//		System.out.println("expPath1  :"+expPath1);
+		System.out.println("tempPdf1  :"+tempPdf1);
+		System.out.println("expPath1  :"+expPath1);
 	}
 }

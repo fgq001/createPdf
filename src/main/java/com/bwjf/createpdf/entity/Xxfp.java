@@ -38,14 +38,16 @@ public class Xxfp extends Entity
 	private String hjje;
 	private String hjse;
 	private String jshj;
-	private byte[] ewm;
+//	private byte[] ewm;
+	private String ewm;
 	private String qzurl;
-	
-	
-	
-	
-	
-	
+	private String fyxmCount;
+	private String qdxmCount;
+	private String qtxmCount;
+	private String zhsl;
+	private String jmbbn;
+    private String tzdbh;
+	private String yqjg;
 	
 	public String getQzurl() {
 		return qzurl;
@@ -119,7 +121,64 @@ public class Xxfp extends Entity
 	public void setGhdwmc(String ghdwmc) {
 		this.ghdwmc = ghdwmc;
 	}
-private String id;
+
+    public String getFyxmCount() {
+        return fyxmCount;
+    }
+
+    public void setFyxmCount(String fyxmCount) {
+        this.fyxmCount = fyxmCount;
+    }
+
+    public String getQdxmCount() {
+        return qdxmCount;
+    }
+
+    public void setQdxmCount(String qdxmCount) {
+        this.qdxmCount = qdxmCount;
+    }
+
+    public String getQtxmCount() {
+        return qtxmCount;
+    }
+
+    public void setQtxmCount(String qtxmCount) {
+        this.qtxmCount = qtxmCount;
+    }
+
+    public String getZhsl() {
+        return zhsl;
+    }
+
+    public void setZhsl(String zhsl) {
+        this.zhsl = zhsl;
+    }
+
+    public String getJmbbn() {
+        return jmbbn;
+    }
+
+    public void setJmbbn(String jmbbn) {
+        this.jmbbn = jmbbn;
+    }
+
+    public String getTzdbh() {
+        return tzdbh;
+    }
+
+    public void setTzdbh(String tzdbh) {
+        this.tzdbh = tzdbh;
+    }
+
+    public String getYqjg() {
+        return yqjg;
+    }
+
+    public void setYqjg(String yqjg) {
+        this.yqjg = yqjg;
+    }
+
+    private String id;
   private String khmc;
   private String sh;
   private String dz;
@@ -719,13 +778,22 @@ public String getFhr() {
   public void setFpmv(String fpmv) {
     this.fpmv = fpmv;
   }
-  public byte[] getEwm() {
-    return this.ewm;
-  }
-  public void setEwm(byte[] ewm) {
-    this.ewm = ewm;
-  }
-  public String getEwmPath() {
+//  public byte[] getEwm() {
+//    return this.ewm;
+//  }
+//  public void setEwm(byte[] ewm) {
+//    this.ewm = ewm;
+//  }
+
+    public String getEwm() {
+        return ewm;
+    }
+
+    public void setEwm(String ewm) {
+        this.ewm = ewm;
+    }
+
+    public String getEwmPath() {
     return this.ewmPath;
   }
   public void setEwmPath(String ewmPath) {

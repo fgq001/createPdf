@@ -31,7 +31,7 @@ import java.util.List;
 public interface CreatePdfService {
 
 
-    boolean createPdf(String tmpPath,String temPath,String endPath, Xxfp xxfp,List<Xxfpmx> xxfpmxList, String pfx, String gif, String password) ;
+    boolean createPdf(String tmpPath,String temPath,String endPath, Xxfp xxfp,List<Xxfpmx> xxfpmxList, String pfx, String gif, String password, String xmlContent) ;
 
     void createFp(String tmpPath, String temPath, String endPath, Xxfp xxfp, List<Xxfpmx> mxlist, String pfx, String gif, String password) throws IOException, DocumentException;
 

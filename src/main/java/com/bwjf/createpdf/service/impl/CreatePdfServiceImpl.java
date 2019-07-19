@@ -7,7 +7,10 @@ import com.bwjf.createpdf.test.CreatePdfServiceImlpTest;
 import com.bwjf.createpdf.test.Img2Base64Util;
 import com.bwjf.createpdf.utils.*;
 import com.itextpdf.text.*;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
+import org.dom4j.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +37,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public boolean createPdf(String tmpPath,String temPath,String endPath,Xxfp xxfp,List<Xxfpmx> xxfpmxList, String pfx, String gif, String password) {
+    public boolean createPdf(String tmpPath,String temPath,String endPath,Xxfp xxfp,List<Xxfpmx> xxfpmxList, String pfx, String gif, String password, String xmlContent) {
         boolean bo = true;
         try {
         File nf = new File(temPath);
@@ -44,6 +47,8 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         if (nf.exists()) {
             nf.delete();
         }
+            System.out.println("xxfp.getJym()========"+xxfp.getJym());
+//            XMLDomUtils.XmlJx(xmlContent);
             createFp(tmpPath, temPath, endPath, xxfp, xxfpmxList,pfx,gif,password);
         } catch (FileNotFoundException e) {
             bo = false;
@@ -57,6 +62,8 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             bo = false;
             System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
                     xxfp.getFphm());
+//        } catch (org.dom4j.DocumentException e) {
+//            e.printStackTrace();
         }
         return bo;
     }

@@ -4,6 +4,7 @@ import com.bwjf.createpdf.constant.FilePathConstant;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
+import com.bwjf.createpdf.service.XmlJxService;
 import com.bwjf.createpdf.utils.FileUtils;
 import com.bwjf.createpdf.utils.XMLDomUtils;
 import net.sf.json.JSONObject;
@@ -33,6 +34,8 @@ public class CreatePdfController {
 
     @Autowired
     private CreatePdfService createPdfService;
+//    @Autowired
+//    private XmlJxService xmlJxService;
 
     @ResponseBody
     @PostMapping("/createPdf")
@@ -62,15 +65,18 @@ public class CreatePdfController {
             String password = req.getParameter("password") == "" ? null : req.getParameter("password");
 //            System.out.println("strJQBH == "+strJQBH+"  pfx ==  "+pfx);
 
-            XMLDomUtils.XmlJx(xmlContent);
+//            XMLDomUtils.XmlJx(xmlContent);
 
             Xxfp xxfp = new Xxfp();
             Xxfpmx xxfpmx = new Xxfpmx();
             List<Xxfpmx> xxfpmxList = new ArrayList<>();
 
-            XMLDomUtils.XmlJx(xmlContent);
-            createPdfService.createPdf(tmpPath,temPath,endPath,xxfp,xxfpmxList,pfx,gif,password);
+            XMLDomUtils.XmlJx(xmlContent,tmpPath,temPath,endPath,xxfp,xxfpmxList,pfx,gif,password);
+//            xxfpmxList = (List<Xxfpmx>) XMLDomUtils.XmlJx(xmlContent);
+            System.out.println("xxfp.getJym()"+xxfp.getJym());
 
+            createPdfService.createPdf(tmpPath,temPath,endPath,xxfp,xxfpmxList,pfx,gif,password,xmlContent);
+//            xmlJxService.XmlJx(xmlContent, tmpPath, temPath, endPath, xxfp, xxfpmxList, pfx, gif, password);
 
 
         } catch (Exception e) {

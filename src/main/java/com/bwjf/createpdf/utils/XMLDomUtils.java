@@ -2,6 +2,7 @@ package com.bwjf.createpdf.utils;
 
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
+import com.bwjf.createpdf.test.CreatePdfServiceImlpTest;
 import com.bwjf.createpdf.test.CreatePdfServiceImlpTest1;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -17,7 +18,7 @@ import java.util.*;
  */
 public class XMLDomUtils {
 
-    public static void XmlJx(String xmlContent) throws IOException, DocumentException {
+    public static void XmlJx(String xmlContent,String tmpPath,String temPath,String endPath,Xxfp xxfp, List<Xxfpmx> xxfpmxList,String pfx,String gif,String password) throws IOException, DocumentException {
 
         String Charset = "gb2312";
 //                                                     </group>
@@ -37,8 +38,8 @@ public class XMLDomUtils {
 
         Iterator j = root.elementIterator("body");// 开票成功
         Iterator k = root.elementIterator("body");// 开票失败
-        Xxfp xxfp = new Xxfp();
-        List<Xxfpmx> xxfpmxList =new ArrayList<>();;
+//        Xxfp xxfp = new Xxfp();
+//        List<Xxfpmx> xxfpmxList =new ArrayList<>();;
         Xxfpmx xxfpmx = new Xxfpmx();
         if (j.hasNext()) {
             Element returncode = root.element("body").element("returncode");
@@ -164,6 +165,7 @@ public class XMLDomUtils {
                     System.out.println("xxfpmx  se = "+xxfpmx.getSe());
                     System.out.println("xxfpmx  Spsl = "+xxfpmx.getSpsl());
                     System.out.println("size = "+xxfpmxList.size());
+//                    return xxfpmxList;
                 }
 
 
@@ -219,12 +221,12 @@ public class XMLDomUtils {
 //                xxfp.setEwmPath(ewm);
 
 
-
                 System.out.println("dm = "+xxfp.getFpdm()+" hm= "+ xxfp.getFphm()+" jym= "+xxfp.getJym()+" kplx= "+xxfp.getKplx());
 
 
 
 
+//                return xxfp;
             }
 //            System.out.print("xxfpmxList  spmc = "+xxfpmxList.get(0).getSpmc());
 //            System.out.println("xxfpmx  Spsl = "+xxfpmxList.get(0).getSpsl());
@@ -241,6 +243,8 @@ public class XMLDomUtils {
 //        System.out.println("success");
 //        System.out.println("tempPdf1  :"+tempPdf1);
 //        System.out.println("expPath1  :"+expPath1);
+//        return "1";
+
     }
 
 }

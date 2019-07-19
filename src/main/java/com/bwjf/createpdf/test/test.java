@@ -2,9 +2,7 @@ package com.bwjf.createpdf.test;
 
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
-import com.bwjf.createpdf.service.CreatePdfServiceImlp;
 import com.bwjf.createpdf.utils.CommonUtils;
-import org.dom4j.Attribute;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -267,7 +265,7 @@ public class test {
 //        String expPath = tempPdf1;
         System.out.println("expPath == "+tempPdf1);
         System.out.println("xxfpmxList = "+xxfpmxList.size());
-        CreatePdfServiceImlp.createPdf(tmpPath, expPath1, pfx, gif,password, xxfp, xxfpmxList, true);
+        CreatePdfServiceImlpTest1.createPdf(tmpPath, expPath1, pfx, gif,password, xxfp, xxfpmxList, true);
         System.out.println("success");
         System.out.println("tempPdf1  :"+tempPdf1);
         System.out.println("expPath1  :"+expPath1);
@@ -435,60 +433,60 @@ public class test {
             "                            <lslbs></lslbs>\n" +
             "                            <zzstsgl></zzstsgl>\n" +
             "                        </group>\n" +
-            "                        <group xh=\"7\">\n" +
-            "                            <fphxz>0</fphxz>\n" +
-            "                            <spmc>税控系统技术维护费4</spmc>\n" +
-            "                            <spsm></spsm>\n" +
-            "                            <ggxh></ggxh>\n" +
-            "                            <dw></dw>\n" +
-            "                            <spsl>1</spsl>\n" +
-            "                            <dj>377.36</dj>\n" +
-            "                            <je>377.36</je>\n" +
-            "                            <sl>0.06</sl>\n" +
-            "                            <se>22.64</se>\n" +
-            "                            <hsbz></hsbz>\n" +
-            "                            <spbm>3079900000000000000</spbm>\n" +
-            "                            <zxbm></zxbm>\n" +
-            "                            <yhzcbs>0</yhzcbs>\n" +
-            "                            <lslbs></lslbs>\n" +
-            "                            <zzstsgl></zzstsgl>\n" +
-            "                        </group>\n" +
-            "                        <group xh=\"8\">\n" +
-            "                            <fphxz>0</fphxz>\n" +
-            "                            <spmc>税控系统技术维护费4</spmc>\n" +
-            "                            <spsm></spsm>\n" +
-            "                            <ggxh></ggxh>\n" +
-            "                            <dw></dw>\n" +
-            "                            <spsl>1</spsl>\n" +
-            "                            <dj>377.36</dj>\n" +
-            "                            <je>377.36</je>\n" +
-            "                            <sl>0.06</sl>\n" +
-            "                            <se>22.64</se>\n" +
-            "                            <hsbz></hsbz>\n" +
-            "                            <spbm>3079900000000000000</spbm>\n" +
-            "                            <zxbm></zxbm>\n" +
-            "                            <yhzcbs>0</yhzcbs>\n" +
-            "                            <lslbs></lslbs>\n" +
-            "                            <zzstsgl></zzstsgl>\n" +
-            "                        </group>\n" +
-            "                        <group xh=\"9\">\n" +
-            "                            <fphxz>0</fphxz>\n" +
-            "                            <spmc>税控系统技术维护费4</spmc>\n" +
-            "                            <spsm></spsm>\n" +
-            "                            <ggxh></ggxh>\n" +
-            "                            <dw></dw>\n" +
-            "                            <spsl>1</spsl>\n" +
-            "                            <dj>377.36</dj>\n" +
-            "                            <je>377.36</je>\n" +
-            "                            <sl>0.06</sl>\n" +
-            "                            <se>22.64</se>\n" +
-            "                            <hsbz></hsbz>\n" +
-            "                            <spbm>3079900000000000000</spbm>\n" +
-            "                            <zxbm></zxbm>\n" +
-            "                            <yhzcbs>0</yhzcbs>\n" +
-            "                            <lslbs></lslbs>\n" +
-            "                            <zzstsgl></zzstsgl>\n" +
-            "                        </group>\n" +
+//            "                        <group xh=\"7\">\n" +
+//            "                            <fphxz>0</fphxz>\n" +
+//            "                            <spmc>税控系统技术维护费4</spmc>\n" +
+//            "                            <spsm></spsm>\n" +
+//            "                            <ggxh></ggxh>\n" +
+//            "                            <dw></dw>\n" +
+//            "                            <spsl>1</spsl>\n" +
+//            "                            <dj>377.36</dj>\n" +
+//            "                            <je>377.36</je>\n" +
+//            "                            <sl>0.06</sl>\n" +
+//            "                            <se>22.64</se>\n" +
+//            "                            <hsbz></hsbz>\n" +
+//            "                            <spbm>3079900000000000000</spbm>\n" +
+//            "                            <zxbm></zxbm>\n" +
+//            "                            <yhzcbs>0</yhzcbs>\n" +
+//            "                            <lslbs></lslbs>\n" +
+//            "                            <zzstsgl></zzstsgl>\n" +
+//            "                        </group>\n" +
+//            "                        <group xh=\"8\">\n" +
+//            "                            <fphxz>0</fphxz>\n" +
+//            "                            <spmc>税控系统技术维护费4</spmc>\n" +
+//            "                            <spsm></spsm>\n" +
+//            "                            <ggxh></ggxh>\n" +
+//            "                            <dw></dw>\n" +
+//            "                            <spsl>1</spsl>\n" +
+//            "                            <dj>377.36</dj>\n" +
+//            "                            <je>377.36</je>\n" +
+//            "                            <sl>0.06</sl>\n" +
+//            "                            <se>22.64</se>\n" +
+//            "                            <hsbz></hsbz>\n" +
+//            "                            <spbm>3079900000000000000</spbm>\n" +
+//            "                            <zxbm></zxbm>\n" +
+//            "                            <yhzcbs>0</yhzcbs>\n" +
+//            "                            <lslbs></lslbs>\n" +
+//            "                            <zzstsgl></zzstsgl>\n" +
+//            "                        </group>\n" +
+//            "                        <group xh=\"9\">\n" +
+//            "                            <fphxz>0</fphxz>\n" +
+//            "                            <spmc>税控系统技术维护费4</spmc>\n" +
+//            "                            <spsm></spsm>\n" +
+//            "                            <ggxh></ggxh>\n" +
+//            "                            <dw></dw>\n" +
+//            "                            <spsl>1</spsl>\n" +
+//            "                            <dj>377.36</dj>\n" +
+//            "                            <je>377.36</je>\n" +
+//            "                            <sl>0.06</sl>\n" +
+//            "                            <se>22.64</se>\n" +
+//            "                            <hsbz></hsbz>\n" +
+//            "                            <spbm>3079900000000000000</spbm>\n" +
+//            "                            <zxbm></zxbm>\n" +
+//            "                            <yhzcbs>0</yhzcbs>\n" +
+//            "                            <lslbs></lslbs>\n" +
+//            "                            <zzstsgl></zzstsgl>\n" +
+//            "                        </group>\n" +
             "                    </fyxm>\n" +
             "                    <qdxm count=\"0\" />\n" +
             "                    <qtxm count=\"0\" />\n" +

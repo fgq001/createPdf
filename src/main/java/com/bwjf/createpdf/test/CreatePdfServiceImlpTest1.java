@@ -1,29 +1,20 @@
-package com.bwjf.createpdf.service;
+package com.bwjf.createpdf.test;
 
-import com.bwjf.createpdf.test.Img2Base64Util;
 import com.bwjf.createpdf.utils.*;
-import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.BarcodeQRCode;
 import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfCopy;
 import com.itextpdf.text.pdf.PdfImportedPage;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.PdfWriter;
 
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
-import sun.misc.BASE64Decoder;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,7 +29,7 @@ import java.util.List;
  * @author admin 生成单票与单张清单票 清单容纳最多30条数据
  *
  */
-public class CreatePdfServiceImlp {
+public class CreatePdfServiceImlpTest1 {
 	// private static Logger logger = Logger.getLogger(PdfUtil.class);
 	// static String qdmbPath = FileOperation.getAbsoPath("template" +
 	// File.separator + "fp" + File.separator + "qd.pdf");
@@ -48,6 +39,10 @@ public class CreatePdfServiceImlp {
 
 //	//pfx文件路径
 //	static  String pfx = "E:\\PDFFileTest\\1.pfx";
+//	//开票的xml内容
+//	static String xmlContent;
+//	//税控设备编号
+//	static String strJQBH = "SDFSDF";
 //	//印章地址
 //	static  String gif = "E:\\PDFFileTest\\1.gif";
 //	//pdf模板地址
@@ -250,7 +245,7 @@ public class CreatePdfServiceImlp {
 		String kprq = xxfp.getKprq().substring(0, 4) + "  " + xxfp.getKprq().substring(4, 6) + "  "
 				+ xxfp.getKprq().substring(6, 8);
 		TextAlign.setSimpleTextLeft(kprq, 465.0F, 333.0F, 580.0F, 345.0F, courier10, over1);
-		TextAlign.setSimpleTextLeft(CreatePdfServiceImlp.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
+		TextAlign.setSimpleTextLeft(CreatePdfServiceImlpTest1.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
 		TextAlign.setSimpleTextLeft(xxfp.getJqbh(), 74.0F, 307.0F, 220.0F, 327.0F, courier11, over1);
 
 		//判断是否正负发票  
@@ -544,7 +539,7 @@ public class CreatePdfServiceImlp {
 			if (!isQdfp(xxfp, xxfpmx)) {
 				int pages = 0;
 				String tempPdf = ("E:\\PDFFileTest\\Jiangsu.pdf");
-				CreatePdfServiceImlp.handleTempalteNew(tempPdf, fpmbPath, pages);
+				CreatePdfServiceImlpTest1.handleTempalteNew(tempPdf, fpmbPath, pages);
 				return tempPdf;
 			} else {
 				//判断是否正负发票  
@@ -555,12 +550,12 @@ public class CreatePdfServiceImlp {
 					// + ".pdf");
 					String tempPdf = ("E:\\PDFFileTest" + File.separator + "Jiangsu.pdf");
 
-					CreatePdfServiceImlp.handleTempalteNew(tempPdf, fpmbPath, pages);
+					CreatePdfServiceImlpTest1.handleTempalteNew(tempPdf, fpmbPath, pages);
 					return tempPdf;
 				}else {
 					int pages = 0;
 					String tempPdf = ("E:\\PDFFileTest\\Jiangsu.pdf");
-					CreatePdfServiceImlp.handleTempalteNew(tempPdf, fpmbPath, pages);
+					CreatePdfServiceImlpTest1.handleTempalteNew(tempPdf, fpmbPath, pages);
 					return tempPdf;
 				}
 				

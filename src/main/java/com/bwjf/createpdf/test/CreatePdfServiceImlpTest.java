@@ -1,8 +1,7 @@
-package com.bwjf.createpdf.service.impl;
+package com.bwjf.createpdf.test;
 
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
-import com.bwjf.createpdf.test.Img2Base64Util;
 import com.bwjf.createpdf.utils.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
@@ -20,21 +19,11 @@ import java.util.List;
  * @author admin 生成单票与单张清单票 清单容纳最多30条数据
  *
  */
-public class CreatePdfServiceImlp {
+public class CreatePdfServiceImlpTest {
 	// private static Logger logger = Logger.getLogger(PdfUtil.class);
 	// static String qdmbPath = FileOperation.getAbsoPath("template" +
 	// File.separator + "fp" + File.separator + "qd.pdf");
-	
-	static long randomTime = System.currentTimeMillis();
-	static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
-	 static  String password = "111111";
-	 static  String pfx = "E:\\PDFFileTest\\1.pfx";
-	 static  String gif = "E:\\PDFFileTest\\1.gif";
-	 static String tempPdf1 = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
-				 + ".pdf");
-	 static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
 
-	 static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
 
 	// static String qdmbPath = ("E:\\PDFFileTest" + File.separator +
 	// "Jiangsu.pdf");
@@ -46,28 +35,12 @@ public class CreatePdfServiceImlp {
 	// return basSpbmDao;
 	// }
 
-	/**
-	 * @param tmpPath
-	 *            模板PDF路径
-	 * @param expPath
-	 *            生成PDF路径
-	 * @param ewmPth
-	 *            二维码路径
-	 * @param qygzUrl
-	 * @param xxfp
-	 *            商品发票
-	 * @param xxfpmx
-	 *            商品明细发票
-	 * @param isQz
-	 *            是否签章
-	 * @return
-	 */
-	static long startTime = System.currentTimeMillis(); // 获取开始时间
-	public static boolean createPdf(String tmpPath, String expPath, String ewmPth, String qygzUrl, Xxfp xxfp,
+
+	public static boolean createPdf(String tmpPath, String tempPdf1, String ewmPth, String qygzUrl, Xxfp xxfp,
 			List<Xxfpmx> xxfpmx, boolean isQz) {
 		boolean bo = true;
 		try {
-			File nf = new File(expPath);
+			File nf = new File(tempPdf1);
 			if (!nf.getParentFile().exists()) {
 				nf.getParentFile().mkdirs();
 			}
@@ -75,7 +48,7 @@ public class CreatePdfServiceImlp {
 				nf.delete();
 			}
 
-			createFp(tmpPath, expPath, xxfp, xxfpmx, ewmPth, qygzUrl, isQz);
+			createFp(tmpPath, tempPdf1, xxfp, xxfpmx, ewmPth, qygzUrl, isQz);
 			// createSpfp(pdfTemp, expPath, xxfp, mxlist, qygzUrl);
 		} catch (FileNotFoundException e) {
 			bo = false;
@@ -93,33 +66,19 @@ public class CreatePdfServiceImlp {
 		return bo;
 	}
 
-	/**
-	 * 生成发票
-	 * 
-	 * @param tmpPath
-	 *            模板PDF路径
-	 * @param expPath
-	 *            生成PDF路径
-	 * @param xxfp
-	 *            商品发票
-	 * @param mxlist
-	 *            明细集合
-	 * @param ewmPth
-	 *            二维码路径
-	 * @param qygzUrl
-	 * @param isQz
-	 *            是否签章
-	 * @throws IOException
-	 * @throws DocumentException
-	 */
-	private static void createFp(String tmpPath, String expPath, Xxfp xxfp, List<Xxfpmx> mxlist, String ewmPth,
+
+	private static void createFp(String tmpPath, String tempPdf1, Xxfp xxfp, List<Xxfpmx> mxlist, String ewmPth,
 			String qygzUrl, boolean isQz) throws IOException, DocumentException {
 		// 读模板PDF路径
 		PdfReader reader = new PdfReader(tmpPath);
 		// 创建临时生成PDF路径
-		String pdfTemp = "";
-		String pdfTemp1 = expPath1;
-		pdfTemp = expPath;
+		String pdfTemp = tempPdf1;	//临时PDF
+		String pdfEnd = expPath1;	//最终PDF
+//		pdfTemp = tempPdf1;
+//		String pdfTemp = "";
+//		String pdfTemp1 = expPath1;
+//		pdfTemp = tempPdf1;
+
 
 		new File(pdfTemp).getParentFile().mkdirs();
 		FileOutputStream tempFile = new FileOutputStream(pdfTemp);
@@ -131,8 +90,8 @@ public class CreatePdfServiceImlp {
 		tempFile.close();
 		
 		pdfTemp = handleTempalteSpfp(xxfp, mxlist, pdfTemp);
-		createCommonSpTest(pdfTemp, expPath, xxfp, mxlist);
-		SignPDF.sign(pfx, expPath, pdfTemp1, gif, password);
+		createCommonSpTest(pdfTemp, tempPdf1, xxfp, mxlist);
+		SignPDF.sign(pfx, tempPdf1, pdfEnd, gif, password);
 		
 	}
 
@@ -147,6 +106,8 @@ public class CreatePdfServiceImlp {
 		return (xxfp != null) && (mxlist != null) && (mxlist.size() > 8);
 	}
 
+
+	//		移动到 NumberUtil
 	private static String Tostr(String str) {
 //		String str = "dsfdsafdsafdsafas";
 		// 字符串长度
@@ -176,17 +137,17 @@ public class CreatePdfServiceImlp {
 	 * 生成发票清单与单张发票 第一张 共有部分
 	 * 
 	 * @param tmpPath
-	 * @param expPath
+//	 * @param expPath
 	 * @param xxfp
 	 * @param mxlist
 	 * @throws IOException
 	 * @throws DocumentException
 	 */
-	private static void createCommonSpTest(String tmpPath, String expPath, Xxfp xxfp, List<Xxfpmx> mxlist)
+	private static void createCommonSpTest(String tmpPath, String tempPdf1, Xxfp xxfp, List<Xxfpmx> mxlist)
 			throws IOException, DocumentException {
 		
 		PdfReader reader = new PdfReader(tmpPath);
-		FileOutputStream tempFile = new FileOutputStream(expPath);
+		FileOutputStream tempFile = new FileOutputStream(tempPdf1);
 		PdfStamper stamp = new PdfStamper(reader, tempFile);
 		
 		int count = mxlist == null ? 0 : mxlist.size();
@@ -226,7 +187,7 @@ public class CreatePdfServiceImlp {
 		String kprq = xxfp.getKprq().substring(0, 4) + "  " + xxfp.getKprq().substring(4, 6) + "  "
 				+ xxfp.getKprq().substring(6, 8);
 		TextAlign.setSimpleTextLeft(kprq, 465.0F, 333.0F, 580.0F, 345.0F, courier10, over1);
-		TextAlign.setSimpleTextLeft(CreatePdfServiceImlp.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
+		TextAlign.setSimpleTextLeft(CreatePdfServiceImlpTest.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
 		TextAlign.setSimpleTextLeft(xxfp.getJqbh(), 74.0F, 307.0F, 220.0F, 327.0F, courier11, over1);
 
 		//判断是否正负发票  
@@ -519,8 +480,9 @@ public class CreatePdfServiceImlp {
 		
 			if (!isQdfp(xxfp, xxfpmx)) {
 				int pages = 0;
-				String tempPdf = ("E:\\PDFFileTest\\Jiangsu.pdf");
-				CreatePdfServiceImlp.handleTempalteNew(tempPdf, fpmbPath, pages);
+//				String tempPdf = ("E:\\PDFFileTest\\Jiangsu.pdf");
+				String tempPdf = tmpPath;
+				CreatePdfServiceImlpTest.handleTempalteNew(tempPdf, fpmbPath, pages);
 				return tempPdf;
 			} else {
 				//判断是否正负发票  
@@ -529,14 +491,16 @@ public class CreatePdfServiceImlp {
 					int pages = count / 30 + (count % 10 == 0 ? 0 : 1);
 					// String tempPdf = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
 					// + ".pdf");
-					String tempPdf = ("E:\\PDFFileTest" + File.separator + "Jiangsu.pdf");
+//					String tempPdf = ("E:\\PDFFileTest" + File.separator + "Jiangsu.pdf");
+					String tempPdf = tmpPath;
 
-					CreatePdfServiceImlp.handleTempalteNew(tempPdf, fpmbPath, pages);
+					CreatePdfServiceImlpTest.handleTempalteNew(tempPdf, fpmbPath, pages);
 					return tempPdf;
 				}else {
 					int pages = 0;
-					String tempPdf = ("E:\\PDFFileTest\\Jiangsu.pdf");
-					CreatePdfServiceImlp.handleTempalteNew(tempPdf, fpmbPath, pages);
+//					String tempPdf = ("E:\\PDFFileTest\\Jiangsu.pdf");
+					String tempPdf = tmpPath;
+					CreatePdfServiceImlpTest.handleTempalteNew(tempPdf, fpmbPath, pages);
 					return tempPdf;
 				}
 				
@@ -587,14 +551,25 @@ public class CreatePdfServiceImlp {
 		}
 	}
 
-	public static void main(String[] args) throws IOException, DocumentException {
-		String tmpPath = "E:\\PDFFileTest\\Jiangsu(2).pdf";
+	static long randomTime = System.currentTimeMillis();
+	static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
+	static  String password = "111111";
+	static  String pfx = "E:\\PDFFileTest\\1.pfx";
+	static  String gif = "E:\\PDFFileTest\\1.gif";
+	static String tempPdf1 = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
+			+ ".pdf");
+	static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
 
-		long randomTime = System.currentTimeMillis();
+	static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
+	static String tmpPath = "E:\\PDFFileTest\\Jiangsu(2).pdf";
+
+	public static void main(String[] args) throws IOException, DocumentException {
+
+//		long randomTime = System.currentTimeMillis();
 		// String tempPdf = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
 		// + ".pdf");
 //		String expPath = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
-		String expPath = tempPdf1;
+//		String expPath = tempPdf1;
 //		String expPath = "E:\\PDFFileTest" + File.separator +  "h30.pdf";
 
 		Xxfp fp = new Xxfp();
@@ -851,7 +826,8 @@ public class CreatePdfServiceImlp {
 		fp.setEwmPath("http://www.baidu.com");
 		fp.setEwm("iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAIAAAD6XpeDAAAC/UlEQVR42u3cy26DUAwFwPz/T6frLqoK8LENDMuIUPDc6PqB+vkEju+C46/7qbrno9/93OWABw8evJfgJYJ1NKBVGAmkK9dPxBkePHjw4NXgHb3Rqs+v3ENV0K8kI4nFBw8ePHjw7odXdU46uUgU/vDgwYMH7114iZtOBL0zqYEHDx48ePN46c08EaCqBGdD4b9iqgAPHjx4D8arOhIN6yd9vvqABA8evAfjfcPHhnvbMIyNxBYePHjw4J1+rnTQEw3xzkVz5Zx4POHBgwcP3mm8qWNzglMFGWmsw4MHDx68f69flSx0viCUSIgSSUp6QcCDBw8evJr3aNIwVQ82lVAkFk1ZgQ8PHjx48EYazVOJQKJAroIZ+xXCgwcP3svxOpOCDQPYK6v4No1pePDgwYN3Gm9q0+4ckFYFOn0P8YeHBw8evJfgJQakVwLU2cDtHOqW1dnw4MGDB6/keaeK8XQh34nU2UCABw8ePHh9g8rEwLNzKNrZEChL0ODBgwcPXhSvs/Dc0AhOD34v/V148ODBg1eCl37BJrGBVzUEEg36xDnw4MGDB68GL7Fpdzap02CJpvzhvwUPHjx48E7PBasK8wRSZ+IzNfuM/wrhwYMHD155QzlRvN/xpal4YxoePHjw4FXEIf6PczYnMonrJJrg8ODBgwfvfD8zHdB0Q6CqaT716ykrzOHBgwcP3ul5XlUgruy72xoC6cVaNlWABw8ePHgleFWN4A2LY9tQOp6wwIMHDx688oI93WjubBpMNa/Hui3w4MGD90K8sU040EBIL5TOmMCDBw8evGPX3LBRT2346WFporHw63N48ODBg1fyPku6iZxIgtKD5XihHU4S4cGDBw9eNqFIDHsTG3hiwbUmLPDgwYMHLzqMTWzI6WBVFdStGeDUNBwePHjw4I00TxPFctU5iThcKtLhwYMHD94t8NLfTTSFVyRE8ODBgwfvNF7ni0ZTQ9eqZ0/EYcUwFh48ePAejNfZI93Q2N0wcF7X7IYHDx685+L9ACpql2Icyp6DAAAAAElFTkSuQmCC");
 //		fp.setEwm();
-		createPdf(tmpPath, expPath, null, null, fp, mxlist, true);
+		long startTime = System.currentTimeMillis(); // 获取开始时间
+		createPdf(tmpPath, tempPdf1, null, null, fp, mxlist, true);
 
 		long endTime = System.currentTimeMillis(); // 获取结束时间
 		System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); // 输出程序运行时间

@@ -184,4 +184,29 @@ public class NumberUtil
     double se = d_bhsje * d_sl;
     return new String[] { double2Str(d_bhsje, len), double2Str(se, 2) };
   }
+
+  public static String Tostr(String str) {
+//		String str = "dsfdsafdsafdsafas";
+    // 字符串长度
+    int strlenth = str.length();
+    // 需要加空格数量
+    int blankcount = 0;
+    // 判断字符串长度
+    if (strlenth <= 5) {
+      blankcount = 0;
+    } else {
+      blankcount = strlenth % 5 > 0 ? strlenth / 5 : str.length() / 5 - 1; // 需要加空格数量
+    }
+    // 插入空格
+    if (blankcount > 0) {
+      for (int i = 0; i < blankcount; i++) {
+        str = str.substring(0, (i + 1) * 5 + i) + " " + str.substring((i + 1) * 5 + i, strlenth + i);
+      }
+    } else {
+      System.out.println("输入的字符串不多于4位，不需要添加空格");
+    }
+    System.out.println(str);
+    return str;
+  }
+
 }

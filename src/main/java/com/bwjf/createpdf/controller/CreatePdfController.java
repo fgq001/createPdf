@@ -19,9 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by admin on 2019/7/16.
@@ -39,9 +37,11 @@ public class CreatePdfController {
 
     @ResponseBody
     @PostMapping("/createPdf")
-    public void CreatePdf(HttpServletRequest req, HttpServletResponse resp){
+    public Map<String,Object> CreatePdf(HttpServletRequest req, HttpServletResponse resp){
         long startTime = System.currentTimeMillis(); // 获取开始时间
+        Map<String,Object> map = new HashMap<>();
         try {
+
             req.setCharacterEncoding("UTF-8");
             resp.setContentType("text/html;charset=UTF-8");
 
@@ -63,27 +63,28 @@ public class CreatePdfController {
             String endPath = req.getParameter("endPath") == "" ? null : req.getParameter("endPath");
             //签章密码
             String password = req.getParameter("password") == "" ? null : req.getParameter("password");
-//            System.out.println("strJQBH == "+strJQBH+"  pfx ==  "+pfx);
-
-//            XMLDomUtils.XmlJx(xmlContent);
 
             Xxfp xxfp = new Xxfp();
-            Xxfpmx xxfpmx = new Xxfpmx();
+//            Xxfpmx xxfpmx = new Xxfpmx();
             List<Xxfpmx> xxfpmxList = new ArrayList<>();
-
-            XMLDomUtils.XmlJx(xmlContent,tmpPath,temPath,endPath,xxfp,xxfpmxList,pfx,gif,password);
-//            xxfpmxList = (List<Xxfpmx>) XMLDomUtils.XmlJx(xmlContent);
-            System.out.println("xxfp.getJym()"+xxfp.getJym());
+            //解析XML内容
+            XMLDomUtils.XmlJx(xmlContent,xxfp,xxfpmxList);
+//            System.out.println("xxfp.getJym()"+xxfp.getJym());
 
             createPdfService.createPdf(tmpPath,temPath,endPath,xxfp,xxfpmxList,pfx,gif,password,xmlContent);
-//            xmlJxService.XmlJx(xmlContent, tmpPath, temPath, endPath, xxfp, xxfpmxList, pfx, gif, password);
 
+
+            map.put("创建成功","sucess");
+            map.put("模板PDF路径",tmpPath);
+            map.put("临时PDF路径",temPath);
+            map.put("最终PDF路径",endPath);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         long endTime = System.currentTimeMillis(); // 获取结束时间
         System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); // 输出程序运行时间
+        return map;
     }
 
 }

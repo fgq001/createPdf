@@ -62,8 +62,6 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             bo = false;
             System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
                     xxfp.getFphm());
-//        } catch (org.dom4j.DocumentException e) {
-//            e.printStackTrace();
         }
         return bo;
     }
@@ -75,11 +73,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         PdfReader reader = new PdfReader(tmpPath);
         // 创建临时生成PDF路径
         String pdfTemp = temPath;	//临时PDF
-        String pdfEnd = endPath;	//最终PDF
-//		pdfTemp = tempPdf1;
-//		String pdfTemp = "";
-//		String pdfTemp1 = expPath1;
-//		pdfTemp = tempPdf1;
+//        String pdfEnd = endPath;	//最终PDF
 
 
         new File(temPath).getParentFile().mkdirs();
@@ -94,6 +88,9 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         pdfTemp = handleTempalteSpfp(xxfp, mxlist, tmpPath, temPath);
         createCommonSpTest(pdfTemp, temPath, xxfp, mxlist,gif);
         SignPDF.sign(pfx, temPath, endPath, gif, password);
+        System.out.println("模板PDF路径： "+tmpPath);
+        System.out.println("临时PDF路径： "+temPath);
+        System.out.println("最终PDF路径： "+endPath);
     }
 
     @Override
@@ -112,7 +109,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             //判断是否正负发票
             if(xxfp.getKplx().equals("0")) {
                 int count = xxfpmx == null ? 0 : xxfpmx.size();
-                int pages = count / 30 + (count % 10 == 0 ? 0 : 1);
+                int pages = count / 30 + (count % 30 == 0 ? 0 : 1);
                 // String tempPdf = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
                 // + ".pdf");
                 String tempPdf = tmpPath;
@@ -193,9 +190,11 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             Font courier10 = FontFactory.getFont(BaseFont.COURIER, BaseFont.WINANSI, 10.0F);
             Font courier8 = FontFactory.getFont(BaseFont.COURIER, BaseFont.WINANSI, 8.0F);
 
-            int pages = count / 30 + (count % 10 == 0 ? 0 : 1);
+            int pages = count / 30 + (count % 30 == 0 ? 0 : 1);
             int PDFPages = reader.getNumberOfPages();
-
+            // 生成带有清单发票
+            // count: 30 pages: 1 PDFPages: 2
+            // count: 31 pages: 2 PDFPages: 3
 
             System.out.println("count:  " + count + "   pages:   " + pages + "   PDFPages:  " + PDFPages);
             // 生成第一页共有内容
@@ -206,13 +205,13 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 //		setSimpleText(xxfp.getFphm(), 477.0F, 352.0F, 700.0F, 364.0F, font, over1);
             TextAlign.setSimpleTextLeft(xxfp.getFpdm(), 465.0F, 359.0F, 580.0F, 379.0F, courier10, over1);
             TextAlign.setSimpleTextLeft(xxfp.getFphm(), 465.0F, 342.0F, 580.0F, 362.0F, courier10, over1);
-            System.out.println("xxfp.getFphm()= "+xxfp.getFphm()+"xxfp.getFpdm()"+xxfp.getFpdm());
+//            System.out.println("xxfp.getFphm()= "+xxfp.getFphm()+"xxfp.getFpdm()"+xxfp.getFpdm());
             String kprq = xxfp.getKprq().substring(0, 4) + "  " + xxfp.getKprq().substring(4, 6) + "  "
                     + xxfp.getKprq().substring(6, 8);
             TextAlign.setSimpleTextLeft(kprq, 465.0F, 333.0F, 580.0F, 345.0F, courier10, over1);
             TextAlign.setSimpleTextLeft(NumberUtil.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
             TextAlign.setSimpleTextLeft(xxfp.getJqbh(), 74.0F, 307.0F, 220.0F, 327.0F, courier11, over1);
-            System.out.println("xxfp.getJqbh()= "+xxfp.getJqbh());
+//            System.out.println("xxfp.getJqbh()= "+xxfp.getJqbh());
             //判断是否正负发票
             if(xxfp.getKplx().equals("1")) {
                 TextAlign.setSimpleTextLeft("销项负数", 97.0F, 320.0F, 185.0F, 340.0F, fontHT14, over1);

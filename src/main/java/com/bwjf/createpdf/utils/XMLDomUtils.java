@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class XMLDomUtils {
 
-    public static void XmlJx(String xmlContent,String tmpPath,String temPath,String endPath,Xxfp xxfp, List<Xxfpmx> xxfpmxList,String pfx,String gif,String password) throws IOException, DocumentException {
+    public static void XmlJx(String xmlContent,Xxfp xxfp, List<Xxfpmx> xxfpmxList) throws IOException, DocumentException {
 
         String Charset = "gb2312";
 //                                                     </group>
@@ -31,16 +31,17 @@ public class XMLDomUtils {
         org.dom4j.Element element;
         org.dom4j.Element element2;
         org.dom4j.Element element3;
-        System.out.println("根节点==="+root.getName());
+//        System.out.println("根节点==="+root.getName());
         //获取子节点
 //        Element node=root.element("body");//在root节点下面找username节点
 //        System.out.println("节点名称------>"+node.getName()+",节点值------->"+node.getStringValue());
 
         Iterator j = root.elementIterator("body");// 开票成功
-        Iterator k = root.elementIterator("body");// 开票失败
+//        Iterator k = root.elementIterator("body");// 开票失败
 //        Xxfp xxfp = new Xxfp();
 //        List<Xxfpmx> xxfpmxList =new ArrayList<>();;
-        Xxfpmx xxfpmx = new Xxfpmx();
+//        Xxfpmx xxfpmx = new Xxfpmx();
+//        List<Xxfpmx> xxfpmxList = new ArrayList<>();
         if (j.hasNext()) {
             Element returncode = root.element("body").element("returncode");
             String returncode1 = returncode.getStringValue() == null ? "":returncode.getStringValue();
@@ -53,7 +54,7 @@ public class XMLDomUtils {
 //                System.out.println(element.toString());
 
                 String fpdm = element.elementText("fpdm") == null ? "" : element.elementText("fpdm").trim();
-                System.out.println("<fpdm>150007899605</fpdm>=="+fpdm);
+//                System.out.println("<fpdm>150007899605</fpdm>=="+fpdm);
                 String fphm = element.elementText("fphm") == null ? "" : element.elementText("fphm").trim();
                 String fpzt = element.elementText("fpzt") == null ? "" : element.elementText("fpzt").trim();
                 String scbz = element.elementText("scbz") == null ? "" : element.elementText("scbz").trim();
@@ -84,7 +85,7 @@ public class XMLDomUtils {
                 String qtxm = qtxm1.attributeValue("count")+"  " == null ? "":qtxm1.attributeValue("count")+"  ";
 //                System.out.println("<qdxm count=\"0\" />=="+qtxm);
 
-                System.out.println("jym  "+jym+"jqbh"+jqbh);
+//                System.out.println("jym  "+jym+"jqbh"+jqbh);
 
                 String zhsl = element.elementText("zhsl") == null ? "" : element.elementText("zhsl").trim();
                 String hjje = element.elementText("hjje") == null ? "" : element.elementText("hjje").trim();
@@ -119,12 +120,14 @@ public class XMLDomUtils {
 //                Element nameElem1 = root.element("body").element("returndata").element("kpxx").element("group").element("fyxm");
 //                System.out.println(nameElem1.attributeValue("count")+"  ");
                 String spmc = null;
-
                 for (Iterator q = root.element("body").element("returndata").element("kpxx").element("group").element("fyxm").elementIterator(); q.hasNext(); ) { // 获取body下面元素
                     element = (org.dom4j.Element) q.next();
 
+                    Xxfpmx xxfpmx = new Xxfpmx();
+
+
                     String group = element.attributeValue("xh")+"  " == null ? "" : element.attributeValue("xh")+"  ";
-                    System.out.println("<group xh=\"9\">=="+group);
+//                    System.out.println("<group xh==="+group);
 
                     String fphxz = element.elementText("fphxz") == null ? "1" : element.elementText("fphxz").trim();
                     spmc = element.elementText("spmc") == null ? "1" : element.elementText("spmc").trim();
@@ -145,6 +148,7 @@ public class XMLDomUtils {
 
                     xxfpmx.setFphxz(fphxz);
                     xxfpmx.setSpmc(spmc);
+//                        System.out.println("xxfpmx.getSpmc()"+xxfpmx.getSpmc());
                     xxfpmx.setSpsm(spsm);
                     xxfpmx.setGgxh(ggxh);
                     xxfpmx.setDw(dw);
@@ -160,14 +164,17 @@ public class XMLDomUtils {
                     xxfpmx.setLslbs(lslbs);
                     xxfpmx.setZzstsgl(zzstsgl);
 
-//                    xxfpmxList.add(xxfpmx);
+
+                    xxfpmxList.add(xxfpmx);
+
+//                        System.out.println("xxfpmxList.get(0).getSpmc()"+xxfpmxList.get(0).getSpmc());
 //                    System.out.print("xxfpmxList  spmc = "+xxfpmxList.get(0).getSpmc());
 //                    System.out.println("xxfpmx  se = "+xxfpmx.getSe());
 //                    System.out.println("xxfpmx  Spsl = "+xxfpmx.getSpsl());
 //                    System.out.println("size = "+xxfpmxList.size());
 //                    return xxfpmxList;
                 }
-                xxfpmxList.add(xxfpmx);
+//                xxfpmxList.add(xxfpmx);
 
 
                 xxfp.setFpdm(fpdm);
@@ -218,7 +225,7 @@ public class XMLDomUtils {
                 xxfp.setQmz(qmz);
                 xxfp.setYkfsje(ykfsje);
                 xxfp.setYqjg(yqjg);
-//                xxfp.setEwmPath(ewm);
+                xxfp.setEwm(ewm);
 
 
                 System.out.println("dm = "+xxfp.getFpdm()+" hm= "+ xxfp.getFphm()+" jym= "+xxfp.getJym()+" kplx= "+xxfp.getKplx());

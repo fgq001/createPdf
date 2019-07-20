@@ -171,7 +171,7 @@ public class CreatePdfServiceImlpTest {
 		Font courier10 = FontFactory.getFont(BaseFont.COURIER, BaseFont.WINANSI, 10.0F);
 		Font courier8 = FontFactory.getFont(BaseFont.COURIER, BaseFont.WINANSI, 8.0F);
 		
-		int pages = count / 30 + (count % 10 == 0 ? 0 : 1);
+		int pages = count / 30 + (count % 30 == 0 ? 0 : 1);
 		int PDFPages = reader.getNumberOfPages();
 
 		
@@ -488,7 +488,7 @@ public class CreatePdfServiceImlpTest {
 				//判断是否正负发票  
 				if(xxfp.getKplx().equals("0")) {
 					int count = xxfpmx == null ? 0 : xxfpmx.size();
-					int pages = count / 30 + (count % 10 == 0 ? 0 : 1);
+					int pages = count / 30 + (count % 30 == 0 ? 0 : 1);
 					// String tempPdf = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
 					// + ".pdf");
 //					String tempPdf = ("E:\\PDFFileTest" + File.separator + "Jiangsu.pdf");
@@ -643,24 +643,24 @@ public class CreatePdfServiceImlpTest {
 		mx.setZzstsgl("");
 		mxlist.add(mx);
 
-//		mx = new Xxfpmx();
-//		mx.setFphxz("2");	// 发票行性质 0正常行、1折扣行、2被折扣行 
-//		mx.setSpmc("税控盘2");
-//		mx.setSpsm("");
-//		mx.setGgxh("花");
-//		mx.setDw("盒盒");
-//		mx.setSpsl("111");
-//		mx.setDj("201");
-//		mx.setJe("201");
-//		mx.setSl("0.17");
-//		mx.setSe("3.41");
-//		mx.setHsbz("");
-//		mx.setSpbm("1070304060000000001");
-//		mx.setZxbm("");
-//		mx.setYhzcbs("");
-//		mx.setLslbs("");
-//		mx.setZzstsgl("");
-//		mxlist.add(mx);
+		mx = new Xxfpmx();
+		mx.setFphxz("2");	// 发票行性质 0正常行、1折扣行、2被折扣行
+		mx.setSpmc("税控盘2");
+		mx.setSpsm("");
+		mx.setGgxh("花");
+		mx.setDw("盒盒");
+		mx.setSpsl("111");
+		mx.setDj("201");
+		mx.setJe("201");
+		mx.setSl("0.17");
+		mx.setSe("3.41");
+		mx.setHsbz("");
+		mx.setSpbm("1070304060000000001");
+		mx.setZxbm("");
+		mx.setYhzcbs("");
+		mx.setLslbs("");
+		mx.setZzstsgl("");
+		mxlist.add(mx);
 		
 //		mx = new Xxfpmx();
 //		mx.setFphxz("1");
@@ -726,24 +726,24 @@ public class CreatePdfServiceImlpTest {
 		mxlist.add(mx); // 10
 		mxlist.add(mx); // 11
 		mxlist.add(mx); // 12
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 30
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 30
 		// ====================================================
 //		mxlist.add(mx); // 31
 //		mxlist.add(mx); // 32

@@ -160,14 +160,14 @@ public class XMLDomUtils {
                     xxfpmx.setLslbs(lslbs);
                     xxfpmx.setZzstsgl(zzstsgl);
 
-                    xxfpmxList.add(xxfpmx);
-                    System.out.print("xxfpmxList  spmc = "+xxfpmxList.get(0).getSpmc());
-                    System.out.println("xxfpmx  se = "+xxfpmx.getSe());
-                    System.out.println("xxfpmx  Spsl = "+xxfpmx.getSpsl());
-                    System.out.println("size = "+xxfpmxList.size());
+//                    xxfpmxList.add(xxfpmx);
+//                    System.out.print("xxfpmxList  spmc = "+xxfpmxList.get(0).getSpmc());
+//                    System.out.println("xxfpmx  se = "+xxfpmx.getSe());
+//                    System.out.println("xxfpmx  Spsl = "+xxfpmx.getSpsl());
+//                    System.out.println("size = "+xxfpmxList.size());
 //                    return xxfpmxList;
                 }
-
+                xxfpmxList.add(xxfpmx);
 
 
                 xxfp.setFpdm(fpdm);

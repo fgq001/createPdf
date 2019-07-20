@@ -209,8 +209,8 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             System.out.println("xxfp.getFphm()= "+xxfp.getFphm()+"xxfp.getFpdm()"+xxfp.getFpdm());
             String kprq = xxfp.getKprq().substring(0, 4) + "  " + xxfp.getKprq().substring(4, 6) + "  "
                     + xxfp.getKprq().substring(6, 8);
-//            TextAlign.setSimpleTextLeft(kprq, 465.0F, 333.0F, 580.0F, 345.0F, courier10, over1);
-//            TextAlign.setSimpleTextLeft(NumberUtil.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
+            TextAlign.setSimpleTextLeft(kprq, 465.0F, 333.0F, 580.0F, 345.0F, courier10, over1);
+            TextAlign.setSimpleTextLeft(NumberUtil.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
             TextAlign.setSimpleTextLeft(xxfp.getJqbh(), 74.0F, 307.0F, 220.0F, 327.0F, courier11, over1);
             System.out.println("xxfp.getJqbh()= "+xxfp.getJqbh());
             //判断是否正负发票

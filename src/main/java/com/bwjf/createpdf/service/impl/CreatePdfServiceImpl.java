@@ -3,14 +3,12 @@ package com.bwjf.createpdf.service.impl;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
-import com.bwjf.createpdf.test.CreatePdfServiceImlpTest;
 import com.bwjf.createpdf.test.Img2Base64Util;
 import com.bwjf.createpdf.utils.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.*;
-import org.dom4j.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +19,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by admin on 2019/7/19.
@@ -35,6 +33,19 @@ public class CreatePdfServiceImpl implements CreatePdfService{
     static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
     static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
 
+    /**
+     * 创建PDF
+     * @param tmpPath   PDF模板路径
+     * @param temPath   生成临时PDF路径
+     * @param endPath   最终生成PDF路径
+     * @param xxfp      发票信息
+     * @param xxfpmxList    发票明细信息
+     * @param pfx       pfx文件路径
+     * @param gif       印章路径
+     * @param password  签章密码
+     * @param xmlContent    XML解析内容
+     * @return
+     */
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public boolean createPdf(String tmpPath,String temPath,String endPath,Xxfp xxfp,List<Xxfpmx> xxfpmxList, String pfx, String gif, String password, String xmlContent) {
@@ -47,26 +58,42 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         if (nf.exists()) {
             nf.delete();
         }
-            System.out.println("xxfp.getJym()========"+xxfp.getJym());
+//            System.out.println("xxfp.getJym()========"+xxfp.getJym());
 //            XMLDomUtils.XmlJx(xmlContent);
             createFp(tmpPath, temPath, endPath, xxfp, xxfpmxList,pfx,gif,password);
         } catch (FileNotFoundException e) {
             bo = false;
             System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
                     xxfp.getFphm());
+            e.printStackTrace();
         } catch (DocumentException e) {
             bo = false;
             System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
                     xxfp.getFphm());
+            e.printStackTrace();
         } catch (IOException e) {
             bo = false;
             System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
                     xxfp.getFphm());
+            e.printStackTrace();
         }
         return bo;
     }
 
 
+    /**
+     * 生成发票
+     * @param tmpPath    PDF模板路径
+     * @param temPath    生成临时PDF路径
+     * @param endPath    最终生成PDF路径
+     * @param xxfp       发票信息
+     * @param mxlist     发票明细信息
+     * @param pfx         pfx文件路径
+     * @param gif         gif文件路径
+     * @param password    签章密码
+     * @throws IOException
+     * @throws DocumentException
+     */
     @Override
     public void createFp(String tmpPath, String temPath, String endPath, Xxfp xxfp, List<Xxfpmx> mxlist, String pfx, String gif, String password) throws IOException, DocumentException {
         // 读模板PDF路径
@@ -88,16 +115,27 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         pdfTemp = handleTempalteSpfp(xxfp, mxlist, tmpPath, temPath);
         createCommonSpTest(pdfTemp, temPath, xxfp, mxlist,gif);
         SignPDF.sign(pfx, temPath, endPath, gif, password);
-        System.out.println("模板PDF路径： "+tmpPath);
-        System.out.println("临时PDF路径： "+temPath);
-        System.out.println("最终PDF路径： "+endPath);
     }
 
+    /**
+     * 判断明细是否超过8条，是否生成清单发票
+     * @param xxfp      发票信息
+     * @param mxlist    发票明细信息
+     * @return
+     */
     @Override
     public boolean isQdfp(Xxfp xxfp, List<Xxfpmx> mxlist) {
         return (xxfp != null) && (mxlist != null) && (mxlist.size() > 8);
     }
 
+    /**
+     * 创建临时PDF
+     * @param xxfp      发票信息
+     * @param xxfpmx    发票明细
+     * @param tmpPath   发票模板
+     * @param temPath   临时PDF
+     * @return
+     */
     @Override
     public String handleTempalteSpfp(Xxfp xxfp, List<Xxfpmx> xxfpmx, String tmpPath, String temPath) {
         if (!isQdfp(xxfp, xxfpmx)) {
@@ -124,7 +162,12 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         }
     }
 
-
+    /**
+     * 根据商品数判断页数，生成带有清单模板的PDF
+     * @param tempPdf   PDF模板
+     * @param temPath   临时PDF
+     * @param pages     页数
+     */
     @Override
     public void handleTempalteNew(String tempPdf, String temPath, int pages) {
         File file = new File(tempPdf);
@@ -161,25 +204,46 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         }
     }
 
+    /**
+     * 模板内填充数据
+     * @param tmpPath   PDF模板
+     * @param tempPdf   临时PDF
+     * @param xxfp      发票信息
+     * @param mxlist    发票明细信息
+     * @param gif       印章
+     * @throws IOException
+     * @throws DocumentException
+     */
     @Override
-    public void createCommonSpTest(String tmpPath, String tempPdf1, Xxfp xxfp, List<Xxfpmx> mxlist, String gif) throws IOException, DocumentException {
+    public void createCommonSpTest(String tmpPath, String tempPdf, Xxfp xxfp, List<Xxfpmx> mxlist, String gif) throws IOException, DocumentException {
         {
 
             PdfReader reader = new PdfReader(tmpPath);
-            FileOutputStream tempFile = new FileOutputStream(tempPdf1);
+            FileOutputStream tempFile = new FileOutputStream(tempPdf);
             PdfStamper stamp = new PdfStamper(reader, tempFile);
 
             int count = mxlist == null ? 0 : mxlist.size();
 
+            // 读取配置文件信息
+            Properties prop = new Properties();
+            prop.load(this.getClass().getResourceAsStream("/font.properties"));
+
+            // 宋体
+            String fontST = prop.getProperty("bwjf.font.st.path");
+            //黑体
+            String fontHT = prop.getProperty("bwjf.font.ht.path");
+
             //宋体
-            BaseFont bfChineseST = BaseFont.createFont("src/main/resources/font/simsun.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+//            BaseFont bfChineseST = BaseFont.createFont("src/main/resources/font/simsun.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont bfChineseST = BaseFont.createFont(fontST, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font fontST11 = new Font(bfChineseST,11.0F);
             Font fontST10 = new Font(bfChineseST,10.0F);
             Font fontST9 = new Font(bfChineseST,9.0F);
             Font fontST8 = new Font(bfChineseST,8.0F);
             Font fontST7 = new Font(bfChineseST,7.0F);
             //黑体
-            BaseFont bfChineseHT = BaseFont.createFont("src/main/resources/font/SIMHEI.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+//            BaseFont bfChineseHT = BaseFont.createFont("src/main/resources/font/SIMHEI.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont bfChineseHT = BaseFont.createFont(fontHT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font fontHT10 = new Font(bfChineseHT,10.0F);
             Font fontHT14 = new Font(bfChineseHT,14.0F);
 
@@ -488,295 +552,5 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             tempFile.close();
         }
     }
-
-
-//    static long randomTime = System.currentTimeMillis();
-//    static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
-//    static  String password = "111111";
-//    static  String pfx = "E:\\PDFFileTest\\1.pfx";
-//    static  String gif = "E:\\PDFFileTest\\1.gif";
-//    static String tempPdf1 = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
-//            + ".pdf");
-//    static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
-//
-//    static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
-//    static String tmpPath = "E:\\PDFFileTest\\Jiangsu(2).pdf";
-
-
-//    public static void main(String[] args) throws IOException, DocumentException {
-//
-////		long randomTime = System.currentTimeMillis();
-//        // String tempPdf = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID()
-//        // + ".pdf");
-////		String expPath = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
-////		String expPath = tempPdf1;
-////		String expPath = "E:\\PDFFileTest" + File.separator +  "h30.pdf";
-//
-//        Xxfp fp = new Xxfp();
-//        // Ticket ticket = new Ticket();
-//
-//        fp.setKplx("0");	//0:为正票  1:为负票
-//        fp.setFpdm("150003529999");
-//        fp.setFphm("95715993");
-//        fp.setKprq("20161125105100");
-//        fp.setJqbh("499111004317");
-//        fp.setJym("15790161104984466735");
-//        fp.setSkm(
-//                "039<*9//9-684*</22*>5042493-*21468>37716><46+>797<47234>--/665**<*4>*9/24/37-+<<959</146826-<50134791945-3890247");
-//        fp.setGhdwmc("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有限公司无锡市分公司");
-//        fp.setGhdwsbh("9132020083600110X7");
-//        fp.setGhdwdzdh("无锡梁青路4号  0510-87905747");
-//        fp.setGhdwyhzh("中国工商银行无锡市分行营业部  1103020209200541791");
-//
-//        fp.setXhdwmc("江苏百旺金赋信息科技有限公司");
-//        fp.setXhdwsbh("91320106598035469W");
-//        fp.setXhdwdzdh("城市区人民中路188号飞驰新天地广场2幢1801室0515");
-//        fp.setXhdwyhzh("中国建设银行迎宾支行32050173513609916688");
-//
-//        fp.setKpr("收款人张三");
-//        fp.setSkr("复核人张三");
-//        fp.setFhr("开票人张三");
-//        fp.setBz("测试用户:服务费截止时间：2019.4"
-//                +"\r\n"
-//                + ".27-2020.4.27"
-//                + "==测试用户:服务费截止时间：2019.4.27-2020.4.27"
-//                + "==测试用户:服务费截止时间：2019.4.27-2020.4.27"
-//                + "==测试用户:服务费截止时间：2019.4.27-2020.4.27"
-//                + "==测试用户:服务费截止时间：2019.4.27-2020.4.27");
-//
-//        List mxlist = new ArrayList();
-//        Xxfpmx mx = new Xxfpmx();
-//        mx.setFphxz("0");	// 发票行性质 0正常行、1折扣行、2被折扣行
-//        mx.setSpmc("阿裕食品桂花园子200克==阿裕食品桂花园子200克");
-//        mx.setSpsm("");
-//        mx.setGgxh("食品桂花");
-//        mx.setDw("袋");
-//        mx.setSpsl("1");
-//        mx.setDj("1342400.01");
-//        mx.setJe("100.01");
-//        mx.setSl("0.17");
-//        mx.setSe("17");
-//        mx.setHsbz("");
-//        mx.setSpbm("1070304060000000000");
-//        mx.setZxbm("");
-//        mx.setYhzcbs("");
-//        mx.setLslbs("");
-//        mx.setZzstsgl("");
-//        mxlist.add(mx);
-//
-//        mx = new Xxfpmx();
-//        mx.setFphxz("0");	// 发票行性质 0正常行、1折扣行、2被折扣行
-//        mx.setSpmc("税控盘");
-//        mx.setSpsm("食品桂花花");
-//        mx.setGgxh("品桂");
-//        mx.setDw("盒");
-//        mx.setSpsl("11");
-//        mx.setDj("-10");
-//        mx.setJe("-10");
-//        mx.setSl("0.17");
-//        mx.setSe("-1.7");
-//        mx.setHsbz("");
-//        mx.setSpbm("1070304060000000002");
-//        mx.setZxbm("");
-//        mx.setYhzcbs("");
-//        mx.setLslbs("");
-//        mx.setZzstsgl("");
-//        mxlist.add(mx);
-//
-////		mx = new Xxfpmx();
-////		mx.setFphxz("2");	// 发票行性质 0正常行、1折扣行、2被折扣行
-////		mx.setSpmc("税控盘2");
-////		mx.setSpsm("");
-////		mx.setGgxh("花");
-////		mx.setDw("盒盒");
-////		mx.setSpsl("111");
-////		mx.setDj("201");
-////		mx.setJe("201");
-////		mx.setSl("0.17");
-////		mx.setSe("3.41");
-////		mx.setHsbz("");
-////		mx.setSpbm("1070304060000000001");
-////		mx.setZxbm("");
-////		mx.setYhzcbs("");
-////		mx.setLslbs("");
-////		mx.setZzstsgl("");
-////		mxlist.add(mx);
-//
-////		mx = new Xxfpmx();
-////		mx.setFphxz("1");
-////		mx.setSpmc("税控盘2");	// 发票行性质 0正常行、1折扣行、2被折扣行
-////		mx.setSpsm("");
-////		mx.setGgxh(" ");
-////		mx.setDw(" ");
-////		mx.setSpsl(" ");
-////		mx.setDj(" ");
-////		mx.setJe("-100");
-////		mx.setSl("0.15");
-////		mx.setSe("1.50");
-////		mx.setHsbz("");
-////		mx.setSpbm("1070304060000000001");
-////		mx.setZxbm("");
-////		mx.setYhzcbs("");
-////		mx.setLslbs("");
-////		mx.setZzstsgl("");
-////		mxlist.add(mx);
-//
-//        mx = new Xxfpmx();
-//        mx.setFphxz("0");
-//        mx.setSpmc("税控盘3");
-//        mx.setSpsm("");
-//        mx.setGgxh("花花");
-//        mx.setDw("盒盒盒");
-//        mx.setSpsl("1111");
-//        mx.setDj("2001");
-//        mx.setJe("2001");
-//        mx.setSl("0.17");
-//        mx.setSe("3411");
-//        mx.setHsbz("");
-//        mx.setSpbm("1070304060000000003");
-//        mx.setZxbm("");
-//        mx.setYhzcbs("");
-//        mx.setLslbs("");
-//        mx.setZzstsgl("");
-//        mxlist.add(mx);
-//
-//        mx = new Xxfpmx();
-//        mx.setFphxz("0");
-//        mx.setSpmc("税控盘4");
-//        mx.setSpsm("");
-//        mx.setGgxh("花花花花");
-//        mx.setDw("盒盒盒");
-//        mx.setSpsl("11111");
-//        mx.setDj("20011.3");
-//        mx.setJe("20011.3");
-//        mx.setSl("0.17");
-//        mx.setSe("31114.1");
-//        mx.setHsbz("");
-//        mx.setSpbm("1070304060000000003");
-//        mx.setZxbm("");
-//        mx.setYhzcbs("");
-//        mx.setLslbs("");
-//        mx.setZzstsgl("");
-//        mxlist.add(mx);
-//        mxlist.add(mx);
-//        mxlist.add(mx);
-//        mxlist.add(mx); // 8
-//        // =======================================
-//        mxlist.add(mx); // 9
-//        mxlist.add(mx); // 10
-//        mxlist.add(mx); // 11
-//        mxlist.add(mx); // 12
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 13
-////		mxlist.add(mx); // 30
-//        // ====================================================
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 40
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 50
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 30
-////		mxlist.add(mx); // 31
-////		mxlist.add(mx); // 32
-////		mxlist.add(mx); // 33
-////		mxlist.add(mx); // 34
-////		mxlist.add(mx); // 35
-////		mxlist.add(mx); // 90
-////		// ===================================
-////		mxlist.add(mx); // 91
-//
-//        // mx.setHwmc("税控盘");
-//        // mx.setTax("0.17");
-//        // mx.setSpmc("税控盘");
-//        // mx.setDw("盒");
-//        // mx.setGg("");
-//        // mx.setSl("1");
-//        // mx.setDj("-10");
-//        // mx.setJe("-10");
-//        // mx.setSl("0.17");
-//        // mx.setSe("1.7");
-//        // mxlist.add(mx);
-//
-//        fp.setHjje("80");
-//        fp.setHjse("20.4");
-//        fp.setJshj("100.4");
-//        fp.setEwmPath("http://www.baidu.com");
-//        fp.setEwm("iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAIAAAD6XpeDAAAC/UlEQVR42u3cy26DUAwFwPz/T6frLqoK8LENDMuIUPDc6PqB+vkEju+C46/7qbrno9/93OWABw8evJfgJYJ1NKBVGAmkK9dPxBkePHjw4NXgHb3Rqs+v3ENV0K8kI4nFBw8ePHjw7odXdU46uUgU/vDgwYMH7114iZtOBL0zqYEHDx48ePN46c08EaCqBGdD4b9iqgAPHjx4D8arOhIN6yd9vvqABA8evAfjfcPHhnvbMIyNxBYePHjw4J1+rnTQEw3xzkVz5Zx4POHBgwcP3mm8qWNzglMFGWmsw4MHDx68f69flSx0viCUSIgSSUp6QcCDBw8evJr3aNIwVQ82lVAkFk1ZgQ8PHjx48EYazVOJQKJAroIZ+xXCgwcP3svxOpOCDQPYK6v4No1pePDgwYN3Gm9q0+4ckFYFOn0P8YeHBw8evJfgJQakVwLU2cDtHOqW1dnw4MGDB6/keaeK8XQh34nU2UCABw8ePHh9g8rEwLNzKNrZEChL0ODBgwcPXhSvs/Dc0AhOD34v/V148ODBg1eCl37BJrGBVzUEEg36xDnw4MGDB68GL7Fpdzap02CJpvzhvwUPHjx48E7PBasK8wRSZ+IzNfuM/wrhwYMHD155QzlRvN/xpal4YxoePHjw4FXEIf6PczYnMonrJJrg8ODBgwfvfD8zHdB0Q6CqaT716ykrzOHBgwcP3ul5XlUgruy72xoC6cVaNlWABw8ePHgleFWN4A2LY9tQOp6wwIMHDx688oI93WjubBpMNa/Hui3w4MGD90K8sU040EBIL5TOmMCDBw8evGPX3LBRT2346WFporHw63N48ODBg1fyPku6iZxIgtKD5XihHU4S4cGDBw9eNqFIDHsTG3hiwbUmLPDgwYMHLzqMTWzI6WBVFdStGeDUNBwePHjw4I00TxPFctU5iThcKtLhwYMHD94t8NLfTTSFVyRE8ODBgwfvNF7ni0ZTQ9eqZ0/EYcUwFh48ePAejNfZI93Q2N0wcF7X7IYHDx685+L9ACpql2Icyp6DAAAAAElFTkSuQmCC");
-////		fp.setEwm();
-//        long startTime = System.currentTimeMillis(); // 获取开始时间
-//        CcreatePdf(tmpPath, tempPdf1, null, null, fp, mxlist, true);
-//
-//        long endTime = System.currentTimeMillis(); // 获取结束时间
-//        System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); // 输出程序运行时间
-//
-//        System.out.println("success");
-//        System.out.println("tempPdf1  :"+tempPdf1);
-//        System.out.println("expPath1  :"+expPath1);
-//    }
-//
-//
 
 }

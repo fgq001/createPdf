@@ -1,9 +1,12 @@
 package com.bwjf.createpdf.controller;
 
 import com.bwjf.createpdf.constant.FilePathConstant;
+import com.bwjf.createpdf.entity.KpCacersubInfo;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
+import com.bwjf.createpdf.service.GetPathService;
+import com.bwjf.createpdf.service.impl.GetPathServiceImpl;
 import com.bwjf.createpdf.utils.FileUtils;
 import com.bwjf.createpdf.utils.XMLDomUtils;
 import net.sf.json.JSONObject;
@@ -31,8 +34,8 @@ public class CreatePdfController {
 
     @Autowired
     private CreatePdfService createPdfService;
-//    @Autowired
-//    private XmlJxService xmlJxService;
+    @Autowired
+    private GetPathService getPathService;
 
     @ResponseBody
     @PostMapping("/createPdf")
@@ -62,7 +65,9 @@ public class CreatePdfController {
             String xhdwsbh = xxfp.getXhdwsbh();
             System.out.println("xhdwsbh"+xhdwsbh);
 
-
+            KpCacersubInfo dd = getPathService.getPfxPath1(xhdwsbh);
+            String ss = dd.getKoibId();
+            System.out.println("ss = "+ss);
 
             //pfx文件路径
             String pfx = req.getParameter("pfx") == "" ? null : req.getParameter("pfx");

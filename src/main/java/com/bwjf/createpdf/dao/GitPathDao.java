@@ -1,6 +1,9 @@
 package com.bwjf.createpdf.dao;
 
+import com.bwjf.createpdf.entity.KpCacersubInfo;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * Created by admin on 2019/7/22.
@@ -8,9 +11,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface GitPathDao {
 
-    String getPfxPath(String xhdwsbh);
-    String getGifPath(String xhdwsbh);
-    String getTmpPath(String xhdwsbh);
+    KpCacersubInfo getPfxPath(String xhdwsbh);
+
 
 
 }

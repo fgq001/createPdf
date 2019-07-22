@@ -1,11 +1,14 @@
 package com.bwjf.createpdf.service;
 
+import com.bwjf.createpdf.entity.KpCacersubInfo;
+
+import java.util.List;
+
 /**
  * Created by admin on 2019/7/22.
  */
 public interface GetPathService {
 
-    String getPfxPath(String xhdwsbh);
-    String getGifPath(String xhdwsbh);
-    String getTmpPath(String xhdwsbh);
+    KpCacersubInfo getPfxPath1(String xhdwsbh);
+
 }

@@ -25,7 +25,8 @@ import java.util.Properties;
 /**
  * Created by admin on 2019/7/19.
  */
-@Service("CreatePdfServiceImpl")
+
+@Service("createPdfService")
 public class CreatePdfServiceImpl implements CreatePdfService{
 
 

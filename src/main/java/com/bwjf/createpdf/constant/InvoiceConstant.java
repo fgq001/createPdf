@@ -139,5 +139,9 @@ public class InvoiceConstant {
 	public static  final String OPENID_OR_APPSECRET_NULL_ERAROR = "openid or appsecret is null!";
 	//客户信息不存在 	500145
 	public static  final String CUSTOMER_NOT_EXIST_ERROR = "customer does not exist";
+	//CA信息 文件流不存在 	500146
+	public static  final String CA_INFO_STREAM_ERROR = " caPfx information stream is null!";
+	//创建PDF失败 	500147
+	public static  final String CREATE_PDF = " create PDF is failed!";
 
 }

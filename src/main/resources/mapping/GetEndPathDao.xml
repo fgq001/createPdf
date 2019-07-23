@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bwjf.createpdf.dao.GetPathDao">
+
+
+    <select id="getFpqqlsh" resultType="com.bwjf.createpdf.entity.Xxfp">
+        select id ,KOIB_FPHM as fphm,KOIB_FPQQLSH as fpqqlsh,KOIB_KPLX as kplx from kp_outside_inte_baseinfo
+        where KOIB_FPHM = #{fphm} and KOIB_DEL = '0'  and
+         KOIB_KPSTATUS = '1' and KOIB_PDFSTATUS = '1'
+    </select>
+
+
+
+</mapper>

@@ -1,5 +1,7 @@
 package com.bwjf.createpdf.constant;
 
+import java.io.File;
+
 public class FilePathConstant {
 	
 	/**
@@ -16,7 +18,17 @@ public class FilePathConstant {
 	 * 签名pdf路径
 	 */
 	public static final String qmPdfFilePath = "E:/PDFFile/qmpdfFile/";
-
 //	public static final String CertFilePath = "E:/PDFFile/";
-	
+
+	//签章密码
+	public static String password = "111111";
+	//创建的临时pdf路径
+	public static String temPath = "E:/PDFFileTest/PDFtemplate/";
+	//最终签名后的pdf路径
+	public static String endPath = "E:/PDFFileTest/pdfFile/";
+	//发票二维码路径
+	public static String ewmPath = "E:/PDFFileTest/ewnFile/";
+	//清单发票路径
+	public static String qdmbPath = "E:"+ File.separator+"PDFFileTest"+ File.separator + "qd(1).pdf";
+
 }

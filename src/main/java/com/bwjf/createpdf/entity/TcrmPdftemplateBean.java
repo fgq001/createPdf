@@ -45,8 +45,17 @@ public class TcrmPdftemplateBean implements Serializable {
 	
 	/**pdf文件流**/
 	private String pdfstream;
-	
-	
+
+	/**PDF模板 ID**/
+	private String vpdfid;
+
+	/**客户ID**/
+	private String vcompanyid;
+
+	/**税号**/
+	private String vnuitedcode;
+
+
 	/**
 	 * 设置：id
 	 */
@@ -197,7 +206,28 @@ public class TcrmPdftemplateBean implements Serializable {
 	public void setPdfstream(String pdfstream) {
 		this.pdfstream = pdfstream;
 	}
-	
-	
-	
+
+	public String getVpdfid() {
+		return vpdfid;
+	}
+
+	public void setVpdfid(String vpdfid) {
+		this.vpdfid = vpdfid;
+	}
+
+	public String getVcompanyid() {
+		return vcompanyid;
+	}
+
+	public void setVcompanyid(String vcompanyid) {
+		this.vcompanyid = vcompanyid;
+	}
+
+	public String getVnuitedcode() {
+		return vnuitedcode;
+	}
+
+	public void setVnuitedcode(String vnuitedcode) {
+		this.vnuitedcode = vnuitedcode;
+	}
 }

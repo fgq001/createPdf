@@ -1,5 +1,6 @@
 package com.bwjf.createpdf.service.impl;
 
+import com.bwjf.createpdf.constant.FilePathConstant;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
@@ -31,8 +32,8 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 
 
     static long randomTime = System.currentTimeMillis();
-    static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
-    static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
+//    static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
+    static String ewmPath = FilePathConstant.ewmPath + File.separator + randomTime + "发票.jpg";
 
     /**
      * 创建PDF
@@ -187,7 +188,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
                 if (i == 0)
                     reader = new PdfReader(temPath);
                 else {
-                    reader = new PdfReader(qdmbPath);
+                    reader = new PdfReader(FilePathConstant.qdmbPath);
                 }
                 document.newPage();
                 PdfImportedPage page = copy.getImportedPage(reader, 1);

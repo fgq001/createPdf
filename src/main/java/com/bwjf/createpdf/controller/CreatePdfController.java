@@ -1,7 +1,9 @@
 package com.bwjf.createpdf.controller;
 
 import com.bwjf.createpdf.constant.FilePathConstant;
+import com.bwjf.createpdf.constant.InvoiceConstant;
 import com.bwjf.createpdf.entity.KpCacersubInfo;
+import com.bwjf.createpdf.entity.TcrmPdftemplateBean;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
@@ -37,11 +39,15 @@ public class CreatePdfController {
     @Autowired
     private GetPathService getPathService;
 
+
+
+
     @ResponseBody
     @PostMapping("/createPdf")
-    public Map<String,Object> CreatePdf(HttpServletRequest req, HttpServletResponse resp){
+    public JSONObject CreatePdf(HttpServletRequest req, HttpServletResponse resp){
         long startTime = System.currentTimeMillis(); // 获取开始时间
         Map<String,Object> map = new HashMap<>();
+        JSONObject jsonObject = null;
         try {
 
             req.setCharacterEncoding("UTF-8");
@@ -52,7 +58,7 @@ public class CreatePdfController {
 
 
             //税控设备编号
-            String strJQBH = req.getParameter("strJQBH") == "" ? null : req.getParameter("strJQBH");
+//            String strJQBH = req.getParameter("strJQBH") == "" ? null : req.getParameter("strJQBH");
 //            //发票Id
 //            String koibId = req.getParameter("koibId") == "" ? null : req.getParameter("koibId");
             //开票的xml内容
@@ -60,48 +66,88 @@ public class CreatePdfController {
 
             Xxfp xxfp = new Xxfp();
             List<Xxfpmx> xxfpmxList = new ArrayList<>();
+
             //解析XML内容
             XMLDomUtils.XmlJx(xmlContent,xxfp,xxfpmxList);
+            //获取销货单位识别号 查询path
             String xhdwsbh = xxfp.getXhdwsbh();
-            System.out.println("xhdwsbh"+xhdwsbh);
+            //获取发票号码  查询发票id
+            String fphm = xxfp.getFphm();
+            System.out.println("fphm  ==  "+fphm);
 
-            KpCacersubInfo dd = getPathService.getPfxPath1(xhdwsbh);
-            String ss = dd.getKoibId();
-            System.out.println("ss = "+ss);
+            //获取ca证书 pfx 的文件路径与文件流
+            Map<String, Object> pfxMap = getPathService.getPfxPath(xhdwsbh);
+            String strPfxTemplate = pfxMap.get("strPfxTemplate").toString();//pfx文件路径
+             jsonObject = JSONObject.fromObject(pfxMap);
+            System.out.println("strPfxTemplate ==== "+strPfxTemplate);
 
-            //pfx文件路径
-            String pfx = req.getParameter("pfx") == "" ? null : req.getParameter("pfx");
-            //印章地址
-            String gif = req.getParameter("gif") == "" ? null : req.getParameter("gif");
-            //pdf模板地址
-            String tmpPath = req.getParameter("tmpPath") == "" ? null : req.getParameter("tmpPath");
+            //获取 印章 gif 的文件路径与文件流
+            Map<String, Object> gifMap = getPathService.getGifPath1(xhdwsbh);
+            String strGifTemplate = gifMap.get("strGifTemplate").toString();
+            jsonObject = JSONObject.fromObject(gifMap);
+            System.out.println("strGifTemplate ==== "+strGifTemplate);
+
+            //获取 模板PDF 的文件路径与文件流
+            Map<String, Object> tmpPath = getPathService.getTemPath(xhdwsbh);
+            String strPDFTemplate = tmpPath.get("strPDFTemplate").toString();
+            jsonObject = JSONObject.fromObject(gifMap);
+            System.out.println("strPDFTemplate ==== "+strPDFTemplate);
 
 
-            //创建的临时pdf路径
-            String temPath = req.getParameter("temPath") == "" ? null : req.getParameter("temPath");
+
+//            //pfx文件路径
+//            String pfx = req.getParameter("pfx") == "" ? null : req.getParameter("pfx");
+//            //印章地址
+//            String gif = req.getParameter("gif") == "" ? null : req.getParameter("gif");
+//            //pdf模板地址
+//            String tmpPath1 = req.getParameter("tmpPath") == "" ? null : req.getParameter("tmpPath");
+
+
+            //根据发票号码 查询 发票请求流水号 作为保存PDF路径名称
+            Xxfp xxfp1 = new Xxfp();
+            xxfp1 = getPathService.getFpqqlsh(fphm);
+            String fpqqlsh = xxfp1.getFpqqlsh();
+            System.out.println("fpqqlsh ===  "+fpqqlsh);
+            String kplxName = null;
+            if(xxfp1.getKplx().equals("0")){
+                kplxName = "Blue_";
+            } else {
+                kplxName = "Red_";
+            };
+            System.out.println("路径"+kplxName+fpqqlsh);
+
+            //创建的临时pdf路径    E:\PDFFileTest\
+//            String temPath = req.getParameter("temPath") == "" ? null : req.getParameter("temPath");
+            String temPath = FilePathConstant.temPath+"Tem"+kplxName+fpqqlsh+".pdf";
             //最终签名后的pdf路径
-            String endPath = req.getParameter("endPath") == "" ? null : req.getParameter("endPath");
+//            String endPath = req.getParameter("endPath") == "" ? null : req.getParameter("endPath");
+            String endPath = FilePathConstant.endPath+kplxName+fpqqlsh+".pdf";
             //签章密码
-            String password = req.getParameter("password") == "" ? null : req.getParameter("password");
+            String password = FilePathConstant.password;
+//            String password = req.getParameter("password") == "" ? null : req.getParameter("password");
 
 
 
 
             //创建PDF
-            boolean bo = createPdfService.createPdf(tmpPath,temPath,endPath,xxfp,xxfpmxList,pfx,gif,password,xmlContent);
+            boolean bo = createPdfService.createPdf(strPDFTemplate,temPath,endPath,xxfp,xxfpmxList,strPfxTemplate,strGifTemplate,password,xmlContent);
 
             long endTime = System.currentTimeMillis(); // 获取结束时间
             System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); // 输出程序运行时间
             if (bo){
-                map.put("创建成功","sucess");
-                map.put("模板PDF路径",tmpPath);
-                map.put("临时PDF路径",temPath);
-                map.put("最终PDF路径",endPath);
-                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "===税控设备编号:"+strJQBH+"=====程序运行时间===="+(endTime - startTime)+"ms=====" + map.toString(), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
+                map.put("msg","操作成功");
+                map.put("result","SUCCESS");
+                map.put("rows", "");
+//                map.put("rows",xmlContent);
+                jsonObject = JSONObject.fromObject(map);
+                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" + map.toString(), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
             } else {
-                map.put("创建失败：","failed");
-                map.put("失败发票代码：",xxfp.getFpdm());
-                map.put("失败发票号码：",xxfp.getFphm());
+                map.put("msg", InvoiceConstant.CREATE_PDF);
+                map.put("result", "ERROR");
+                map.put("code", "500147");
+                map.put("rows", "");
+                jsonObject = JSONObject.fromObject(map);
+
             }
 
 
@@ -112,7 +158,7 @@ public class CreatePdfController {
             e.printStackTrace();
         }
 
-        return map;
+        return jsonObject;
     }
 
 }

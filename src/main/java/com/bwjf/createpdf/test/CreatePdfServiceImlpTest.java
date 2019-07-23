@@ -561,7 +561,7 @@ public class CreatePdfServiceImlpTest {
 	static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
 
 	static String ewmPath = "E:\\PDFFileTest" + File.separator + randomTime + "发票.jpg";
-	static String tmpPath = "E:\\PDFFileTest\\Jiangsu(2).pdf";
+	static String tmpPath = "E:\\PDFFileTest\\Jiangsu3.pdf";
 
 	public static void main(String[] args) throws IOException, DocumentException {
 

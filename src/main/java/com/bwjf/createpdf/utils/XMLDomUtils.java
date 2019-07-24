@@ -19,11 +19,9 @@ import java.util.*;
 public class XMLDomUtils {
 
     public static void XmlJx(String xmlContent,Xxfp xxfp, List<Xxfpmx> xxfpmxList) throws IOException, DocumentException {
-
         String Charset = "gb2312";
-//                                                     </group>
         SAXReader reader = new SAXReader();
-        reader.setEncoding("GB2312");//这里设置文件编码
+        reader.setEncoding("gb2312");//这里设置文件编码
 //			Charset = "UTF-16";
         org.dom4j.Document doc = reader.read(new ByteArrayInputStream(xmlContent.getBytes(Charset)));
 //			doc = reader.read(new ByteArrayInputStream(context.getBytes("UTF-8")));
@@ -62,6 +60,7 @@ public class XMLDomUtils {
                 String kplx = element.elementText("kplx") == null ? "" : element.elementText("kplx").trim();
                 String jqbh = element.elementText("jqbh") == null ? "" : element.elementText("jqbh").trim();
                 String skm = element.elementText("skm") == null ? "" : element.elementText("skm").trim();
+
                 String jym = element.elementText("jym") == null ? "" : element.elementText("jym").trim();
                 String bbh = element.elementText("bbh") == null ? "" : element.elementText("bbh").trim();
                 String xhdwsbh = element.elementText("xhdwsbh") == null ? "" : element.elementText("xhdwsbh").trim();

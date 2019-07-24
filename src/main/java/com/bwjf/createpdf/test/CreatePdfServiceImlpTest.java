@@ -159,12 +159,15 @@ public class CreatePdfServiceImlpTest {
         Font fontST9 = new Font(bfChineseST,9.0F);
         Font fontST8 = new Font(bfChineseST,8.0F);
         Font fontST7 = new Font(bfChineseST,7.0F);
+        Font fontST6 = new Font(bfChineseST,6.0F);
+        Font fontST5 = new Font(bfChineseST,5.0F);
         //黑体
         BaseFont bfChineseHT = BaseFont.createFont("src/main/resources/font/SIMHEI.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         Font fontHT10 = new Font(bfChineseHT,10.0F);
         Font fontHT14 = new Font(bfChineseHT,14.0F);
-		
-        
+
+
+
         //Courier New 数字
         Font courier12 = FontFactory.getFont(BaseFont.COURIER, BaseFont.WINANSI, 12.0F);
         Font courier11 = FontFactory.getFont(BaseFont.COURIER, BaseFont.WINANSI, 11.0F);
@@ -206,6 +209,9 @@ public class CreatePdfServiceImlpTest {
 		TextAlign.setSimpleTextLeft(skm3, 366.0F, 304 - lineTop1 * 3, 580.0F, 316 - lineTop1 * 3, courier12, over1);
 		TextAlign.setSimpleTextLeft(skm4, 366.0F, 304 - lineTop1 * 4, 580.0F, 316 - lineTop1 * 4, courier12, over1);
 
+//		if(xxfp.getGhdwmc().length()>27){
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 324.0F, 307.5F, fontST6, over1);
+//		}
 		TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 324.0F, 307.5F, fontST8, over1);
 		TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 324.0F, 292.5F, fontST8, over1);
 		TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 324.0F, 277.5F, fontST8, over1);
@@ -275,7 +281,11 @@ public class CreatePdfServiceImlpTest {
 							spbmJc = "";
 						}
 
-						TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
+//						if(mx.getSpmc().length()>20){
+//							TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST6, over);
+//						} else{
+//						}
+							TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
 
 						TextAlign.setSimpleTextLeft(mx.getGgxh(), 174.0F, 215 - i * lineTop, 205.0F, 235 - i * lineTop, fontST7, over);
 
@@ -378,8 +388,14 @@ public class CreatePdfServiceImlpTest {
 							spbmJc = "";
 						}
 
-						TextAlign.setSimpleTextLeft(mx.getSpmc(), 58.0F, 605 - (i - j * 30) * lineTop, 200.0F,
-								625 - (i - j * 30) * lineTop, fontST8, over2);
+						if(mx.getSpmc().trim().length()>20){
+							TextAlign.setSimpleTextLeft(mx.getSpmc(), 58.0F, 605 - (i - j * 30) * lineTop, 200.0F,
+									625 - (i - j * 30) * lineTop, fontST7, over2);
+						}else {
+
+							TextAlign.setSimpleTextLeft(mx.getSpmc(), 58.0F, 605 - (i - j * 30) * lineTop, 200.0F,
+									625 - (i - j * 30) * lineTop, fontST8, over2);
+						}
 
 						TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
 								625 - (i - j * 30) * lineTop, fontST8, over2);
@@ -583,8 +599,10 @@ public class CreatePdfServiceImlpTest {
 		fp.setJym("15790161104984466735");
 		fp.setSkm(
 				"039<*9//9-684*</22*>5042493-*21468>37716><46+>797<47234>--/665**<*4>*9/24/37-+<<959</146826-<50134791945-3890247");
-		fp.setGhdwmc("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有限公司无锡市分公司");
-		fp.setGhdwsbh("9132020083600110X7");
+//		fp.setGhdwmc("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有限公司无锡市分公司");
+		fp.setGhdwmc("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有是");
+//		fp.setGhdwsbh("9132020083600110X7");
+		fp.setGhdwsbh("ABCDEFGABCDEABCDEABCDEABCDE ABCDEFGABCDEABCDEABCDF");
 		fp.setGhdwdzdh("无锡梁青路4号  0510-87905747");
 		fp.setGhdwyhzh("中国工商银行无锡市分行营业部  1103020209200541791");
 
@@ -607,12 +625,12 @@ public class CreatePdfServiceImlpTest {
 		List mxlist = new ArrayList();
 		Xxfpmx mx = new Xxfpmx();
 		mx.setFphxz("0");	// 发票行性质 0正常行、1折扣行、2被折扣行
-		mx.setSpmc("阿裕食品桂花园子200克==阿裕食品桂花园子200克");
+		mx.setSpmc("阿裕食品桂花园子克阿裕食品桂花阿裕食品桂花园子200克");
 		mx.setSpsm("");
 		mx.setGgxh("食品桂花");
 		mx.setDw("袋");
 		mx.setSpsl("1");
-		mx.setDj("1342400.01");
+		mx.setDj("1300.01");
 		mx.setJe("100.01");
 		mx.setSl("0.17");
 		mx.setSe("17");
@@ -722,28 +740,28 @@ public class CreatePdfServiceImlpTest {
 		mxlist.add(mx);
 		mxlist.add(mx); // 8
 		// =======================================
-		mxlist.add(mx); // 9
-		mxlist.add(mx); // 10
-		mxlist.add(mx); // 11
-		mxlist.add(mx); // 12
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 13
-		mxlist.add(mx); // 30
+//		mxlist.add(mx); // 9
+//		mxlist.add(mx); // 10
+//		mxlist.add(mx); // 11
+//		mxlist.add(mx); // 12
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 13
+//		mxlist.add(mx); // 30
 		// ====================================================
 //		mxlist.add(mx); // 31
 //		mxlist.add(mx); // 32

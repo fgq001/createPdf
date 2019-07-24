@@ -143,5 +143,7 @@ public class InvoiceConstant {
 	public static  final String CA_INFO_STREAM_ERROR = " caPfx information stream is null!";
 	//创建PDF失败 	500147
 	public static  final String CREATE_PDF = " create PDF is failed!";
+	//发票请求流水号为空 	500148
+	public static  final String FPQQLSH_INFO = " fpqqlsh info is null!";
 
 }

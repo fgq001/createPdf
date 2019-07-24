@@ -47,6 +47,7 @@ public class CreatePdfController {
     public JSONObject CreatePdf(HttpServletRequest req, HttpServletResponse resp){
         long startTime = System.currentTimeMillis(); // 获取开始时间
         Map<String,Object> map = new HashMap<>();
+        Map<String,Object> sonMap = new HashMap<>();
         JSONObject jsonObject = null;
         try {
 
@@ -55,14 +56,10 @@ public class CreatePdfController {
 
 //            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "=====" + jsonData1.toString(), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"execProcedureData.txt");
 
-
-
-            //税控设备编号
-//            String strJQBH = req.getParameter("strJQBH") == "" ? null : req.getParameter("strJQBH");
-//            //发票Id
-//            String koibId = req.getParameter("koibId") == "" ? null : req.getParameter("koibId");
             //开票的xml内容
             String xmlContent = req.getParameter("xmlContent") == "" ? null : req.getParameter("xmlContent");
+
+            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())  + xmlContent+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"xmlContent.txt");
 
             Xxfp xxfp = new Xxfp();
             List<Xxfpmx> xxfpmxList = new ArrayList<>();
@@ -73,6 +70,7 @@ public class CreatePdfController {
             String xhdwsbh = xxfp.getXhdwsbh();
             //获取发票号码  查询发票id
             String fphm = xxfp.getFphm();
+            String fpdm = xxfp.getFpdm();
             System.out.println("fphm  ==  "+fphm);
 
             //获取ca证书 pfx 的文件路径与文件流
@@ -106,6 +104,13 @@ public class CreatePdfController {
             //根据发票号码 查询 发票请求流水号 作为保存PDF路径名称
             Xxfp xxfp1 = new Xxfp();
             xxfp1 = getPathService.getFpqqlsh(fphm);
+            if(xxfp1==null){
+                map.put("msg", InvoiceConstant.FPQQLSH_INFO);
+                map.put("result", "ERROR");
+                map.put("code", "500148");
+                map.put("rows", "");
+                jsonObject = JSONObject.fromObject(map);
+            }
             String fpqqlsh = xxfp1.getFpqqlsh();
             System.out.println("fpqqlsh ===  "+fpqqlsh);
             String kplxName = null;
@@ -114,7 +119,7 @@ public class CreatePdfController {
             } else {
                 kplxName = "Red_";
             };
-            System.out.println("路径"+kplxName+fpqqlsh);
+            System.out.println("生成路径:"+kplxName+fpqqlsh);
 
             //创建的临时pdf路径    E:\PDFFileTest\
 //            String temPath = req.getParameter("temPath") == "" ? null : req.getParameter("temPath");
@@ -132,32 +137,38 @@ public class CreatePdfController {
             //创建PDF
             boolean bo = createPdfService.createPdf(strPDFTemplate,temPath,endPath,xxfp,xxfpmxList,strPfxTemplate,strGifTemplate,password,xmlContent);
 
+            //把签章后PDF路径转成流
+            String fileAddr = FileUtils.encodeBase64File(endPath);
+            sonMap.put("fpdm",fpdm);
+            sonMap.put("fphm",fphm);
+            sonMap.put("fileStream",fileAddr);
+
             long endTime = System.currentTimeMillis(); // 获取结束时间
             System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); // 输出程序运行时间
+
             if (bo){
                 map.put("msg","操作成功");
                 map.put("result","SUCCESS");
-                map.put("rows", "");
+                map.put("code","0");
+                map.put("rows", sonMap);
 //                map.put("rows",xmlContent);
                 jsonObject = JSONObject.fromObject(map);
-                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" + map.toString(), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
+                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" + map.toString()+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
             } else {
                 map.put("msg", InvoiceConstant.CREATE_PDF);
                 map.put("result", "ERROR");
                 map.put("code", "500147");
                 map.put("rows", "");
                 jsonObject = JSONObject.fromObject(map);
-
             }
-
-
         } catch (Exception e) {
-
-
-
+            map.put("msg", InvoiceConstant.CREATE_PDF);
+            map.put("result", "ERROR");
+            map.put("code", "500147");
+            map.put("rows", "");
+            jsonObject = JSONObject.fromObject(map);
             e.printStackTrace();
         }
-
         return jsonObject;
     }
 

@@ -10,6 +10,7 @@ import com.bwjf.createpdf.service.CreatePdfService;
 import com.bwjf.createpdf.service.GetPathService;
 import com.bwjf.createpdf.service.impl.GetPathServiceImpl;
 import com.bwjf.createpdf.utils.FileUtils;
+import com.bwjf.createpdf.utils.NumberUtil;
 import com.bwjf.createpdf.utils.XMLDomUtils;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +58,9 @@ public class CreatePdfController {
 //            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "=====" + jsonData1.toString(), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"execProcedureData.txt");
 
             //开票的xml内容
-            String xmlContent = req.getParameter("xmlContent") == "" ? null : req.getParameter("xmlContent");
+            String xmlContentNew = req.getParameter("xmlContent") == "" ? null : req.getParameter("xmlContent");
+            //替换xml中<smk>的  <>
+            String xmlContent = NumberUtil.strSkm(xmlContentNew);
 
             FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())  + xmlContent+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"xmlContent.txt");
 

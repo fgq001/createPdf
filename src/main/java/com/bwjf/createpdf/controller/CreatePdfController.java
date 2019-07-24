@@ -58,9 +58,10 @@ public class CreatePdfController {
 //            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "=====" + jsonData1.toString(), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"execProcedureData.txt");
 
             //开票的xml内容
-            String xmlContentNew = req.getParameter("xmlContent") == "" ? null : req.getParameter("xmlContent");
+            String xmlContentSkm = req.getParameter("xmlContent") == "" ? null : req.getParameter("xmlContent");
             //替换xml中<smk>的  <>
-            String xmlContent = NumberUtil.strSkm(xmlContentNew);
+            String xmlContentEwm = NumberUtil.strSkm(xmlContentSkm);
+            String xmlContent = NumberUtil.strSkm(xmlContentEwm);
 
             FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())  + xmlContent+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"xmlContent.txt");
 

@@ -63,4 +63,36 @@ public class test2 {
 //        System.out.println("s333 = "+s333);
         return s333;
     }
+
+    public static String strEwm(String strSmk){
+        String s111 = null;
+        String regex = "<ewm>(.*?)</ewm>";
+        List<String> list = new ArrayList<String>();
+        List<String> extvounoLists = new ArrayList<String>();
+        Pattern pattern = Pattern.compile(regex);
+        Matcher m = pattern.matcher(strSmk);
+        while (m.find()) {
+            int i = 1;
+            list.add(m.group(i));
+            i++;
+        }
+        String str1 = null;
+        for (String str : list) {
+            str1 = str;
+            String[] strs = str.split("-");
+            String strss = strs[strs.length-1];
+            extvounoLists.add(strs[strs.length-1]);
+        }
+//        System.out.println("截取去掉<skm>  str1  =  "+str1);
+        s111 = str1.replaceAll("<","&lt;").replaceAll(">","&gt;");
+//        System.out.println("替换后的<skm>值  s111  =  "+s111);
+
+        String s221 = "<ewm>"+str1+"</ewm>";
+//        System.out.println("s221 = "+s221);
+        String s222 = "<ewm>"+s111+"</ewm>";
+//        System.out.println("s222 = "+s222);
+        String s333 =strSmk.replace(s221,s222);
+//        System.out.println("s333 = "+s333);
+        return s333;
+    }
 }

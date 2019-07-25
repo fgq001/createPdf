@@ -59,11 +59,12 @@ public class CreatePdfController {
 
             //开票的xml内容
             String xmlContentSkm = req.getParameter("xmlContent") == "" ? null : req.getParameter("xmlContent");
+            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +"初始xml" + "\n\t"+ xmlContentSkm+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"xmlContent.txt");
             //替换xml中<smk>的  <>
-            String xmlContentEwm = NumberUtil.strSkm(xmlContentSkm);
-            String xmlContent = NumberUtil.strSkm(xmlContentEwm);
+            String xmlContent = NumberUtil.strSkm(xmlContentSkm);
+//            String xmlContent = NumberUtil.strEwm(xmlContentEwm);
 
-            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date())  + xmlContent+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"xmlContent.txt");
+            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +"修改后xml" + "\n\t" + xmlContent+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"xmlContent.txt");
 
             Xxfp xxfp = new Xxfp();
             List<Xxfpmx> xxfpmxList = new ArrayList<>();
@@ -75,25 +76,25 @@ public class CreatePdfController {
             //获取发票号码  查询发票id
             String fphm = xxfp.getFphm();
             String fpdm = xxfp.getFpdm();
-            System.out.println("fphm  ==  "+fphm);
+//            System.out.println("fphm  ==  "+fphm);
 
             //获取ca证书 pfx 的文件路径与文件流
             Map<String, Object> pfxMap = getPathService.getPfxPath(xhdwsbh);
             String strPfxTemplate = pfxMap.get("strPfxTemplate").toString();//pfx文件路径
              jsonObject = JSONObject.fromObject(pfxMap);
-            System.out.println("strPfxTemplate ==== "+strPfxTemplate);
+//            System.out.println("strPfxTemplate ==== "+strPfxTemplate);
 
             //获取 印章 gif 的文件路径与文件流
             Map<String, Object> gifMap = getPathService.getGifPath1(xhdwsbh);
             String strGifTemplate = gifMap.get("strGifTemplate").toString();
             jsonObject = JSONObject.fromObject(gifMap);
-            System.out.println("strGifTemplate ==== "+strGifTemplate);
+//            System.out.println("strGifTemplate ==== "+strGifTemplate);
 
             //获取 模板PDF 的文件路径与文件流
             Map<String, Object> tmpPath = getPathService.getTemPath(xhdwsbh);
             String strPDFTemplate = tmpPath.get("strPDFTemplate").toString();
             jsonObject = JSONObject.fromObject(gifMap);
-            System.out.println("strPDFTemplate ==== "+strPDFTemplate);
+//            System.out.println("strPDFTemplate ==== "+strPDFTemplate);
 
 
 
@@ -116,14 +117,14 @@ public class CreatePdfController {
                 jsonObject = JSONObject.fromObject(map);
             }
             String fpqqlsh = xxfp1.getFpqqlsh();
-            System.out.println("fpqqlsh ===  "+fpqqlsh);
+//            System.out.println("fpqqlsh ===  "+fpqqlsh);
             String kplxName = null;
             if(xxfp1.getKplx().equals("0")){
                 kplxName = "Blue_";
             } else {
                 kplxName = "Red_";
             };
-            System.out.println("生成路径:"+kplxName+fpqqlsh);
+            System.out.println("生成文件名:"+kplxName+fpqqlsh);
 
             //创建的临时pdf路径    E:\PDFFileTest\
 //            String temPath = req.getParameter("temPath") == "" ? null : req.getParameter("temPath");
@@ -157,7 +158,8 @@ public class CreatePdfController {
                 map.put("rows", sonMap);
 //                map.put("rows",xmlContent);
                 jsonObject = JSONObject.fromObject(map);
-                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" + map.toString()+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
+//                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" + map.toString()+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
+                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" +"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
             } else {
                 map.put("msg", InvoiceConstant.CREATE_PDF);
                 map.put("result", "ERROR");
@@ -172,6 +174,16 @@ public class CreatePdfController {
             map.put("rows", "");
             jsonObject = JSONObject.fromObject(map);
             e.printStackTrace();
+
+//            FileUtils.printLog("发票表id===" + koibId + "异常，内容为" + FileUtils.getTrace(e),
+//                    FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "buildPdfLog.txt");
+//
+//            Map<String, Object> inteParam = new HashMap<String, Object>();
+//            inteParam.put("exceptionDatasource", "2");
+//            inteParam.put("exceptionClass", "TicketOpenServiceImpl");
+//            inteParam.put("exceptionMethod", "buildPDFFile");
+//            inteParam.put("exceptionInfo", CommonUtils.getException(e));
+//            int saveExceptionLogInfo = CommonUtils.saveExceptionInfo(inteParam);
         }
         return jsonObject;
     }

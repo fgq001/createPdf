@@ -10,6 +10,7 @@ import java.util.List;
 public class Xxfp extends Entity
 {
 	private String kplx;	//kplx为 0-蓝字发票；1-红字发票
+	private String tspz;	//tspz为 “00”不是  “01”农产品销售   “02”农产品收购   “06”抵扣通行费
 	private String fpdm;
 	private String fphm;
 	private String fpzt;
@@ -176,6 +177,14 @@ public class Xxfp extends Entity
 
     public void setYqjg(String yqjg) {
         this.yqjg = yqjg;
+    }
+
+    public String getTspz() {
+        return tspz;
+    }
+
+    public void setTspz(String tspz) {
+        this.tspz = tspz;
     }
 
     private String id;

@@ -45,7 +45,7 @@ public class XMLDomUtils {
             String returncode1 = returncode.getStringValue() == null ? "":returncode.getStringValue();
             Element returnmsg = root.element("body").element("returnmsg");
             String returnmsg1 = returnmsg.getStringValue() == null ? "":returnmsg.getStringValue();
-            System.out.println("returncode==  "+returncode1+"  returnmsg==  "+returnmsg1);
+//            System.out.println("returncode==  "+returncode1+"  returnmsg==  "+returnmsg1);
 
             for (Iterator i = root.element("body").element("returndata").element("kpxx").elementIterator(); i.hasNext(); ) { // 获取body下面元素
                 element = (org.dom4j.Element) i.next();
@@ -73,6 +73,7 @@ public class XMLDomUtils {
                 String ghdwyhzh = element.elementText("ghdwyhzh") == null ? "" : element.elementText("ghdwyhzh").trim();
                 String bmbbbh = element.elementText("bmbbbh") == null ? "" : element.elementText("bmbbbh").trim();
                 String zsfs = element.elementText("zsfs") == null ? "" : element.elementText("zsfs").trim();
+                String tspz = element.elementText("tspz") == null ? "" : element.elementText("tspz").trim();
 
                 Element fyxm1 = root.element("body").element("returndata").element("kpxx").element("group").element("fyxm");
                 String fyxm = fyxm1.attributeValue("count")+"  " == null ? "":fyxm1.attributeValue("count")+"  ";
@@ -126,7 +127,6 @@ public class XMLDomUtils {
 
 
                     String group = element.attributeValue("xh")+"  " == null ? "" : element.attributeValue("xh")+"  ";
-//                    System.out.println("<group xh==="+group);
 
                     String fphxz = element.elementText("fphxz") == null ? "1" : element.elementText("fphxz").trim();
                     spmc = element.elementText("spmc") == null ? "1" : element.elementText("spmc").trim();
@@ -144,6 +144,8 @@ public class XMLDomUtils {
                     String lslbs = element.elementText("lslbs") == null ? "1" : element.elementText("lslbs").trim();
                     String zzstsgl = element.elementText("zzstsgl") == null ? "1" : element.elementText("zzstsgl").trim();
 
+
+//                    System.out.println("dj = "+dj);
 
                     xxfpmx.setFphxz(fphxz);
                     xxfpmx.setSpmc(spmc);
@@ -163,17 +165,9 @@ public class XMLDomUtils {
                     xxfpmx.setLslbs(lslbs);
                     xxfpmx.setZzstsgl(zzstsgl);
 
-
                     xxfpmxList.add(xxfpmx);
 
-//                        System.out.println("xxfpmxList.get(0).getSpmc()"+xxfpmxList.get(0).getSpmc());
-//                    System.out.print("xxfpmxList  spmc = "+xxfpmxList.get(0).getSpmc());
-//                    System.out.println("xxfpmx  se = "+xxfpmx.getSe());
-//                    System.out.println("xxfpmx  Spsl = "+xxfpmx.getSpsl());
-//                    System.out.println("size = "+xxfpmxList.size());
-//                    return xxfpmxList;
                 }
-//                xxfpmxList.add(xxfpmx);
 
 
                 xxfp.setFpdm(fpdm);
@@ -196,6 +190,7 @@ public class XMLDomUtils {
                 xxfp.setGhdwyhzh(ghdwyhzh);
                 xxfp.setBmbbbh(bmbbbh);
                 xxfp.setZsfs(zsfs);
+                xxfp.setTspz(tspz);
 
                 xxfp.setFyxmCount(fyxm);
                 xxfp.setQdxmCount(qdxm);
@@ -226,30 +221,9 @@ public class XMLDomUtils {
                 xxfp.setYqjg(yqjg);
                 xxfp.setEwm(ewm);
 
-
-                System.out.println("dm = "+xxfp.getFpdm()+" hm= "+ xxfp.getFphm()+" jym= "+xxfp.getJym()+" kplx= "+xxfp.getKplx());
-
-
-
-
-//                return xxfp;
             }
-//            System.out.print("xxfpmxList  spmc = "+xxfpmxList.get(0).getSpmc());
-//            System.out.println("xxfpmx  Spsl = "+xxfpmxList.get(0).getSpsl());
-//            System.out.println("size = "+xxfpmxList.size());
         }
-//        System.out.println(root.element("body").asXML());
-//        System.out.println(xmlContent);
-//        String tmpPath = "E:\\PDFFileTest\\Jiangsu(2).pdf";
-//        long startTime = System.currentTimeMillis();
-//        String expPath = tempPdf1;
-//        System.out.println("expPath == "+tempPdf1);
-//        System.out.println("xxfpmxList = "+xxfpmxList.size());
-//        CreatePdfServiceImlpTest1.createPdf(tmpPath, expPath1, pfx, gif,password, xxfp, xxfpmxList, true);
-//        System.out.println("success");
-//        System.out.println("tempPdf1  :"+tempPdf1);
-//        System.out.println("expPath1  :"+expPath1);
-//        return "1";
+
 
     }
 

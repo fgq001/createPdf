@@ -4,7 +4,7 @@ import com.bwjf.createpdf.constant.FilePathConstant;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
-import com.bwjf.createpdf.test.Img2Base64Util;
+import com.bwjf.createpdf.utils.Img2Base64Util;
 import com.bwjf.createpdf.utils.*;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Document;
@@ -238,6 +238,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             //宋体
 //            BaseFont bfChineseST = BaseFont.createFont("src/main/resources/font/simsun.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             BaseFont bfChineseST = BaseFont.createFont(fontST, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font fontST12 = new Font(bfChineseST,12.0F);
             Font fontST11 = new Font(bfChineseST,11.0F);
             Font fontST10 = new Font(bfChineseST,10.0F);
             Font fontST9 = new Font(bfChineseST,9.0F);
@@ -266,22 +267,22 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             // 生成第一页共有内容
             PdfContentByte over1 = stamp.getOverContent(1);
 
+            //判断是否正负发票
+            if(xxfp.getKplx().equals("1")) {
+                TextAlign.setSimpleTextLeft("销项负数", 97.0F, 320.0F, 185.0F, 340.0F, fontHT14, over1);
+            }
+            //判断是否是收购发票
+            if(xxfp.getTspz().equals("02")) {
+                TextAlign.setSimpleTextLeft("收购", 97.0F, 341.0F, 185.0F, 355.0F, fontST12, over1);
+            }
 
-//		setSimpleText(xxfp.getFpdm(), 477.0F, 372.0F, 700.0F, 382.0F, font, over1);
-//		setSimpleText(xxfp.getFphm(), 477.0F, 352.0F, 700.0F, 364.0F, font, over1);
             TextAlign.setSimpleTextLeft(xxfp.getFpdm(), 465.0F, 359.0F, 580.0F, 379.0F, courier10, over1);
             TextAlign.setSimpleTextLeft(xxfp.getFphm(), 465.0F, 342.0F, 580.0F, 362.0F, courier10, over1);
-//            System.out.println("xxfp.getFphm()= "+xxfp.getFphm()+"xxfp.getFpdm()"+xxfp.getFpdm());
             String kprq = xxfp.getKprq().substring(0, 4) + "  " + xxfp.getKprq().substring(4, 6) + "  "
                     + xxfp.getKprq().substring(6, 8);
             TextAlign.setSimpleTextLeft(kprq, 465.0F, 333.0F, 580.0F, 345.0F, courier10, over1);
             TextAlign.setSimpleTextLeft(NumberUtil.Tostr(xxfp.getJym()), 465.0F, 318.5F, 580.0F, 328.5F, courier8, over1);
             TextAlign.setSimpleTextLeft(xxfp.getJqbh(), 74.0F, 307.0F, 220.0F, 327.0F, courier11, over1);
-//            System.out.println("xxfp.getJqbh()= "+xxfp.getJqbh());
-            //判断是否正负发票
-            if(xxfp.getKplx().equals("1")) {
-                TextAlign.setSimpleTextLeft("销项负数", 97.0F, 320.0F, 185.0F, 340.0F, fontHT14, over1);
-            }
 
             String skm1 = xxfp.getSkm().substring(0, 28);
             String skm2 = xxfp.getSkm().substring(28, 56);
@@ -294,21 +295,40 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             TextAlign.setSimpleTextLeft(skm3, 366.0F, 304 - lineTop1 * 3, 580.0F, 316 - lineTop1 * 3, courier12, over1);
             TextAlign.setSimpleTextLeft(skm4, 366.0F, 304 - lineTop1 * 4, 580.0F, 316 - lineTop1 * 4, courier12, over1);
 
-            TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 324.0F, 307.5F, fontST8, over1);
-            TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 324.0F, 292.5F, fontST8, over1);
-            TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 324.0F, 277.5F, fontST8, over1);
-            TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 242.0F, 324.0F, 262.0F, fontST8, over1);
+            //判断是否是收购发票
+            if(xxfp.getTspz().equals("02")) {
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
 
-            TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 83.5F, 300.0F, 103.5F, fontST8, over1);//+3
-            TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 69.5F, 300.0F, 89.5F, fontST8, over1);
-            TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 55.5F, 300.0F, 75.5F, fontST8, over1);
-            TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 42.5F, 300.0F, 62.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
 
+            } else {
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
+
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
+                TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
+
+            }
             TextAlign.setSimpleTextLeft(xxfp.getSkr(), 68.0F, 23.0F, 148.0F, 43.0F, fontST9, over1);//+3
             TextAlign.setSimpleTextLeft(xxfp.getFhr(), 215.0F, 23.0F, 295.0F, 43.0F, fontST9, over1);
             TextAlign.setSimpleTextLeft(xxfp.getKpr(), 345.0F, 23.0F, 425.0F, 43.0F, fontST9, over1);
-            TextAlign.setSimpleTextLeft(xxfp.getBz(), 355.0F, 50.0F, 578.0F, 105.0F, fontST9, over1);
-
+            //生成备注信息
+            if(xxfp.getKplx().equals("1")) {
+                String bz = "对应正数发票代码:"+xxfp.getFpdm()+"号码:"+xxfp.getFphm()+"\r\n";
+                TextAlign.setSimpleTextLeft(bz+xxfp.getBz(), 355.0F, 50.0F, 578.0F, 105.0F, fontST9, over1);
+            }else {
+                TextAlign.setSimpleTextLeft(xxfp.getBz(), 355.0F, 50.0F, 578.0F, 105.0F, fontST9, over1);
+            }
 
 
             // if (qygzUrl != null) {
@@ -356,39 +376,65 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 
                         // String spbmJc = basSpbmDao.getSpbmJcByBm(mx.getBasSpbmBm() == null ? "" :
                         // mx.getBasSpbmBm());
-                        String spbmJc = ("1030299000000000000");
-                        if ((!"".equals(spbmJc)) && (spbmJc != null))
-                            spbmJc = "*" + spbmJc + "*";
-                        else {
-                            spbmJc = "";
-                        }
+//                        String spbmJc = ("1030299000000000000");
+//                        if ((!"".equals(spbmJc)) && (spbmJc != null))
+//                            spbmJc = "*" + spbmJc + "*";
+//                        else {
+//                            spbmJc = "";
+//                        }
 
                         TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
 
-                        TextAlign.setSimpleTextLeft(mx.getGgxh(), 174.0F, 215 - i * lineTop, 205.0F, 235 - i * lineTop, fontST7, over);
+                        if(mx.getFphxz().equals("1")){
+                            //空
+                        } else {
+                            TextAlign.setSimpleTextLeft(mx.getGgxh(), 174.0F, 215 - i * lineTop, 205.0F, 235 - i * lineTop, fontST7, over);
+                        }
 
-                        TextAlign.setSimpleTextRigth(mx.getDw(), 210.0F, 215 - i * lineTop, 246.0F, 235 - i * lineTop, fontST7, over);
+                        if(mx.getFphxz().equals("1")){
+                            //空
+                        } else {
+                            TextAlign.setSimpleTextRigth(mx.getDw(), 210.0F, 215 - i * lineTop, 246.0F, 235 - i * lineTop, fontST7, over);
+                        }
 
-                        TextAlign.setSimpleTextRigth(mx.getSpsl(), 250.0F, 215 - i * lineTop, 310.0F, 235 - i * lineTop, fontST7, over);
-
-                        TextAlign.setSimpleTextRigth(NumberUtil.formatToNumber(new BigDecimal(mx.getDj())), 315.0F, 215 - i * lineTop,
+                        if(mx.getFphxz().equals("1")){
+                            //空
+                        } else {
+                            TextAlign.setSimpleTextRigth(mx.getSpsl(), 250.0F, 215 - i * lineTop, 310.0F, 235 - i * lineTop, fontST7, over);
+                        }
+                        TextAlign.setSimpleTextRigth(mx.getDj(), 315.0F, 215 - i * lineTop,
                                 380.0F, 235 - i * lineTop, fontST7, over);
 
                         TextAlign.setSimpleTextRigth(NumberUtil.formatToNumber(new BigDecimal(mx.getJe())), 385.0F, 215 - i * lineTop,
                                 466.0F, 235 - i * lineTop, fontST7, over);
 
-                        String slv = (Double.parseDouble(mx.getSl()) * 100.0D + "%").replace(".0", "");
-                        TextAlign.setSimpleTextRigth(slv, 468.0F, 215 - i * lineTop, 490.0F, 235 - i * lineTop, fontST7, over);
+                        //判断是否是收购发票
+                        if(xxfp.getTspz().equals("02")) {
+                            TextAlign.setSimpleTextRigth("免税", 468.0F, 215 - i * lineTop, 490.0F, 235 - i * lineTop, fontST7, over);
+                        } else {
+                            String slv = (Double.parseDouble(mx.getSl()) * 100.0D + "%").replace(".0", "");
+                            TextAlign.setSimpleTextRigth(slv, 468.0F, 215 - i * lineTop, 490.0F, 235 - i * lineTop, fontST7, over);
+                        }
 
-                        TextAlign.setSimpleTextRigth(NumberUtil.formatToNumber(new BigDecimal(mx.getSe())), 493.0F, 215 - i * lineTop,
-                                575.0F, 235 - i * lineTop, fontST7, over);
-
+                        //判断是否是收购发票
+                        if(xxfp.getTspz().equals("02")) {
+                            TextAlign.setSimpleTextRigth("***", 493.0F, 215 - i * lineTop,
+                                    575.0F, 235 - i * lineTop, fontST7, over);
+                        } else{
+                            TextAlign.setSimpleTextRigth(NumberUtil.formatToNumber(new BigDecimal(mx.getSe())), 493.0F, 215 - i * lineTop,
+                                    575.0F, 235 - i * lineTop, fontST7, over);
+                        }
                         hjse += Double.parseDouble(mx.getSe());
                         hjje += Double.parseDouble(mx.getJe());
-
                     }
+
                     TextAlign.setSimpleTextRigth("￥" + myformat.format(hjje), 385.0F, 114, 466.0F, 138, fontST8, over);
-                    TextAlign.setSimpleTextRigth("￥" + myformat.format(hjse), 493.0F, 114, 575.0F, 138, fontST8, over);
+                    //判断是否是收购发票
+                    if(xxfp.getTspz().equals("02")) {
+                        TextAlign.setSimpleTextRigth("***", 493.0F, 114, 575.0F, 138, fontST8, over);
+                    } else{
+                        TextAlign.setSimpleTextRigth("￥" + myformat.format(hjse), 493.0F, 114, 575.0F, 138, fontST8, over);
+                    }
 
                     String jshj = myformat.format(hjse + hjje);
                     String jsdx = NumberToCN.number2CNMontrayUnit(jshj);
@@ -459,12 +505,12 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 
                             // String spbmJc = basSpbmDao.getSpbmJcByBm(mx.getBasSpbmBm() == null ? "" :
                             // mx.getBasSpbmBm());
-                            String spbmJc = ("1030299000000000000");
-                            if ((!"".equals(spbmJc)) && (spbmJc != null))
-                                spbmJc = "*" + spbmJc + "*";
-                            else {
-                                spbmJc = "";
-                            }
+//                            String spbmJc = ("1030299000000000000");
+//                            if ((!"".equals(spbmJc)) && (spbmJc != null))
+//                                spbmJc = "*" + spbmJc + "*";
+//                            else {
+//                                spbmJc = "";
+//                            }
 
                             TextAlign.setSimpleTextLeft(mx.getSpmc(), 58.0F, 605 - (i - j * 30) * lineTop, 200.0F,
                                     625 - (i - j * 30) * lineTop, fontST8, over2);
@@ -478,7 +524,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
                             TextAlign.setSimpleTextRigth(mx.getSpsl(), 291.0F, 605 - (i - j * 30) * lineTop, 346.0F,
                                     625 - (i - j * 30) * lineTop, fontST8, over2);
 
-                            TextAlign.setSimpleTextRigth(NumberUtil.formatToNumber(new BigDecimal(mx.getDj())), 351.0F,
+                            TextAlign.setSimpleTextRigth(mx.getDj(), 351.0F,
                                     605 - (i - j * 30) * lineTop, 403.0F, 625 - (i - j * 30) * lineTop, fontST8, over2);
 
                             TextAlign.setSimpleTextRigth(NumberUtil.formatToNumber(new BigDecimal(mx.getJe())), 407.0F,

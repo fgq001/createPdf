@@ -20,6 +20,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -65,19 +67,19 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             createFp(tmpPath, temPath, endPath, xxfp, xxfpmxList,pfx,gif,password);
         } catch (FileNotFoundException e) {
             bo = false;
-            System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
-                    xxfp.getFphm());
             e.printStackTrace();
+             FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
+                            xxfp.getFphm()  +"，异常，内容为"+"\n\t" + FileUtils.getTrace(e), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"PdfExceptionLog.txt");
         } catch (DocumentException e) {
             bo = false;
-            System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
-                    xxfp.getFphm());
             e.printStackTrace();
+            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
+                           xxfp.getFphm()  +"，异常，内容为"+"\n\t" + FileUtils.getTrace(e), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"PdfExceptionLog.txt");
         } catch (IOException e) {
             bo = false;
-            System.err.print("发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
-                    xxfp.getFphm());
             e.printStackTrace();
+            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "发票pdf(带签章)生成失败,发票代码：" + xxfp.getFpdm() + ",发票号码：" +
+                           xxfp.getFphm()  +"，异常，内容为"+"\n\t" + FileUtils.getTrace(e), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"PdfExceptionLog.txt");
         }
         return bo;
     }

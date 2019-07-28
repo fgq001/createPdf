@@ -4,6 +4,7 @@ package com.bwjf.createpdf.test;
  * Created by admin on 2019/7/18.
  */
 
+import com.itextpdf.text.pdf.PdfEncodings;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -71,7 +72,71 @@ public class Img2Base64Util {
             return true;
         }
     }
+    /**
+     * Java 文件转二进制
+     * @param filePath
+     * @return
+     * @throws IOException
+     */
+    public static byte[] fileToByte(String filePath) throws IOException {
+        byte[] bytes = null;
+        FileInputStream fis = null;
+        try {
+            File file = new File(filePath);
+            fis = new FileInputStream(file);
+            bytes = new byte[(int) file.length()];
+            fis.read(bytes);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            fis.close();
+        }
+        return bytes;
+    }
 
+    /**
+     * Gets the width of a <CODE>String</CODE> in normalized 1000 units.
+     * @param text the <CODE>String</CODE> to get the width of
+     * @return the width in normalized 1000 units
+     */
+//    public int getWidth(String text) {
+//        int total = 0;
+//        if (fastWinansi) {
+//            int len = text.length();
+//            for (int k = 0; k < len; ++k) {
+//                char char1 = text.charAt(k);
+//                if (char1 < 128 || char1 >= 160 && char1 <= 255)
+//                    total += widths[char1];
+//                else
+//                    total += widths[PdfEncodings.winansi.get(char1)];
+//            }
+//            return total;
+//        }
+//        else {
+//            byte mbytes[] = convertToBytes(text);
+//            for (int k = 0; k < mbytes.length; ++k)
+//                total += widths[0xff & mbytes[k]];
+//        }
+//        return total;
+//    }
+
+    /**
+     * 文件转为二进制字符串
+     *
+//     * @param file
+     * @return
+     */
+//    public static String fileToBinStr(File file) {
+//        try {
+//            InputStream fis = new FileInputStream(file);
+//            byte[] bytes = FileCopyUtils.copyToByteArray(fis);
+//            // return new String(bytes,"GB2312");
+//            return new String(bytes, "ISO-8859-1");
+//        } catch (Exception ex) {
+//            throw new RuntimeException("transform file into bin String 出错", ex);
+//        }
+//    }
 
     public static void main(String[] args) throws IOException {
 //        String imageStr = Img2Base64Util.GetImageStr("D://下载/企鹅.jpg");

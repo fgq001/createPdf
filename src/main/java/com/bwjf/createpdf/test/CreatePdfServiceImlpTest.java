@@ -1,5 +1,6 @@
 package com.bwjf.createpdf.test;
 
+import com.bwjf.createpdf.constant.FilePathConstant;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.utils.*;
@@ -12,7 +13,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -169,6 +172,12 @@ public class CreatePdfServiceImlpTest {
         Font fontHT10 = new Font(bfChineseHT,10.0F);
         Font fontHT14 = new Font(bfChineseHT,14.0F);
 
+//		DocumentFont dd = new DocumentFont();
+//		BaseFont ee = new DocumentFont(dd).getWidth("dfsd");
+//		BaseFont.getWidthPoint（String text，float fontSize）
+//		DocumentFont dd = new DocumentFont().getWidth("");
+//		dd.getWidth("");
+//		Type3Font ff = new Type3Font();
 
 
         //Courier New 数字
@@ -231,8 +240,33 @@ public class CreatePdfServiceImlpTest {
 			TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
 
 		} else {
-			TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
-			TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+			//矩形长为	225.0F
+//			if (225.0F<NumberUtil.StrCount(xxfp.getGhdwmc())&&NumberUtil.StrCount(xxfp.getGhdwmc())<258.0F){
+//				TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST7, over1);
+//			} else if (257.0F<NumberUtil.StrCount(xxfp.getGhdwmc())&&NumberUtil.StrCount(xxfp.getGhdwmc())<316.0F){
+//				TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST6, over1);
+//			}else{
+//				TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
+//			}
+
+			if (NumberUtil.StrCount(xxfp.getGhdwmc())<226.0F){
+				TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
+			} else if (225.0F<NumberUtil.StrCount(xxfp.getGhdwmc())&&NumberUtil.StrCount(xxfp.getGhdwmc())<258.0F){
+				TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST7, over1);
+			}else{
+				TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST6, over1);
+			}
+
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+
+			if (NumberUtil.StrCount(xxfp.getGhdwsbh())<226.0F){
+				TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+			} else if (225.0F<NumberUtil.StrCount(xxfp.getGhdwsbh())&&NumberUtil.StrCount(xxfp.getGhdwsbh())<258.0F){
+				TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST7, over1);
+			}else{
+				TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST6, over1);
+			}
+
 			TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
 			TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
 
@@ -315,21 +349,30 @@ public class CreatePdfServiceImlpTest {
 //							TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST6, over);
 //						} else{
 //						}
-						TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
-						if(mx.getFphxz().equals("1")){
+						//矩形长度 142.0F
+//						TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
 
+						if (NumberUtil.StrCount(mx.getSpmc())<142.0F){
+							TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
+						} else if (142.0F<NumberUtil.StrCount(mx.getSpmc())&&NumberUtil.StrCount(mx.getSpmc())<=203.0F){
+							TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST6, over);
+						}else{
+							TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST5, over);
+						}
+
+
+						if(mx.getFphxz().equals("1")){
 						} else {
 							TextAlign.setSimpleTextLeft(mx.getGgxh(), 174.0F, 215 - i * lineTop, 205.0F, 235 - i * lineTop, fontST7, over);
 						}
 
 						if(mx.getFphxz().equals("1")){
-
 						} else {
 							TextAlign.setSimpleTextRigth(mx.getDw(), 210.0F, 215 - i * lineTop, 246.0F, 235 - i * lineTop, fontST7, over);
 
 						}
-						if(mx.getFphxz().equals("1")){
 
+						if(mx.getFphxz().equals("1")){
 						} else {
 							TextAlign.setSimpleTextRigth(mx.getSpsl(), 250.0F, 215 - i * lineTop, 310.0F, 235 - i * lineTop, fontST7, over);
 						}
@@ -664,7 +707,7 @@ public class CreatePdfServiceImlpTest {
 		// Ticket ticket = new Ticket();
 		
 		fp.setKplx("0");	//0:为正票  1:为负票
-		fp.setTspz("02");	//“00”不是  “01”农产品销售   “02”农产品收购   “06”抵扣通行费
+		fp.setTspz("00");	//“00”不是  “01”农产品销售   “02”农产品收购   “06”抵扣通行费
 		fp.setFpdm("150003529999");
 		fp.setFphm("95715993");
 		fp.setKprq("20161125105100");
@@ -673,9 +716,9 @@ public class CreatePdfServiceImlpTest {
 		fp.setSkm(
 				"039<*9//9-684*</22*>5042493-*21468>37716><46+>797<47234>--/665**<*4>*9/24/37-+<<959</146826-<50134791945-3890247");
 //		fp.setGhdwmc("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有限公司无锡市分公司");
-		fp.setGhdwmc("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有是有限公司");
+		fp.setGhdwmc("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有是有限公司有限公司保险");
 //		fp.setGhdwsbh("9132020083600110X7");
-		fp.setGhdwsbh("ABCDEFGABCDEABCDEABCDEABCDE ABCDEFGABCDEABCDEABCDF");
+		fp.setGhdwsbh("中国人寿保险股份有限公司无锡市分公司中国人寿保险股份有是有限公司有限公司保险");
 		fp.setGhdwdzdh("无锡梁青路4号  0510-87905747");
 		fp.setGhdwyhzh("中国工商银行无锡市分行营业部  1103020209200541791");
 
@@ -698,7 +741,7 @@ public class CreatePdfServiceImlpTest {
 		List mxlist = new ArrayList();
 		Xxfpmx mx = new Xxfpmx();
 		mx.setFphxz("0");	// 发票行性质 0正常行、1折扣行、2被折扣行
-		mx.setSpmc("阿裕食品桂花园子克阿裕食品桂花阿裕食品桂花园子200克");
+		mx.setSpmc("阿裕食品桂花园子克阿裕食品桂花阿裕食品桂花园子200");
 		mx.setSpsm("");
 		mx.setGgxh("食品桂花");
 		mx.setDw("袋");
@@ -927,5 +970,18 @@ public class CreatePdfServiceImlpTest {
 		System.out.println("success");
 		System.out.println("tempPdf1  :"+tempPdf1);
 		System.out.println("expPath1  :"+expPath1);
+
+//		byte[] bytes = Img2Base64Util.fileToByte(expPath1);
+//		byte[] bytes1 = CompressionUtil.compress(bytes,Level.BEST_COMPRESSION);
+//
+//		String ss = bytes1.toString();
+//		File file = new File("E:\\onLineData1\\Test2055.txt");
+//		FileOutputStream fos = new FileOutputStream(ss);
+//		fos.write(bytes1);
+//		System.out.println("写入成功");
+//		fos.close();
+
+
+//		FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) +"二进制文件流" + "\n\t" + bytes+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"two2222.txt");
 	}
 }

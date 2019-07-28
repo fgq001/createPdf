@@ -41,6 +41,7 @@ public class TextAlign {
 		ct.go();
 	}
 
+
 	/**
 	 * 居中
 	 * 

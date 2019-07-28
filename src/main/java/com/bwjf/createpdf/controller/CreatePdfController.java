@@ -9,6 +9,9 @@ import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
 import com.bwjf.createpdf.service.GetPathService;
 import com.bwjf.createpdf.service.impl.GetPathServiceImpl;
+import com.bwjf.createpdf.utils.CompressionUtil;
+import com.bwjf.createpdf.utils.Img2Base64Util;
+import com.bwjf.createpdf.utils.Level;
 import com.bwjf.createpdf.utils.FileUtils;
 import com.bwjf.createpdf.utils.NumberUtil;
 import com.bwjf.createpdf.utils.XMLDomUtils;
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -144,6 +149,18 @@ public class CreatePdfController {
 
             //把签章后PDF路径转成流
             String fileAddr = FileUtils.encodeBase64File(endPath);
+
+//            //二进制文件流
+//            byte[] bytes = CompressionUtil.fileToByte(endPath);
+//            //压缩后的二进制流
+//            byte[] bytes1 = CompressionUtil.compress(bytes, Level.BEST_COMPRESSION);
+
+//            File file = new File("E:\\onLineData1\\Test501.txt");
+//            FileOutputStream fos = new FileOutputStream(file);
+//            fos.write(bytes);
+//            System.out.println("写入成功");
+//            fos.close();
+
             sonMap.put("fpdm",fpdm);
             sonMap.put("fphm",fphm);
             sonMap.put("fileStream",fileAddr);
@@ -156,10 +173,8 @@ public class CreatePdfController {
                 map.put("result","SUCCESS");
                 map.put("code","0");
                 map.put("rows", sonMap);
-//                map.put("rows",xmlContent);
                 jsonObject = JSONObject.fromObject(map);
-//                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" + map.toString()+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
-                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" +"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"createPDFInfo.txt");
+                FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "=====程序运行时间===="+(endTime - startTime)+"ms=====" +fileAddr+"\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd100").format(new Date())+"createPDFInfo.txt");
             } else {
                 map.put("msg", InvoiceConstant.CREATE_PDF);
                 map.put("result", "ERROR");
@@ -174,9 +189,8 @@ public class CreatePdfController {
             map.put("rows", "");
             jsonObject = JSONObject.fromObject(map);
             e.printStackTrace();
+            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) +"，异常，内容为"+"\n\t" + FileUtils.getTrace(e), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date())+"PdfExceptionLog.txt");
 
-//            FileUtils.printLog("发票表id===" + koibId + "异常，内容为" + FileUtils.getTrace(e),
-//                    FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "buildPdfLog.txt");
 //
 //            Map<String, Object> inteParam = new HashMap<String, Object>();
 //            inteParam.put("exceptionDatasource", "2");

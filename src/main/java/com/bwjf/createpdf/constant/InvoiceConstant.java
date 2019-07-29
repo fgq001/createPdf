@@ -141,9 +141,16 @@ public class InvoiceConstant {
 	public static  final String CUSTOMER_NOT_EXIST_ERROR = "customer does not exist";
 	//CA信息 文件流不存在 	500146
 	public static  final String CA_INFO_STREAM_ERROR = " caPfx information stream is null!";
-	//创建PDF失败 	500147
-	public static  final String CREATE_PDF = " create PDF is failed!";
-	//发票请求流水号为空 	500148
+	//创建PDF服务失败 	500147
+	public static  final String CREATE_PDF = " create PDF server is failed!";
+	//发票请求流水号为空 	500148	tmpPath
 	public static  final String FPQQLSH_INFO = " fpqqlsh info is null!";
-
+	//PDF模板路径为空 	500149
+	public static  final String TMPPATH_INFO = " tmpPath info is null!";
+	//印章图片路径为空 	500150
+	public static  final String GIFMAP_INFO = " gifMap info is null!";
+	//签章路径为空 	500151
+	public static  final String PFXMAP_INFO = " pfxMap info is null!";
+	//创建PDF异常 	500152
+	public static  final String CREATE_PDF_EXCEPTION = " create PDF is exception!";
 }

@@ -62,8 +62,6 @@ public class CreatePdfServiceImpl implements CreatePdfService{
         if (nf.exists()) {
             nf.delete();
         }
-//            System.out.println("xxfp.getJym()========"+xxfp.getJym());
-//            XMLDomUtils.XmlJx(xmlContent);
             createFp(tmpPath, temPath, endPath, xxfp, xxfpmxList,pfx,gif,password);
         } catch (FileNotFoundException e) {
             bo = false;
@@ -246,6 +244,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             Font fontST9 = new Font(bfChineseST,9.0F);
             Font fontST8 = new Font(bfChineseST,8.0F);
             Font fontST7 = new Font(bfChineseST,7.0F);
+            Font fontST6 = new Font(bfChineseST,6.0F);
             //黑体
 //            BaseFont bfChineseHT = BaseFont.createFont("src/main/resources/font/SIMHEI.TTF", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             BaseFont bfChineseHT = BaseFont.createFont(fontHT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -299,26 +298,119 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 
             //判断是否是收购发票
             if(xxfp.getTspz().equals("02")) {
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
+//			TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getXhdwmc())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST7, over1);
+                }
 
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
+//			TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getXhdwsbh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST7, over1);
+                }
 
+//			TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getXhdwdzdh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft1(xxfp.getXhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getXhdwyhzh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
+                if (NumberUtil.StrCount(xxfp.getGhdwmc())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST7, over1);//+3
+                }
+
+//			TextAlign.setSimpleTextLeft1(xxfp.getGhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getGhdwsbh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getGhdwdzdh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getGhdwyhzh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST7, over1);
+                }
             } else {
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
+                // 	常规发票
+                //	矩形长为	225.0F
 
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
-                TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getGhdwmc())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwmc(), 107.0F, 287.5F, 332.0F, 307.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getGhdwsbh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwsbh(), 107.0F, 272.5F, 332.0F, 292.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getGhdwdzdh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwdzdh(), 107.0F, 255.5F, 332.0F, 277.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getGhdwyhzh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getGhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getGhdwyhzh(), 107.0F, 242.0F, 332.0F, 262.0F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
+                if (NumberUtil.StrCount(xxfp.getXhdwmc())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST8, over1);//+3
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwmc(), 107.0F, 83.5F, 332.0F, 103.5F, fontST7, over1);//+3
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getXhdwsbh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwsbh(), 107.0F, 69.5F, 332.0F, 89.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getXhdwdzdh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwdzdh(), 107.0F, 55.5F, 332.0F, 75.5F, fontST7, over1);
+                }
+
+//			TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
+                if (NumberUtil.StrCount(xxfp.getXhdwyhzh())<226.0F){
+                    TextAlign.setSimpleTextLeft(xxfp.getXhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST8, over1);
+                }else{
+                    TextAlign.setSimpleTextLeft1(xxfp.getXhdwyhzh(), 107.0F, 42.5F, 332.0F, 62.5F, fontST7, over1);
+                }
 
             }
             TextAlign.setSimpleTextLeft(xxfp.getSkr(), 68.0F, 23.0F, 148.0F, 43.0F, fontST9, over1);//+3
@@ -373,19 +465,15 @@ public class CreatePdfServiceImpl implements CreatePdfService{
                             break;
                         }
                         Xxfpmx mx = (Xxfpmx) mxlist.get(c_rownum);
-//						setSimpleText(Integer.toString(i + 1), 25.0F, 215 - i * lineTop, 58.0F, 235 - i * lineTop, font,
-//								over);
 
-                        // String spbmJc = basSpbmDao.getSpbmJcByBm(mx.getBasSpbmBm() == null ? "" :
-                        // mx.getBasSpbmBm());
-//                        String spbmJc = ("1030299000000000000");
-//                        if ((!"".equals(spbmJc)) && (spbmJc != null))
-//                            spbmJc = "*" + spbmJc + "*";
-//                        else {
-//                            spbmJc = "";
-//                        }
+                        //矩形长度 142.0F
+//						TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
 
-                        TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
+                        if (NumberUtil.StrCount(mx.getSpmc())<142.0F){
+                            TextAlign.setSimpleTextLeft(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST7, over);
+                        }else{
+                            TextAlign.setSimpleTextLeft2(mx.getSpmc(), 25.0F, 215 - i * lineTop, 167.0F, 235 - i * lineTop, fontST6, over);
+                        }
 
                         if(mx.getFphxz().equals("1")){
                             //空
@@ -505,29 +593,41 @@ public class CreatePdfServiceImpl implements CreatePdfService{
                             TextAlign.setSimpleTextCenter(Integer.toString(i + 1), 34.0F, 605 - (i - j * 30) * lineTop, 45.0F,
                                     625 - (i - j * 30) * lineTop, fontST8, over2);
 
-                            // String spbmJc = basSpbmDao.getSpbmJcByBm(mx.getBasSpbmBm() == null ? "" :
-                            // mx.getBasSpbmBm());
-//                            String spbmJc = ("1030299000000000000");
-//                            if ((!"".equals(spbmJc)) && (spbmJc != null))
-//                                spbmJc = "*" + spbmJc + "*";
-//                            else {
-//                                spbmJc = "";
-//                            }
+                            if (NumberUtil.StrCount(mx.getSpmc())<145.0F){
+                                TextAlign.setSimpleTextLeft(mx.getSpmc(), 58.0F, 605 - (i - j * 30) * lineTop, 208.0F,
+                                        625 - (i - j * 30) * lineTop, fontST8, over2);
+                            }else{
+                                TextAlign.setSimpleTextLeft1(mx.getSpmc(), 58.0F, 605 - (i - j * 30) * lineTop, 208.0F,
+                                        625 - (i - j * 30) * lineTop, fontST7, over2);
+                            }
 
-                            TextAlign.setSimpleTextLeft(mx.getSpmc(), 58.0F, 605 - (i - j * 30) * lineTop, 200.0F,
-                                    625 - (i - j * 30) * lineTop, fontST8, over2);
+                            if(mx.getFphxz().equals("1")){
+                                //空
+                            } else {
+                                TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
+                                        625 - (i - j * 30) * lineTop, fontST8, over2);
+                            }
 
-                            TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
-                                    625 - (i - j * 30) * lineTop, fontST8, over2);
+                            if(mx.getFphxz().equals("1")){
+                                //空
+                            } else {
+                                TextAlign.setSimpleTextRigth(mx.getDw(), 261.0F, 605 - (i - j * 30) * lineTop, 289.0F,
+                                        625 - (i - j * 30) * lineTop, fontST8, over2);
+                            }
 
-                            TextAlign.setSimpleTextRigth(mx.getDw(), 261.0F, 605 - (i - j * 30) * lineTop, 289.0F,
-                                    625 - (i - j * 30) * lineTop, fontST8, over2);
+                            if(mx.getFphxz().equals("1")){
+                                //空
+                            } else {
+                                TextAlign.setSimpleTextRigth(mx.getSpsl(), 291.0F, 605 - (i - j * 30) * lineTop, 346.0F,
+                                        625 - (i - j * 30) * lineTop, fontST8, over2);
+                            }
 
-                            TextAlign.setSimpleTextRigth(mx.getSpsl(), 291.0F, 605 - (i - j * 30) * lineTop, 346.0F,
-                                    625 - (i - j * 30) * lineTop, fontST8, over2);
-
-                            TextAlign.setSimpleTextRigth(mx.getDj(), 351.0F,
-                                    605 - (i - j * 30) * lineTop, 403.0F, 625 - (i - j * 30) * lineTop, fontST8, over2);
+                            if(mx.getFphxz().equals("1")){
+                                //空
+                            } else {
+                                TextAlign.setSimpleTextRigth(mx.getDj(), 351.0F,
+                                        605 - (i - j * 30) * lineTop, 403.0F, 625 - (i - j * 30) * lineTop, fontST8, over2);
+                            }
 
                             TextAlign.setSimpleTextRigth(NumberUtil.formatToNumber(new BigDecimal(mx.getJe())), 407.0F,
                                     605 - (i - j * 30) * lineTop, 470.0F, 625 - (i - j * 30) * lineTop, fontST8, over2);

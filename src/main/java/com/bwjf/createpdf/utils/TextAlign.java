@@ -41,7 +41,21 @@ public class TextAlign {
 		ct.go();
 	}
 
+	public static void setSimpleTextLeft1(String str, float llx, float lly, float urx, float ury, Font font,
+										 PdfContentByte over) throws DocumentException {
+		Phrase text = new Phrase(str, font);
+		ColumnText ct = new ColumnText(over);
+		ct.setSimpleColumn(text, llx, lly, urx, ury, 6.0F, 0);//0:默认左对齐	1:居中	2:右对齐
+		ct.go();
+	}
 
+	public static void setSimpleTextLeft2(String str, float llx, float lly, float urx, float ury, Font font,
+										  PdfContentByte over) throws DocumentException {
+		Phrase text = new Phrase(str, font);
+		ColumnText ct = new ColumnText(over);
+		ct.setSimpleColumn(text, llx, lly, urx, ury, 5.0F, 0);//0:默认左对齐	1:居中	2:右对齐
+		ct.go();
+	}
 	/**
 	 * 居中
 	 * 

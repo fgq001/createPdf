@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 public class test2 {
     public static void main(String[] args) {
         String str = "北京神鼎飞丹砂海淀 hello world!";
-        String str1 = "阿裕食品桂花园子克阿裕食品桂花阿裕食品桂花园子200克";
+        String str1 = "阿裕食品桂花园子克阿裕食品桂花阿裕食品桂花";
         System.out.println("fdsfsd = "+str1.trim().length());
         float dd = test2.StrCount(str1);
 

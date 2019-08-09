@@ -264,6 +264,7 @@ public class NumberUtil
 //        System.out.println("s333 = "+s333);
     return s333;
   }
+
   public static String strEwm(String strSmk){
     String s111 = null;
     String regex = "<ewm>(.*?)</ewm>";

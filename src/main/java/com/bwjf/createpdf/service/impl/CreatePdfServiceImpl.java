@@ -685,13 +685,13 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 
                     PdfContentByte over = stamp.getOverContent(1);
                     TextAlign.setSimpleTextLeft("（详见销货清单）", 45.0F, 215.0F, 206.0F, 235.0F, fontST7, over);
-                    TextAlign.setSimpleTextRigth(myformat.format(-hjje1), 385.0F, 215, 466.0F, 235, fontST7, over);
-                    TextAlign.setSimpleTextRigth(myformat.format(-hjse1), 493.0F, 215, 575.0F, 235, fontST7, over);
+                    TextAlign.setSimpleTextRigth(myformat.format(hjje1), 385.0F, 215, 466.0F, 235, fontST7, over);
+                    TextAlign.setSimpleTextRigth(myformat.format(hjse1), 493.0F, 215, 575.0F, 235, fontST7, over);
 
-                    TextAlign.setSimpleTextRigth("￥" + myformat.format(-hjje1), 385.0F, 114, 466.0F, 138.0F, fontST8, over);
-                    TextAlign.setSimpleTextRigth("￥" + myformat.format(-hjse1), 493.0F, 114, 575.0F, 138.0F, fontST8, over);
+                    TextAlign.setSimpleTextRigth("￥" + myformat.format(hjje1), 385.0F, 114, 466.0F, 138.0F, fontST8, over);
+                    TextAlign.setSimpleTextRigth("￥" + myformat.format(hjse1), 493.0F, 114, 575.0F, 138.0F, fontST8, over);
 
-                    String jshj = myformat.format(-hjse1 + (-hjje1));
+                    String jshj = myformat.format(hjse1 + hjje1);
                     String jsdx = NumberToCN.number2CNMontrayUnit(jshj);
                     TextAlign.setSimpleTextLeft(jsdx, 192.0F, 108.5F, 420.0F, 121.5F, fontST10, over);
                     TextAlign.setSimpleTextRigth("￥" + jshj, 470.0F, 106.5F, 575.0F, 121.5F, fontHT10, over);

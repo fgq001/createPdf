@@ -418,8 +418,8 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             TextAlign.setSimpleTextLeft(xxfp.getKpr(), 345.0F, 23.0F, 425.0F, 43.0F, fontST9, over1);
             //生成备注信息
             if(xxfp.getKplx().equals("1")) {
-                String bz = "对应正数发票代码:"+xxfp.getFpdm()+"号码:"+xxfp.getFphm()+"\r\n";
-                TextAlign.setSimpleTextLeft(bz+xxfp.getBz(), 355.0F, 50.0F, 578.0F, 105.0F, fontST9, over1);
+//                String bz = "对应正数发票代码:"+xxfp.getFpdm()+"号码:"+xxfp.getFphm()+"\r\n";
+                TextAlign.setSimpleTextLeft(xxfp.getBz(), 355.0F, 50.0F, 578.0F, 105.0F, fontST9, over1);
             }else {
                 TextAlign.setSimpleTextLeft(xxfp.getBz(), 355.0F, 50.0F, 578.0F, 105.0F, fontST9, over1);
             }

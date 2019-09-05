@@ -82,29 +82,16 @@ public class CreatePdfController {
             Map<String, Object> pfxMap = getPathService.getPfxPath(xhdwsbh);
             if (pfxMap != null) {
                 String strPfxTemplate = pfxMap.get("strPfxTemplate").toString();//pfx文件路径
-//                jsonObject = JSONObject.fromObject(pfxMap);
-//              System.out.println("strPfxTemplate ==== "+strPfxTemplate);
 
                 //获取 印章 gif 的文件路径与文件流
                 Map<String, Object> gifMap = getPathService.getGifPath1(xhdwsbh);
                 if (gifMap != null) {
                     String strGifTemplate = gifMap.get("strGifTemplate").toString();
-//                    jsonObject = JSONObject.fromObject(gifMap);
-//                   System.out.println("strGifTemplate ==== "+strGifTemplate);
 
                     //获取 模板PDF 的文件路径与文件流
                     Map<String, Object> tmpPath = getPathService.getTemPath(xhdwsbh);
                     if (tmpPath != null) {
                         String strPDFTemplate = tmpPath.get("strPDFTemplate").toString();
-//                        jsonObject = JSONObject.fromObject(tmpPath);
-        //            System.out.println("strPDFTemplate ==== "+strPDFTemplate);
-
-        //            //pfx文件路径
-        //            String pfx = req.getParameter("pfx") == "" ? null : req.getParameter("pfx");
-        //            //印章地址
-        //            String gif = req.getParameter("gif") == "" ? null : req.getParameter("gif");
-        //            //pdf模板地址
-        //            String tmpPath1 = req.getParameter("tmpPath") == "" ? null : req.getParameter("tmpPath");
 
                         //根据发票号码 查询 发票请求流水号 作为保存PDF路径名称
                         Xxfp xxfp1 = new Xxfp();
@@ -119,7 +106,7 @@ public class CreatePdfController {
                                 kplxName = "Red_";
                             }
                             ;
-                            System.out.println("生成文件名: " + kplxName + fpqqlsh);
+
 
                             //创建的临时pdf路径 E:\PDFFileTest\
                             String temPath = FilePathConstant.temPath + "Tem" + kplxName + fpqqlsh + ".pdf";
@@ -134,17 +121,6 @@ public class CreatePdfController {
                             //把签章后PDF路径转成流
                             String fileAddr = FileUtils.encodeBase64File(endPath);
 
-//                            //二进制文件流
-//                            byte[] bytes = CompressionUtil.fileToByte(endPath);
-//                            //压缩后的二进制流
-//                            byte[] bytes1 = CompressionUtil.compress(bytes, Level.BEST_COMPRESSION);
-//
-//                            File file = new File("E:\\onLineData1\\Test501.txt");
-//                            FileOutputStream fos = new FileOutputStream(file);
-//                            fos.write(bytes);
-//                            System.out.println("写入成功");
-//                            fos.close();
-
                             sonMap.put("fpdm", fpdm);
                             sonMap.put("fphm", fphm);
                             sonMap.put("fileStream", fileAddr);
@@ -153,6 +129,7 @@ public class CreatePdfController {
                             System.out.println("程序运行时间：" + (endTime - startTime) + "ms"); // 输出程序运行时间
 
                             if (bo) {
+                                System.out.println("生成文件路径: " + endPath );
                                 map.put("msg", "操作成功");
                                 map.put("result", "SUCCESS");
                                 map.put("code", "0");
@@ -166,8 +143,8 @@ public class CreatePdfController {
                                 map.put("rows", "");
                                 jsonObject = JSONObject.fromObject(map);
                             }
-                        } else {    //xxfp1 = null 发票请求流水号
-                            map.put("msg", InvoiceConstant.FPQQLSH_INFO);
+                        } else {    //fphm = null 发票号码为空
+                            map.put("msg", InvoiceConstant.FPHM_INFO);
                             map.put("result", "ERROR");
                             map.put("code", "500148");
                             map.put("rows", "");

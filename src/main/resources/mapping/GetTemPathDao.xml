@@ -9,9 +9,9 @@
 
 
     <select id="getTemPath" resultType="com.bwjf.createpdf.entity.TcrmPdftemplateBean">
-        select id,vpath,pdfstream,istatus from tcrm_pdftemplate where id=
-        (select vpdfid from tcrm_serverconfig where vcompanyid=
-        (select id from tcrm_customerinfo where vnuitedcode=#{vnuitedcode}))
+        select id,vpath,pdfstream,istatus from tcrm_pdftemplate where id in
+        (select vpdfid from tcrm_serverconfig where vcompanyid in
+        (select id from tcrm_customerinfo where vnuitedcode=#{vnuitedcode}) and istatus = '0')
         and istatus = '0'
     </select>
 

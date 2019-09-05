@@ -64,6 +64,7 @@ public class GetPathServiceImpl implements GetPathService {
                         return pfxMap;
                     }
                 }
+            pfxMap.put("strPfxTemplate",strPfxTemplate);
         } else {
             pfxMap.put("msg", InvoiceConstant.XSF_CA_INFO_ERROR);
             pfxMap.put("result", "ERROR");
@@ -113,6 +114,7 @@ public class GetPathServiceImpl implements GetPathService {
                     return gifMap;
                 }
             }
+            gifMap.put("strGifTemplate",strGifTemplate);
         } else {
             gifMap.put("msg", InvoiceConstant.XSF_CA_INFO_ERROR);
             gifMap.put("result", "ERROR");
@@ -162,6 +164,7 @@ public class GetPathServiceImpl implements GetPathService {
                     return temMap;
                 }
             }
+            temMap.put("strPDFTemplate",strPDFTemplate);
         } else {
             temMap.put("msg", InvoiceConstant.XSF_CA_INFO_ERROR);
             temMap.put("result", "ERROR");

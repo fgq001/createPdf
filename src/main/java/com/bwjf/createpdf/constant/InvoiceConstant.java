@@ -144,7 +144,7 @@ public class InvoiceConstant {
 	//创建PDF服务失败 	500147
 	public static  final String CREATE_PDF = " create PDF server is failed!";
 	//发票请求流水号为空 	500148	tmpPath
-	public static  final String FPQQLSH_INFO = " fpqqlsh info is null!";
+	public static  final String FPHM_INFO = " fphm info is null or not exist!";
 	//PDF模板路径为空 	500149
 	public static  final String TMPPATH_INFO = " tmpPath info is null!";
 	//印章图片路径为空 	500150

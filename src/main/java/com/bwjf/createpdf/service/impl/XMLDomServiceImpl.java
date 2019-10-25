@@ -1,36 +1,30 @@
-package com.bwjf.createpdf.utils;
+package com.bwjf.createpdf.service.impl;
 
-import com.bwjf.createpdf.entity.BwjfKpFileBean;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.redis.key.InvoiceKey;
 import com.bwjf.createpdf.redis.key.RedisService;
-import com.bwjf.createpdf.test.CreatePdfServiceImlpTest;
-import com.bwjf.createpdf.test.CreatePdfServiceImlpTest1;
-import org.dom4j.Document;
+import com.bwjf.createpdf.service.XMLDomService;
 import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import java.io.*;
-import java.util.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
-/**
- * Created by admin on 2019/7/17.
- */
-@Service
-public class XMLDomUtils {
-    @Resource
+@Service("XMLDom")
+public class XMLDomServiceImpl implements XMLDomService {
+
+    @Autowired
     RedisService redisService;
 
-    @Transactional
-    public  void XmlJx(String xmlContent, Xxfp xxfp, List<Xxfpmx> xxfpmxList) throws IOException, DocumentException {
+
+    @Override
+    public void XmlJx(String xmlContent, Xxfp xxfp, List<Xxfpmx> xxfpmxList) throws IOException, DocumentException {
         String Charset = "gb2312";
         SAXReader reader = new SAXReader();
         reader.setEncoding("gb2312");//这里设置文件编码
@@ -238,6 +232,4 @@ public class XMLDomUtils {
 
 
     }
-
-
 }

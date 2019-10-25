@@ -2,16 +2,11 @@ package com.bwjf.createpdf.controller;
 
 import com.bwjf.createpdf.constant.FilePathConstant;
 import com.bwjf.createpdf.constant.InvoiceConstant;
-import com.bwjf.createpdf.entity.KpCacersubInfo;
-import com.bwjf.createpdf.entity.TcrmPdftemplateBean;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
 import com.bwjf.createpdf.service.GetPathService;
-import com.bwjf.createpdf.service.impl.GetPathServiceImpl;
-import com.bwjf.createpdf.utils.CompressionUtil;
-import com.bwjf.createpdf.utils.Img2Base64Util;
-import com.bwjf.createpdf.utils.Level;
+import com.bwjf.createpdf.service.XMLDomService;
 import com.bwjf.createpdf.utils.FileUtils;
 import com.bwjf.createpdf.utils.NumberUtil;
 import com.bwjf.createpdf.utils.XMLDomUtils;
@@ -19,15 +14,11 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -44,7 +35,12 @@ public class CreatePdfController {
     private CreatePdfService createPdfService;
     @Autowired
     private GetPathService getPathService;
+    @Autowired
+    private XMLDomService xmlDomService;
 
+
+@Autowired
+private XMLDomUtils xmlDomUtils;
 
     @ResponseBody
     @PostMapping("/createPdf")
@@ -70,8 +66,8 @@ public class CreatePdfController {
             List<Xxfpmx> xxfpmxList = new ArrayList<>();
 
             //解析XML内容
-            XMLDomUtils.XmlJx(xmlContent, xxfp, xxfpmxList);
-
+//            XMLDomUtils.XmlJx(xmlContent, xxfp, xxfpmxList);
+            xmlDomService.XmlJx(xmlContent, xxfp, xxfpmxList);
             //获取销货单位识别号 查询path
             String xhdwsbh = xxfp.getXhdwsbh();
             //获取发票号码  查询发票id
@@ -142,6 +138,7 @@ public class CreatePdfController {
                                 map.put("code", "500147");
                                 map.put("rows", "");
                                 jsonObject = JSONObject.fromObject(map);
+                                return jsonObject;
                             }
                         } else {    //fphm = null 发票号码为空
                             map.put("msg", InvoiceConstant.FPHM_INFO);
@@ -149,6 +146,7 @@ public class CreatePdfController {
                             map.put("code", "500148");
                             map.put("rows", "");
                             jsonObject = JSONObject.fromObject(map);
+                            return jsonObject;
                         }
                     } else {    //  tmpPath  = null
                         map.put("msg", InvoiceConstant.TMPPATH_INFO);
@@ -156,6 +154,7 @@ public class CreatePdfController {
                         map.put("code", "500149");
                         map.put("rows", "");
                         jsonObject = JSONObject.fromObject(map);
+                        return jsonObject;
                     }
 
                 } else {     //  gifMap  = null
@@ -164,6 +163,7 @@ public class CreatePdfController {
                     map.put("code", "500150");
                     map.put("rows", "");
                     jsonObject = JSONObject.fromObject(map);
+                    return jsonObject;
                 }
             } else {    //  pfxMap  = null
                 map.put("msg", InvoiceConstant.PFXMAP_INFO);
@@ -171,6 +171,7 @@ public class CreatePdfController {
                 map.put("code", "500151");
                 map.put("rows", "");
                 jsonObject = JSONObject.fromObject(map);
+                return jsonObject;
             }
 
 
@@ -182,7 +183,7 @@ public class CreatePdfController {
             jsonObject = JSONObject.fromObject(map);
             e.printStackTrace();
             FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd  HH:mm:ss").format(new Date()) + "，异常，内容为" + "\n\t" + FileUtils.getTrace(e), FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "PdfExceptionLog.txt");
-
+            return jsonObject;
 //
 //            Map<String, Object> inteParam = new HashMap<String, Object>();
 //            inteParam.put("exceptionDatasource", "2");

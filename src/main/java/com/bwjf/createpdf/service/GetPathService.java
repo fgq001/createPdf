@@ -12,11 +12,12 @@ import java.util.Map;
  */
 public interface GetPathService {
 
+    //获取签名
     Map<String, Object> getPfxPath(String xhdwsbh);
-
+    //获取印章
     Map<String, Object> getGifPath1(String xhdwsbh);
-
+    //获取模板PDF
     Map<String, Object> getTemPath(String xhdwsbh);
-
+    //获取发票流水号 作为保存文件名
     Xxfp getFpqqlsh(String fphm);
 }

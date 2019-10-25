@@ -18,6 +18,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +33,8 @@ public class GetPathServiceImpl implements GetPathService {
     @Override
     public Map<String, Object> getPfxPath(String xhdwsbh) {
         Map<String, Object> pfxMap = new HashMap<String, Object>();
-        KpCacersubInfo pfx = getPathDao.getPfxPath(xhdwsbh);
+        List<KpCacersubInfo> pfx1 = getPathDao.getPfxPath(xhdwsbh);
+        KpCacersubInfo pfx = pfx1.get(0);
 //        String pfxFileAddr1 = pfx.getKcsiFileAddr(); //pfx文件路径
 //        String pfxStream1 = pfx.getKcsiStream();     //pfx文件流
 //        String pfxType1 = pfx.getKcsiType();         //文件类型
@@ -84,6 +86,7 @@ public class GetPathServiceImpl implements GetPathService {
 
         Map<String, Object> gifMap = new HashMap<String, Object>();
         KpCacersubInfo pfx = getPathDao.getGifPath(xhdwsbh);
+
 //        String pfxFileAddr1 = pfx.getKcsiFileAddr(); //pfx文件路径
 //        String pfxStream1 = pfx.getKcsiStream();     //pfx文件流
 //        String pfxType1 = pfx.getKcsiType();         //文件类型

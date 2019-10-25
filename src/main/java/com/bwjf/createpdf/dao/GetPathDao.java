@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface GetPathDao {
 
-    KpCacersubInfo getPfxPath(String xhdwsbh);
+    List<KpCacersubInfo> getPfxPath(String xhdwsbh);
 
     KpCacersubInfo getGifPath(String xhdwsbh);
 

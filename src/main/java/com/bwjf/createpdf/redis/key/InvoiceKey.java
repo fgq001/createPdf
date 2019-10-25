@@ -37,7 +37,14 @@ public class InvoiceKey extends BasePrefix{
     /**
      * 电票文件信息相关表
      */
-    public static InvoiceKey kfiKey = new InvoiceKey(60, "kfi");
+    public static InvoiceKey kfiKey = new InvoiceKey(60, "kfiEwmKey");
+
+    /**
+     *  电票二维码信息
+     */
+    public static InvoiceKey kfiEwmKey = new InvoiceKey(60, "kfiEwmKey");
+
+
 
 
 }

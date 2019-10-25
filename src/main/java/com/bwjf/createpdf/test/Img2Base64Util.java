@@ -95,54 +95,5 @@ public class Img2Base64Util {
         return bytes;
     }
 
-    /**
-     * Gets the width of a <CODE>String</CODE> in normalized 1000 units.
-     * @param text the <CODE>String</CODE> to get the width of
-     * @return the width in normalized 1000 units
-     */
-//    public int getWidth(String text) {
-//        int total = 0;
-//        if (fastWinansi) {
-//            int len = text.length();
-//            for (int k = 0; k < len; ++k) {
-//                char char1 = text.charAt(k);
-//                if (char1 < 128 || char1 >= 160 && char1 <= 255)
-//                    total += widths[char1];
-//                else
-//                    total += widths[PdfEncodings.winansi.get(char1)];
-//            }
-//            return total;
-//        }
-//        else {
-//            byte mbytes[] = convertToBytes(text);
-//            for (int k = 0; k < mbytes.length; ++k)
-//                total += widths[0xff & mbytes[k]];
-//        }
-//        return total;
-//    }
 
-    /**
-     * 文件转为二进制字符串
-     *
-//     * @param file
-     * @return
-     */
-//    public static String fileToBinStr(File file) {
-//        try {
-//            InputStream fis = new FileInputStream(file);
-//            byte[] bytes = FileCopyUtils.copyToByteArray(fis);
-//            // return new String(bytes,"GB2312");
-//            return new String(bytes, "ISO-8859-1");
-//        } catch (Exception ex) {
-//            throw new RuntimeException("transform file into bin String 出错", ex);
-//        }
-//    }
-
-    public static void main(String[] args) throws IOException {
-//        String imageStr = Img2Base64Util.GetImageStr("D://下载/企鹅.jpg");
-//        System.out.println(imageStr);
-        String dd = "iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAIAAAD6XpeDAAADAklEQVR42u3aW26EMBAEwNz/0psTRAHcPZil FwhsF1eeR78/BSuzx/XkfuP/H72XUeec3ZeR8aQeu/oBQ8ePHgvwfssXKkFnQRoL/oK9unxwIMHDx68y3ipwe0WHLXP/kYABQ8ePHjwno23ErCkwNoA8ODBgwfvvXjtgnW7SJ3aWPDgwYMHby 8xmGeAmsHO6ng6PFdBXjw4MH7YrxGsdjvQ4sODx4kePBuaTxOHtSTHxG153h6TeDBgwcP3uU1aU 4XRBYSaIb751cT3jw4MGDl8FrFKMbMO0ib2MusXWABw8ePHj/Pr RCE82Y1ee2dhMk/fAgwcPHrzrePXi6WDif1fRoL2J4cGDBw/edbxGQtoY0A4F6DZArMANDx48ePAiSfrkxz Nd 0QTN1WmIYHDx48eJEDPFUUbp/H7QBndPzw4MGDBy ClwpYGs9sBCBtDHjw4MGDty9eI6lsN3LvCjQmgzt48ODBg5c5vxuJbfvQngw0UuOsNIHhwYMHD94Y3spzGol2CntlLql3HVofePDgwYN3Ga d4Lcn39gEqeBiJcCBBw8ePHhdvJ0T8DZSuziwlJjDgwcPHrzIOsQKpoWDurHo7YR6cpzw4MGDB 9cP28ycJg88NuF8gZq5d8GDx48eC/EmyxGtxPbdkCxW1AGDx48ePAyePUqQCjoSBXNU9ijhWl48ODBgxcpRjeCkcnJt8dfCUBS/0J48ODBg3cZ766PfFYWq70JUoX12CaGBw8ePHhb5Xmpga4c8u1icWpjbRdtwoMHD94X4zUWa4eG7Q7F98aHT/DgwYMHb66YmwpeJgu77WZpPZCBBw8ePHh3nLWV5mS7QdrYWCmARpMAHjx48ODlC6 TB/JdTeNGUHZbVwEePHjwXo7XSFrbSWhqw6U26OgFDx48ePC2wpsES22myXktFSvgwYMHD97j8BrN0sY9jUL84wMWePDgwXso3mTCm0qWJwOfRrN3u2YsPHjw4H0x3g410slBtz8uSjVgH1PghgcPHry98X4BxAy5JBgfwFkAAAAASUVORK5CYII=";
-        Img2Base64Util.GenerateImage(dd, "E:\\发票12.jpg");
-        System.out.println("success");
-    }
 }

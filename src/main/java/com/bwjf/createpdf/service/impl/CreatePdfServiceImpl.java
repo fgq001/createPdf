@@ -434,7 +434,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
             // over.addImage(img1);
             // }
 
-            if ((xxfp.getEwm() != null) && (!"".equals(xxfp.getEwm()))) {
+            if (xxfp.getEwm() != null) {
                 over1 = over1 == null ? stamp.getOverContent(1) : over1;
 
                 Img2Base64Util.GenerateImage(xxfp.getEwm().trim(), ewmPath);

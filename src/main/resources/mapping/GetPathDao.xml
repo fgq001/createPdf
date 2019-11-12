@@ -34,7 +34,7 @@
 
 
     <select id="getPfxPath" resultType="com.bwjf.createpdf.entity.KpCacersubInfo">
-        select ca.kci_file_addr as kcsiFileAddr,ca.KOIB_ID as koibId,ca.KCI_TYPE as kcsiType,ca.KCI_DEL as kcsiDel,
+        select ca.id as id,ca.kci_file_addr as kcsiFileAddr,ca.KOIB_ID as koibId,ca.KCI_TYPE as kcsiType,ca.KCI_DEL as kcsiDel,
         ca.KCI_VEMO as kcsiStream from kp_cacert_info as ca where ca.KOIB_ID in
         (select id from tcrm_customerinfo where
         vnuitedcode = #{vnuitedCode} and istatus = '0'
@@ -42,7 +42,7 @@
     </select>
 
     <select id="getGifPath" resultType="com.bwjf.createpdf.entity.KpCacersubInfo">
-        select ca.kci_file_addr as kcsiFileAddr,ca.KOIB_ID as koibId,ca.KCI_TYPE as kcsiType,ca.KCI_DEL as kcsiDel,
+        select ca.id as id,ca.kci_file_addr as kcsiFileAddr,ca.KOIB_ID as koibId,ca.KCI_TYPE as kcsiType,ca.KCI_DEL as kcsiDel,
         ca.KCI_VEMO as kcsiStream from kp_cacert_info as ca where ca.KOIB_ID in
         (select id from tcrm_customerinfo where
         vnuitedcode = #{vnuitedCode} and istatus = '0'

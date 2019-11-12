@@ -42,7 +42,7 @@ public class InvoiceKey extends BasePrefix{
     /**
      *  电票二维码信息
      */
-    public static InvoiceKey kfiEwmKey = new InvoiceKey(60, "kfiEwmKey");
+    public static InvoiceKey kfiEwmKey = new InvoiceKey(60, "");
 
 
 

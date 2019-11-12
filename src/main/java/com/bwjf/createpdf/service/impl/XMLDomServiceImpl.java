@@ -117,6 +117,8 @@ public class XMLDomServiceImpl implements XMLDomService {
                 if (ewm.equals("")) {
                     //redis里边获取
                     redisEwm = redisService.get(InvoiceKey.kfiEwmKey, fpdm + fphm, String.class);
+                }else{
+                    redisEwm = ewm;
                 }
 
                 //获得更深层次的标签（一层一层的获取）

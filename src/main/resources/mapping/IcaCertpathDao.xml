@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace就是与此文件对应的Dao接口的全路径-->
+<mapper namespace="com.bwjf.createpdf.dao.IcaCertpathDao" >
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo" id="kpOutsideInteBaseinfoMap">
+        <result property="id" column="id"/>
+        <result property="koibFpdm" column="KOIB_FPDM"/>
+        <result property="koibFplxdm" column="KOIB_FPLXDM"/>
+        <result property="koibFphm" column="KOIB_FPHM"/>
+        <result property="koibFpzt" column="KOIB_FPZT"/>
+        <result property="koibScbz" column="KOIB_SCBZ"/>
+        <result property="koibKprq" column="KOIB_KPRQ"/>
+        <result property="koibJqbh" column="KOIB_JQBH"/>
+        <result property="koibSkm" column="KOIB_SKM"/>
+        <result property="koibDel" column="KOIB_DEL"/>
+        <result property="koibCreatetime" column="KOIB_CREATETIME"/>
+        <result property="koibDatasource" column="KOIB_DATASOURCE"/>
+        <result property="koibXsfId" column="KOIB_XSF_ID"/>
+        <result property="koibGmfId" column="KOIB_GMF_ID"/>
+        <result property="koibOrderno" column="KOIB_ORDERNO"/>
+        <result property="koibJym" column="KOIB_JYM"/>
+        <result property="koibBbh" column="KOIB_BBH"/>
+        <result property="koibBmbbbh" column="KOIB_BMBBBH"/>
+        <result property="koibZsfs" column="KOIB_ZSFS"/>
+        <result property="koibFyxmId" column="KOIB_FYXM_ID"/>
+        <result property="koibZhsl" column="KOIB_ZHSL"/>
+        <result property="koibHjje" column="KOIB_HJJE"/>
+        <result property="koibHjse" column="KOIB_HJSE"/>
+        <result property="koibJshj" column="KOIB_JSHJ"/>
+        <result property="koibBz" column="KOIB_BZ"/>
+        <result property="koibSkr" column="KOIB_SKR"/>
+        <result property="koibFhr" column="KOIB_FHR"/>
+        <result property="koibKpr" column="KOIB_KPR"/>
+        <result property="koibQpm" column="KOIB_QPM"/>
+        <result property="koibSender" column="KOIB_SENDER"/>
+        <result property="koibEmail" column="KOIB_EMAIL"/>
+        <result property="koibField1" column="KOIB_FIELD1"/>
+        <result property="koibField2" column="KOIB_FIELD2"/>
+        <result property="koibField3" column="KOIB_FIELD3"/>
+        <result property="koibField4" column="KOIB_FIELD4"/>
+        <result property="koibSkpbh" column="KOIB_SKPBH"/>
+        <result property="koibFpqqlsh" column="KOIB_FPQQLSH"/>
+        <result property="koibKplx" column="KOIB_KPLX"/>
+        <result property="koibTspz" column="KOIB_TSPZ"/>
+        <result property="koibKpstatus" column="KOIB_KPSTATUS"/>
+        <result property="koibKce" column="KOIB_KCE"/>
+        <result property="koibYfphm" column="KOIB_YFPHM"/>
+        <result property="koibYfpdm" column="KOIB_YFPDM"/>
+        <result property="koibPdfStatus" column="KOIB_PDFSTATUS"/>
+    </resultMap>
+
+    <sql id="BaseKpBaseInfo_Column_List">
+		KOIB_FPDM AS koibFpdm,
+		KOIB_FPHM AS koibFphm,
+		KOIB_FPLXDM AS KoibFplxdm,
+		KOIB_FPZT AS koibFpzt,
+		KOIB_SCBZ AS koibScbz,
+		KOIB_KPRQ AS koibKprq,
+		KOIB_JQBH AS koibJqbh,
+		KOIB_SKM AS koibSkm,
+		KOIB_DEL AS koibDel,
+		KOIB_CREATETIME AS koibCreatetime,
+		KOIB_DATASOURCE AS koibDatasource,
+		KOIB_XSF_ID AS koibXsfId,
+		KOIB_GMF_ID AS koibGmfId,
+		KOIB_ORDERNO AS koibOrderno,
+		KOIB_JYM AS koibJym,
+		KOIB_BBH AS koibBbh,
+		KOIB_BMBBBH AS koibBmbbbh,
+		KOIB_ZSFS AS koibZsfs,
+		KOIB_ZHSL AS koibZhsl,
+		KOIB_HJJE AS koibHjje,
+		KOIB_HJSE AS koibHjse,
+		KOIB_JSHJ AS koibJshj,
+		KOIB_BZ AS koibBz,
+		KOIB_SKR AS koibSkr,
+		KOIB_FHR AS koibFhr,
+		KOIB_KPR AS koibKpr,
+		KOIB_QPM AS koibQpm,
+		KOIB_SENDER AS koibSender,
+		KOIB_EMAIL AS koibEmail,
+		KOIB_FPQQLSH AS koibFpqqlsh,
+		KOIB_KPLX AS koibKplx,
+		KOIB_TSPZ AS koibTspz,
+		KOIB_KPSTATUS AS koibKpstatus,
+		KOIB_KCE as koibKce,
+		KOIB_YFPHM as koibYfphm,
+		KOIB_YFPDM as koibYfpdm,
+		KOIB_PDFSTATUS as koibPdfStatus
+	</sql>
+
+    <select id="countBig"  resultType="java.lang.String" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        SELECT koib.KOIB_FPQQLSH
+        FROM  kp_outside_inte_baseinfo koib
+        WHERE koib.`KOIB_DATASOURCE` = 'nebula'
+        AND koib.`KOIB_DEL` = '0'
+        GROUP BY koib.KOIB_FPQQLSH
+        HAVING  COUNT(koib.KOIB_FPQQLSH) > 1
+--         limit 0,5
+    </select>
+
+
+
+    <select id="queryNumber" resultType="java.lang.Integer" parameterType="java.lang.String">
+        select COUNT(1) from kp_outside_inte_baseinfo T where T.KOIB_FPQQLSH = #{koibFpqqlsh} and T.KOIB_DEL='0';
+    </select>
+
+    <select id="kpList"  resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo" parameterType="java.lang.String">
+        select  koib.id,
+        <include refid="BaseKpBaseInfo_Column_List"/>
+         from kp_outside_inte_baseinfo koib where koib.KOIB_FPQQLSH = #{koibFpqqlsh}
+    </select>
+
+    <update id="updataFpqqlsh" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo" >
+        update kp_outside_inte_baseinfo koib
+        set `KOIB_FPQQLSH` = #{koibFpqqlsh}
+        WHERE koib.KOIB_DEL = '0' and koib.id =#{id}
+    </update>
+</mapper>

@@ -7,6 +7,7 @@ import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.service.CreatePdfService;
 import com.bwjf.createpdf.service.GetPathService;
 import com.bwjf.createpdf.service.XMLDomService;
+import com.bwjf.createpdf.utils.ExtractTextByArea;
 import com.bwjf.createpdf.utils.FileUtils;
 import com.bwjf.createpdf.utils.NumberUtil;
 import com.bwjf.createpdf.utils.XMLDomUtils;
@@ -19,8 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by admin on 2019/7/16.
@@ -195,4 +199,57 @@ private XMLDomUtils xmlDomUtils;
         return jsonObject;
     }
 
+
+    public static void main(String[] args) throws Exception {
+
+
+
+        String file = "D:\\tastPDF22\\koidID_26645.pdf";
+        Map<String,String> map = ExtractTextByArea.jiexiPDF(file);
+
+        String fpdmStr = map.get("fpdm");
+        String fphmStr = map.get("fphmStr");
+        String kprqStr = map.get("kprqStr");
+        String jymStr = map.get("jymStr");
+        String jqbmStr = map.get("jqbmStr");
+        String BZStr = map.get("BZStr");
+        String mkqStr = map.get("mkqStr");
+
+
+
+        System.out.println(fpdmStr);
+        System.out.println(fphmStr);
+        System.out.println(kprqStr);
+        System.out.println(jymStr);
+        System.out.println(jqbmStr);
+        System.out.println(BZStr);
+        System.out.println(mkqStr);
+
+
+
+//        String a="love23next234csdn3423javaeye";
+        String regEx="[^0-9]";
+        Pattern p = Pattern.compile(regEx);
+//        Matcher m = p.matcher(kprqStr);
+        Matcher m = p.matcher(kprqStr);
+        Matcher m1 = p.matcher(jymStr);
+        System.out.println( "开票日期正则截取："+ m.replaceAll("").trim());
+        System.out.println( "机器编码正则截取："+ m1.replaceAll("").trim());
+
+
+//        String s = "'sds gdasda" + "\n" + "edaeafd'";
+//        System.out.println("转换前："+s);
+//        s = s.replaceAll("\r|\n", "");
+//        System.out.println("转换后："+s);
+
+        String Bzstr1 = BZStr;
+        Bzstr1 = Bzstr1.replaceAll("\r|\n", "");
+        System.out.println("转换后BZStr："+Bzstr1);
+
+
+        File file1=new File(file);
+        if(file1.exists()&&file1.isFile())
+            file1.delete();
+
+    }
 }

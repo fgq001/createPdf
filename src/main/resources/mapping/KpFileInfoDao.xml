@@ -1,0 +1,392 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bwjf.createpdf.dao.KpFileInfoDao">
+
+
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.bwjf.createpdf.entity.KpFileInfo" id="kpFileInfoMap">
+        <result property="id" column="ID"/>
+        <result property="koifFileAddr" column="KOIF_FILE_ADDR"/>
+        <result property="koifYxq" column="KOIF_YXQ"/>
+        <result property="koifType" column="KOIF_TYPE"/>
+        <result property="koifCreatetime" column="KOIF_CREATETIME"/>
+        <result property="koifDel" column="KOIF_DEL"/>
+        <result property="koibId" column="KOIB_ID"/>
+        <result property="koifVemo" column="KOIF_VEMO"/>
+        <result property="koifFileStream" column="koif_file_stream"/>
+    </resultMap>
+
+
+    <!--新增操作-->
+    <insert id="insertFileInfo" parameterType="com.bwjf.createpdf.entity.KpFileInfo">
+        INSERT INTO kp_file_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="koifFileAddr != null">
+                KOIF_FILE_ADDR,
+            </if>
+            <if test="koifYxq != null">
+                KOIF_YXQ,
+            </if>
+            <if test="koifType != null">
+                KOIF_TYPE,
+            </if>
+            <if test="koifCreatetime != null">
+                KOIF_CREATETIME,
+            </if>
+            <if test="koifDel != null">
+                KOIF_DEL,
+            </if>
+            <if test="koibId != null">
+                KOIB_ID,
+            </if>
+            <if test="koifVemo != null">
+                KOIF_VEMO,
+            </if>
+            <if test="koifFilestream != null">
+                koif_file_stream,
+            </if>
+        </trim>
+        <trim prefix=" VALUES(" suffix=")" suffixOverrides=",">
+            <if test="koifFileAddr != null">
+                #{koifFileAddr},
+            </if>
+            <if test="koifYxq != null">
+                #{koifYxq},
+            </if>
+            <if test="koifType != null">
+                #{koifType},
+            </if>
+            <if test="koifCreatetime != null">
+                #{koifCreatetime},
+            </if>
+            <if test="koifDel != null">
+                #{koifDel},
+            </if>
+            <if test="koibId != null">
+                #{koibId},
+            </if>
+            <if test="koifVemo != null">
+                #{koifVemo},
+            </if>
+            <if test="koifFilestream != null">
+                #{koifFilestream},
+            </if>
+        </trim>
+    </insert>
+
+
+	<select id="getFileInfoById" resultType="com.bwjf.createpdf.entity.KpFileInfo">
+		select * from kp_file_info where koif_type = 1 and koif_del = 0 and koib_id=#{koibId}
+	</select>
+
+
+
+
+    <select id="getFileInfoAll" resultType="com.bwjf.createpdf.entity.KpFileInfo">
+        select file.* from new_kp_outside_inte_baseinfo koib
+        right join kp_file_info file on koib.id=file.KOIB_ID
+        where file.KOIF_TYPE='2'
+        and  koib.KOIB_FPHM='51551336'
+        and koib.KOIB_DATASOURCE='nebula'
+        and koib.KOIB_FPLXDM='026'
+        and koib.KOIB_DEL='0'
+        and  file.KOIF_FILE_ADDR is not null
+        and file.KOIF_FILE_ADDR != ''
+        limit #{limNum},1000
+	</select>
+
+    <!--新增操作-->
+    <insert id="saveBackupBaseInfo" parameterType="com.bwjf.createpdf.entity.BackupBwjfKpOutsideInteBaseInfoBean">
+        INSERT INTO by_ewm_backup
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="koibFpdm != null">
+                KOIB_FPDM,
+            </if>
+            <if test="koibFphm != null">
+                KOIB_FPHM,
+            </if>
+            <if test="koibFplxdm != null">
+                KOIB_FPLXDM,
+            </if>
+            <if test="koibFpzt != null">
+                KOIB_FPZT,
+            </if>
+            <if test="koibScbz != null">
+                KOIB_SCBZ,
+            </if>
+            <if test="koibKprq != null">
+                KOIB_KPRQ,
+            </if>
+            <if test="koibJqbh != null">
+                KOIB_JQBH,
+            </if>
+            <if test="koibSkm != null">
+                KOIB_SKM,
+            </if>
+            <if test="koibSkpBh != null">
+                KOIB_SKPBH,
+            </if>
+            <if test="koibDel != null">
+                KOIB_DEL,
+            </if>
+            <if test="koibKce != null">
+                KOIB_KCE,
+            </if>
+            <if test="koibCreatetime != null">
+                KOIB_CREATETIME,
+            </if>
+            <if test="koibDatasource != null">
+                KOIB_DATASOURCE,
+            </if>
+            <if test="koibXsfId != null">
+                KOIB_XSF_ID,
+            </if>
+            <if test="koibGmfId != null">
+                KOIB_GMF_ID,
+            </if>
+            <if test="koibOrderno != null">
+                KOIB_ORDERNO,
+            </if>
+            <if test="koibJym != null">
+                KOIB_JYM,
+            </if>
+            <if test="koibBbh != null">
+                KOIB_BBH,
+            </if>
+            <if test="koibBmbbbh != null">
+                KOIB_BMBBBH,
+            </if>
+            <if test="koibZsfs != null">
+                KOIB_ZSFS,
+            </if>
+            <if test="koibFyxmId != null">
+                KOIB_FYXM_ID,
+            </if>
+            <if test="koibZhsl != null">
+                KOIB_ZHSL,
+            </if>
+            <if test="koibHjje != null">
+                KOIB_HJJE,
+            </if>
+            <if test="koibHjse != null">
+                KOIB_HJSE,
+            </if>
+            <if test="koibJshj != null">
+                KOIB_JSHJ,
+            </if>
+            <if test="koibBz != null">
+                KOIB_BZ,
+            </if>
+            <if test="koibSkr != null">
+                KOIB_SKR,
+            </if>
+            <if test="koibFhr != null">
+                KOIB_FHR,
+            </if>
+            <if test="koibKpr != null">
+                KOIB_KPR,
+            </if>
+            <if test="koibQpm != null">
+                KOIB_QPM,
+            </if>
+            <if test="koibSender != null">
+                KOIB_SENDER,
+            </if>
+            <if test="koibEmail != null">
+                KOIB_EMAIL,
+            </if>
+            <if test="koibField1 != null">
+                KOIB_FIELD1,
+            </if>
+            <if test="koibField2 != null">
+                KOIB_FIELD2,
+            </if>
+            <if test="koibField3 != null">
+                KOIB_FIELD3,
+            </if>
+            <if test="koibField4 != null">
+                KOIB_FIELD4,
+            </if>
+
+            <if test="koibSkpbh != null">
+                KOIB_SKPBH,
+            </if>
+            <if test="koibFpqqlsh != null">
+                KOIB_FPQQLSH,
+            </if>
+            <if test="koibKplx != null">
+                KOIB_KPLX,
+            </if>
+            <if test="koibTspz != null">
+                KOIB_TSPZ,
+            </if>
+            <if test="koibKpstatus != null">
+                KOIB_KPSTATUS,
+            </if>
+            <if test="koibYfphm != null">
+                KOIB_YFPHM,
+            </if>
+            <if test="koibYfpdm != null">
+                KOIB_YFPDM,
+            </if>
+            <if test="koibPdfStatus != null">
+                KOIB_PDFSTATUS,
+            </if>
+            <if test="koibUploadStatus != null">
+                KOIB_UPLOADSTATUS,
+            </if>
+            <if test="koibHeadtype != null">
+                koib_headtype
+            </if>
+        </trim>
+        <trim prefix=" VALUES(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="koibFpdm != null">
+                #{koibFpdm},
+            </if>
+            <if test="koibFphm != null">
+                #{koibFphm},
+            </if>
+            <if test="koibFplxdm != null">
+                #{koibFplxdm},
+            </if>
+            <if test="koibFpzt != null">
+                #{koibFpzt},
+            </if>
+            <if test="koibScbz != null">
+                #{koibScbz},
+            </if>
+            <if test="koibKprq != null">
+                #{koibKprq},
+            </if>
+            <if test="koibJqbh != null">
+                #{koibJqbh},
+            </if>
+            <if test="koibSkm != null">
+                #{koibSkm},
+            </if>
+            <if test="koibSkpBh != null">
+                #{koibSkpBh},
+            </if>
+            <if test="koibDel != null">
+                #{koibDel},
+            </if>
+            <if test="koibKce != null">
+                #{koibKce},
+            </if>
+            <if test="koibCreatetime != null">
+                #{koibCreatetime},
+            </if>
+            <if test="koibDatasource != null">
+                #{koibDatasource},
+            </if>
+            <if test="koibXsfId != null">
+                #{koibXsfId},
+            </if>
+            <if test="koibGmfId != null">
+                #{koibGmfId},
+            </if>
+            <if test="koibOrderno != null">
+                #{koibOrderno},
+            </if>
+            <if test="koibJym != null">
+                #{koibJym},
+            </if>
+            <if test="koibBbh != null">
+                #{koibBbh},
+            </if>
+            <if test="koibBmbbbh != null">
+                #{koibBmbbbh},
+            </if>
+            <if test="koibZsfs != null">
+                #{koibZsfs},
+            </if>
+            <if test="koibFyxmId != null">
+                #{koibFyxmId},
+            </if>
+            <if test="koibZhsl != null">
+                #{koibZhsl},
+            </if>
+            <if test="koibHjje != null">
+                #{koibHjje},
+            </if>
+            <if test="koibHjse != null">
+                #{koibHjse},
+            </if>
+            <if test="koibJshj != null">
+                #{koibJshj},
+            </if>
+            <if test="koibBz != null">
+                #{koibBz},
+            </if>
+            <if test="koibSkr != null">
+                #{koibSkr},
+            </if>
+            <if test="koibFhr != null">
+                #{koibFhr},
+            </if>
+            <if test="koibKpr != null">
+                #{koibKpr},
+            </if>
+            <if test="koibQpm != null">
+                #{koibQpm},
+            </if>
+            <if test="koibSender != null">
+                #{koibSender},
+            </if>
+            <if test="koibEmail != null">
+                #{koibEmail},
+            </if>
+            <if test="koibField1 != null">
+                #{koibField1},
+            </if>
+            <if test="koibField2 != null">
+                #{koibField2},
+            </if>
+            <if test="koibField3 != null">
+                #{koibField3},
+            </if>
+            <if test="koibField4 != null">
+                #{koibField4},
+            </if>
+            <if test="koibSkpbh != null">
+                #{koibSkpbh},
+            </if>
+            <if test="koibFpqqlsh != null">
+                #{koibFpqqlsh},
+            </if>
+            <if test="koibKplx != null">
+                #{koibKplx},
+            </if>
+            <if test="koibTspz != null">
+                #{koibTspz},
+            </if>
+            <if test="koibKpstatus != null">
+                #{koibKpstatus},
+            </if>
+            <if test="koibYfphm != null">
+                #{koibYfphm},
+            </if>
+            <if test="koibYfpdm != null">
+                #{koibYfpdm},
+            </if>
+            <if test="koibPdfStatus != null">
+                #{koibPdfStatus},
+            </if>
+            <if test="koibUploadStatus != null">
+                #{koibUploadStatus},
+            </if>
+            <if test="koibHeadtype != null">
+                #{koibHeadtype}
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

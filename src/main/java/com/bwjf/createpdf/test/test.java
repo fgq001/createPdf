@@ -28,7 +28,8 @@ public class test {
     //创建的pdf路径
     static String tempPdf1 = ("E:\\PDFFileTest" + File.separator + CommonUtils.getUUID() + ".pdf");
     //签名后的pdf路径
-    static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
+//    static String expPath1 = "E:\\PDFFileTest" + File.separator + randomTime + ".pdf";
+    static String expPath1 = "E:\\aaaa" + File.separator + randomTime + ".pdf";
     //签章密码
     static String password = "111111";
 

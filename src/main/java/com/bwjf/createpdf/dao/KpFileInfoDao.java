@@ -30,6 +30,10 @@ public interface KpFileInfoDao {
     //修改文件表文件的状态，作废掉
     int updateFileStatus(BwjfKpFileBean bwjfKpFileBean);
 
+
+    //根据发票ID判断是否生成发票图片
+    int getFileNumber(String koibId);
+
     //根据发票请求流水号和取票码获取发票PDF相关信息
 //    List<BwjfKpFileBean> getBaseFileInfoByFpqqlshAndQpm(BwjfKpFileBean bwjfKpFileBean);
 

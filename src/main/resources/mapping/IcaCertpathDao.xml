@@ -98,7 +98,7 @@
         AND koib.`KOIB_DEL` = '0'
         GROUP BY koib.KOIB_FPQQLSH
         HAVING  COUNT(koib.KOIB_FPQQLSH) > 1
---         limit 0,5
+--         limit 0,1
     </select>
 
 
@@ -110,7 +110,7 @@
     <select id="kpList"  resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo" parameterType="java.lang.String">
         select  koib.id,
         <include refid="BaseKpBaseInfo_Column_List"/>
-         from kp_outside_inte_baseinfo koib where koib.KOIB_FPQQLSH = #{koibFpqqlsh}
+         from kp_outside_inte_baseinfo koib where koib.KOIB_FPQQLSH = #{koibFpqqlsh} and koib.KOIB_DEL='0'
     </select>
 
     <update id="updataFpqqlsh" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo" >

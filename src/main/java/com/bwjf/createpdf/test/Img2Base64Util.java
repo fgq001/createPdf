@@ -44,6 +44,40 @@ public class Img2Base64Util {
     }
 
 
+    /**
+     *      byte数组字符串生成pdf文件路径
+     * @param b1        byte数组
+     * @param filePdfPath   pdf文件路径
+     * @return
+     * @throws IOException
+     */
+    public static boolean CreatePdfByByte( byte[] b1, String filePdfPath) throws IOException {
+        if (b1 == null) // 图像数据为空
+            return false;
+        OutputStream out = null;
+        try {
+            File temPdfFile = new File(filePdfPath);
+            out = new FileOutputStream(temPdfFile);
+            byte[] b = b1;
+            for (int i = 0; i < b.length; ++i) {
+                if (b[i] < 0) {// 调整异常数据
+                    b[i] += 256;
+                }
+            }
+            out.write(b);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            out.flush();
+            out.close();
+            return true;
+        }
+    }
+
 
     public static boolean GenerateImage(String imgData, String imgFilePath) throws IOException { // 对字节数组字符串进行Base64解码并生成图片
         if (imgData == null) // 图像数据为空
@@ -93,6 +127,22 @@ public class Img2Base64Util {
             fis.close();
         }
         return bytes;
+    }
+
+    /**
+     *
+     * @Title: encodeBase64File @Description: 根据文件路径进行base64加密 @param @param
+     *         path @param @return @param @throws Exception 设定文件 @return String
+     *         返回类型 @throws
+     */
+    public static String encodeBase64File(String path) throws Exception {
+        File file = new File(path);
+        FileInputStream inputFile = new FileInputStream(file);
+        byte[] buffer = new byte[(int) file.length()];
+        inputFile.read(buffer);
+        inputFile.close();
+        return new BASE64Encoder().encode(buffer).replaceAll("[\\s*\t\n\r]", "");
+
     }
 
 

@@ -186,17 +186,7 @@ public class NumberUtil
 
   }
 
-  public static void main(String[] args) {
-    String ss = double3Str("-100", 6);
-    String dd = double2Str("11", 2);
-    String dDd = double3Str("11", 2);
-    
-    double e = 1.2;
-    
-    
-    System.out.println(ss);
-    System.out.println(dDd);
-  }
+
 
   public static String[] toBhs2(String hsje, String sl, int len)
   {
@@ -233,6 +223,42 @@ public class NumberUtil
     System.out.println(str);
     return str;
   }
+
+  public static void main(String[] args) {
+    /*String ss = double3Str("-100", 6);
+    String dd = double2Str("11", 2);
+    String dDd = double3Str("11", 2);
+    double e = 1.2;
+    System.out.println(ss);
+    System.out.println(dDd);*/
+    String s111 = null;
+
+    String skm = "<fpdm>050003521106</fpdm><skm>03*6-108-17>101<410%2B156-1240-3-*><23><93-8*87-0848>3>557236*718</-42-74>9>131-<>-/*%2B2>6*3<86<801<4791977731>2>//</skm>";
+    String regex = "<skm>(.*?)</skm>";
+    List<String> list = new ArrayList<String>();
+    List<String> extvounoLists = new ArrayList<String>();
+    Pattern pattern = Pattern.compile(regex);
+    Matcher m = pattern.matcher(skm);
+    while (m.find()) {
+      int i = 1;
+      list.add(m.group(i));
+      i++;
+    }
+    String str1 = null;
+    for (String str : list) {
+      str1 = str;
+      String[] strs = str.split("-");
+      String strss = strs[strs.length-1];
+      extvounoLists.add(strs[strs.length-1]);
+    }
+
+    System.out.println("str1: "+str1);
+    s111 = str1.replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("%2B","+");
+    System.out.println("str22: "+s111);
+
+
+  }
+
   public static String strSkm(String strSmk){
     String s111 = null;
     String regex = "<skm>(.*?)</skm>";
@@ -264,6 +290,9 @@ public class NumberUtil
 //        System.out.println("s333 = "+s333);
     return s333;
   }
+
+
+
 
   public static String strEwm(String strSmk){
     String s111 = null;

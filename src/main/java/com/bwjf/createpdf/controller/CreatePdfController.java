@@ -60,18 +60,19 @@ private XMLDomUtils xmlDomUtils;
 
             //开票的xml内容
             String xmlContentSkm = req.getParameter("xmlContent") == "" ? null : req.getParameter("xmlContent");
+//            System.out.println("xmlContentSkm: "+xmlContentSkm);
             FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "初始xml" + "\n\t" + xmlContentSkm + "\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "xmlContent.txt");
-            //替换xml中<smk>的  <>
-            String xmlContent = NumberUtil.strSkm(xmlContentSkm);
-//            String xmlContent = NumberUtil.strEwm(xmlContentEwm);
-            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "修改后xml" + "\n\t" + xmlContent + "\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "xmlContent.txt");
+              //替换xml中<smk>的  <>
+//            String xmlContent = NumberUtil.strSkm(xmlContentSkm);
+//            System.out.println("替换后: "+xmlContent);
+//            FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "修改后xml" + "\n\t" + xmlContent + "\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "xmlContent.txt");
 
             Xxfp xxfp = new Xxfp();
             List<Xxfpmx> xxfpmxList = new ArrayList<>();
 
             //解析XML内容
 //            XMLDomUtils.XmlJx(xmlContent, xxfp, xxfpmxList);
-            xmlDomService.XmlJx(xmlContent, xxfp, xxfpmxList);
+            xmlDomService.XmlJx(xmlContentSkm, xxfp, xxfpmxList);
             //获取销货单位识别号 查询path
             String xhdwsbh = xxfp.getXhdwsbh();
             //获取发票号码  查询发票id
@@ -116,7 +117,7 @@ private XMLDomUtils xmlDomUtils;
                             String password = FilePathConstant.password;
 
                             //创建PDF
-                            boolean bo = createPdfService.createPdf(strPDFTemplate, temPath, endPath, xxfp, xxfpmxList, strPfxTemplate, strGifTemplate, password, xmlContent);
+                            boolean bo = createPdfService.createPdf(strPDFTemplate, temPath, endPath, xxfp, xxfpmxList, strPfxTemplate, strGifTemplate, password, xmlContentSkm);
 
                             //把签章后PDF路径转成流
                             String fileAddr = FileUtils.encodeBase64File(endPath);

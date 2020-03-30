@@ -1,10 +1,13 @@
 package com.bwjf.createpdf.service.impl;
 
+import com.bwjf.createpdf.constant.FilePathConstant;
 import com.bwjf.createpdf.entity.Xxfp;
 import com.bwjf.createpdf.entity.Xxfpmx;
 import com.bwjf.createpdf.redis.key.InvoiceKey;
 import com.bwjf.createpdf.redis.key.RedisService;
 import com.bwjf.createpdf.service.XMLDomService;
+import com.bwjf.createpdf.utils.FileUtils;
+import com.bwjf.createpdf.utils.NumberUtil;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -13,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,9 +30,15 @@ public class XMLDomServiceImpl implements XMLDomService {
 
     @Override
     public void XmlJx(String xmlContent, Xxfp xxfp, List<Xxfpmx> xxfpmxList) throws IOException, DocumentException {
-        String Charset = "gb2312";
+
+        //替换xml中<smk>的  <>
+        xmlContent = NumberUtil.strSkm(xmlContent);
+//        System.out.println("替换后: "+xmlContent);
+        FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "修改后xml" + "\n\t" + xmlContent + "\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "xmlContent.txt");
+
+        String Charset = "GB2312";
         SAXReader reader = new SAXReader();
-        reader.setEncoding("gb2312");//这里设置文件编码
+        reader.setEncoding("GB2312");//这里设置文件编码
 //			Charset = "UTF-16";
         org.dom4j.Document doc = reader.read(new ByteArrayInputStream(xmlContent.getBytes(Charset)));
 //			doc = reader.read(new ByteArrayInputStream(context.getBytes("UTF-8")));

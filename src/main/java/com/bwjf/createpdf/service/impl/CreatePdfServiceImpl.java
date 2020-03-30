@@ -35,7 +35,7 @@ public class CreatePdfServiceImpl implements CreatePdfService{
 
     static long randomTime = System.currentTimeMillis();
 //    static String qdmbPath = ("E:\\PDFFileTest" + File.separator + "qd(1).pdf");
-    static String ewmPath = FilePathConstant.ewmPath + File.separator + randomTime + "发票.jpg";
+    static String ewmPath = FilePathConstant.ewmPath + randomTime + "fp.png";
 
     /**
      * 创建PDF
@@ -514,7 +514,11 @@ public class CreatePdfServiceImpl implements CreatePdfService{
                         if(mx.getFphxz().equals("1")){
                             //空
                         } else {
-                            TextAlign.setSimpleTextLeft(mx.getGgxh(), 176.0F, 215 - i * lineTop, 205.0F, 235 - i * lineTop, fontST7, over);
+                            if (NumberUtil.StrCount(mx.getGgxh())<44.0F){
+                                TextAlign.setSimpleTextLeft(mx.getGgxh(), 176.0F, 215 - i * lineTop, 220.0F, 235 - i * lineTop, fontST7, over);
+                            }else{
+                                TextAlign.setSimpleTextLeft1(mx.getGgxh(), 176.0F, 215 - i * lineTop , 220.0F, 235 - i * lineTop, fontST5, over);
+                            }
                         }
 
                         if(mx.getFphxz().equals("1")){
@@ -678,8 +682,13 @@ public class CreatePdfServiceImpl implements CreatePdfService{
                             if(mx.getFphxz().equals("1")){
                                 //空
                             } else {
-                                TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
-                                        625 - (i - j * 30) * lineTop, fontST8, over2);
+                                if (NumberUtil.StrCount(mx.getGgxh())<44.0F){
+                                    TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
+                                            625 - (i - j * 30) * lineTop, fontST8, over2);
+                                }else{
+                                    TextAlign.setSimpleTextLeft1(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
+                                            625 - (i - j * 30) * lineTop, fontST6, over2);
+                                }
                             }
 
                             if(mx.getFphxz().equals("1")){

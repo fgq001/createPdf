@@ -420,7 +420,12 @@ public class CreatePdfServiceImlpTest {
 
 						if(mx.getFphxz().equals("1")){
 						} else {
-							TextAlign.setSimpleTextLeft(mx.getGgxh(), 176.0F, 215 - i * lineTop, 205.0F, 235 - i * lineTop, fontST7, over);
+//							TextAlign.setSimpleTextLeft(mx.getGgxh(), 176.0F, 215 - i * lineTop, 220.0F, 235 - i * lineTop, fontST7, over);
+							if (NumberUtil.StrCount(mx.getGgxh())<44.0F){
+								TextAlign.setSimpleTextLeft(mx.getGgxh(), 176.0F, 215 - i * lineTop, 220.0F, 235 - i * lineTop, fontST7, over);
+							}else{
+								TextAlign.setSimpleTextLeft1(mx.getGgxh(), 176.0F, 215 - i * lineTop , 220.0F, 235 - i * lineTop, fontST5, over);
+							}
 						}
 
 						if(mx.getFphxz().equals("1")){
@@ -591,8 +596,17 @@ public class CreatePdfServiceImlpTest {
 						if(mx.getFphxz().equals("1")){
 							//空
 						} else {
-							TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
-									625 - (i - j * 30) * lineTop, fontST8, over2);
+//							TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
+//									625 - (i - j * 30) * lineTop, fontST8, over2);
+
+							if (NumberUtil.StrCount(mx.getGgxh())<44.0F){
+								TextAlign.setSimpleTextLeft(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
+										625 - (i - j * 30) * lineTop, fontST8, over2);
+							}else{
+//								TextAlign.setSimpleTextLeft1(mx.getGgxh(), 176.0F, 215 - i * lineTop , 220.0F, 235 - i * lineTop, fontST5, over2);
+								TextAlign.setSimpleTextLeft1(mx.getGgxh(), 210.0F, 605 - (i - j * 30) * lineTop, 260.0F,
+										625 - (i - j * 30) * lineTop, fontST6, over2);
+							}
 						}
 
 						if(mx.getFphxz().equals("1")){
@@ -863,7 +877,7 @@ public class CreatePdfServiceImlpTest {
 		Xxfp fp = new Xxfp();
 		// Ticket ticket = new Ticket();
 		
-		fp.setKplx("1");	//0:为正票  1:为负票
+		fp.setKplx("0");	//0:为正票  1:为负票
 		fp.setTspz("00");	//“00”不是  “01”农产品销售   “02”农产品收购   “06”抵扣通行费
 		fp.setFpdm("150003529999");
 		fp.setFphm("95715993");
@@ -895,7 +909,7 @@ public class CreatePdfServiceImlpTest {
 //		mx.setSpmc("阿裕食品桂花园子克阿裕食品桂花阿裕食品桂花园子200");
 		mx.setSpmc("税控盘1");
 		mx.setSpsm("");
-		mx.setGgxh("食品桂花");
+		mx.setGgxh("MA-B12-IF-044-B12-IF ");
 		mx.setDw("袋");
 		mx.setSpsl("1");
 		mx.setDj("1300.01");
@@ -914,7 +928,7 @@ public class CreatePdfServiceImlpTest {
 		mx.setFphxz("0");	// 发票行性质 0正常行、1折扣行、2被折扣行
 		mx.setSpmc("税控盘2");
 		mx.setSpsm("");
-		mx.setGgxh("花");
+		mx.setGgxh("MA-B12-IF-044-B12-IF");
 		mx.setDw("盒盒");
 		mx.setSpsl("111");
 		mx.setDj("201");
@@ -933,7 +947,7 @@ public class CreatePdfServiceImlpTest {
 		mx.setFphxz("0");	// 发票行性质 0正常行、1折扣行、2被折扣行
 		mx.setSpmc("税控盘3");
 		mx.setSpsm("食品桂花花");
-		mx.setGgxh("品桂");
+		mx.setGgxh("MA-B12-IF-044-B12-IF");
 		mx.setDw("盒");
 		mx.setSpsl("99");
 		mx.setDj("-10");
@@ -1009,20 +1023,20 @@ public class CreatePdfServiceImlpTest {
 //		mxlist.add(mx);
 //		mxlist.add(mx); // 8
 		// =======================================
-//		mxlist.add(mx); // 9
-//		mxlist.add(mx); // 10
-//		mxlist.add(mx); // 11
-//		mxlist.add(mx); // 12
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
-//		mxlist.add(mx); // 13
+		mxlist.add(mx); // 9
+		mxlist.add(mx); // 10
+		mxlist.add(mx); // 11
+		mxlist.add(mx); // 12
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
+		mxlist.add(mx); // 13
 //		mxlist.add(mx); // 13
 //		mxlist.add(mx); // 13
 //		mxlist.add(mx); // 13

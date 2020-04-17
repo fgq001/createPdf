@@ -33,12 +33,14 @@ public class XMLDomServiceImpl implements XMLDomService {
 
         //替换xml中<smk>的  <>
         xmlContent = NumberUtil.strSkm(xmlContent);
+        xmlContent = NumberUtil.strEwm(xmlContent);
+
 //        System.out.println("替换后: "+xmlContent);
         FileUtils.printLog(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "修改后xml" + "\n\t" + xmlContent + "\n\t", FilePathConstant.LogFilePath + new SimpleDateFormat("yyyyMMdd").format(new Date()) + "xmlContent.txt");
 
-        String Charset = "GB2312";
+        String Charset = "utf-8";
         SAXReader reader = new SAXReader();
-        reader.setEncoding("GB2312");//这里设置文件编码
+        reader.setEncoding("utf-8");//这里设置文件编码
 //			Charset = "UTF-16";
         org.dom4j.Document doc = reader.read(new ByteArrayInputStream(xmlContent.getBytes(Charset)));
 //			doc = reader.read(new ByteArrayInputStream(context.getBytes("UTF-8")));
@@ -243,6 +245,10 @@ public class XMLDomServiceImpl implements XMLDomService {
             }
         }
 
+
+    }
+
+    public static void main(String[] args) {
 
     }
 }

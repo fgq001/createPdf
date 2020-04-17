@@ -279,7 +279,9 @@ public class NumberUtil
       extvounoLists.add(strs[strs.length-1]);
     }
 //        System.out.println("截取去掉<skm>  str1  =  "+str1);
-    s111 = str1.replaceAll("<","&lt;").replaceAll(">","&gt;");
+//    s111 = str1.replaceAll("<","&lt;").replaceAll(">","&gt;");
+    s111 = str1.replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll("%2B", "+").replaceAll("%2F", "/");
+
 //        System.out.println("替换后的<skm>值  s111  =  "+s111);
 
     String s221 = "<skm>"+str1+"</skm>";
@@ -314,7 +316,9 @@ public class NumberUtil
       extvounoLists.add(strs[strs.length-1]);
     }
 //        System.out.println("截取去掉<skm>  str1  =  "+str1);
-    s111 = str1.replaceAll("<","&lt;").replaceAll(">","&gt;");
+//    s111 = str1.replaceAll("<","&lt;").replaceAll(">","&gt;");
+    s111 = str1.replaceAll("%2B", "+").replaceAll("%2F", "/");;
+
 //        System.out.println("替换后的<skm>值  s111  =  "+s111);
 
     String s221 = "<ewm>"+str1+"</ewm>";

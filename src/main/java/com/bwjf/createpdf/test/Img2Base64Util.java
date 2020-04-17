@@ -146,4 +146,19 @@ public class Img2Base64Util {
     }
 
 
+    public static void main(String[] args) {
+//        String str = Img2Base64Util.GetImageStr("E:/aaaa/1.ofd");
+//        String dd = "iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAABpUlEQVR42u3dUXLCMAwEUN//0uEMibWKFZ4+O1OIXzpsvYZ2XSY2CwFcuAYuXLgG7nG4KzBVz3X3cV5bF1y4cOE+wN16US/CLQuZznXBhQsX7ibuXYhEsNx9/M51wYULF+4k3HiZAhcuXLh/jpu+Brhw4cKditsZIJ24n2rF4MKFOxo3cZB3wtc/e/oLFy7ccbgnFCjpUIqvES5cuHAbipt0mVJVuFRdP1y4cOFWBlpZedxYylTdsEhxAxcuXLhPvjmMXoWbvja4cOHCTeEmSpPOcr2zAIILFy7cykDrPFhM37zjNhFw4cKFWwh6wps5xuzQ4MKF+7e4O0H3VpnSeQAKFy5cuKv5AydVobSzEej8QYELFy7cjkBL/6I+ZXMBFy5cuFfhG/Eih3fhsrwq9CKBBhcuXLgPypF0OJwQjHDhwoXbjdsZXIkb81oAwoULF25DcZMuzk8OYbhw4cJdH/iD8J1wRx9QwoULF+4mbtUiE4X3+ECDCxfuaNzIRQSK6s4NC1y4cOFef/5/IhK4Y05/4cKFOw7X7A9cuHANXLhwDdzX5gftJbZzydpYAwAAAABJRU5ErkJggg==";
+//        String dd = "iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb+IFwAAABpUlEQVR42u3dUXLCMAwEUN//0uEMibWKFZ4+O1OIXzpsvYZ2XSY2CwFcuAYuXLgG7nG4KzBVz3X3cV5bF1y4cOE+wN16US/CLQuZznXBhQsX7ibuXYhEsNx9/M51wYULF+4k3HiZAhcuXLh/jpu+Brhw4cKditsZIJ24n2rF4MKFOxo3cZB3wtc/e/oLFy7ccbgnFCjpUIqvES5cuHAbipt0mVJVuFRdP1y4cOFWBlpZedxYylTdsEhxAxcuXLhPvjmMXoWbvja4cOHCTeEmSpPOcr2zAIILFy7cykDrPFhM37zjNhFw4cKFWwh6wps5xuzQ4MKF+7e4O0H3VpnSeQAKFy5cuKv5AydVobSzEej8QYELFy7cjkBL/6I+ZXMBFy5cuFfhG/Eih3fhsrwq9CKBBhcuXLgPypF0OJwQjHDhwoXbjdsZXIkb81oAwoULF25DcZMuzk8OYbhw4cJdH/iD8J1wRx9QwoULF+4mbtUiE4X3+ECDCxfuaNzIRQSK6s4NC1y4cOFef/5/IhK4Y05/4cKFOw7X7A9cuHANXLhwDdzX5gftJbZzydpYAwAAAABJRU5ErkJggg==";
+        String dd = "iVBORw0KGgoAAAANSUhEUgAAAHQAAAB0CAIAAADb IFwAAABpUlEQVR42u3dUXLCMAwEUN//0uEMibWKFZ4 O1OIXzpsvYZ2XSY2CwFcuAYuXLgG7nG4KzBVz3X3cV5bF1y4cOE wN16US/CLQuZznXBhQsX7ibuXYhEsNx9/M51wYULF 4k3HiZAhcuXLh/jpu Brhw4cKditsZIJ24n2rF4MKFOxo3cZB3wtc/e/oLFy7ccbgnFCjpUIqvES5cuHAbipt0mVJVuFRdP1y4cOFWBlpZedxYylTdsEhxAxcuXLhPvjmMXoWbvja4cOHCTeEmSpPOcr2zAIILFy7cykDrPFhM37zjNhFw4cKFWwh6wps5xuzQ4MKF 7e4O0H3VpnSeQAKFy5cuKv5AydVobSzEej8QYELFy7cjkBL/6I ZXMBFy5cuFfhG/Eih3fhsrwq9CKBBhcuXLgPypF0OJwQjHDhwoXbjdsZXIkb81oAwoULF25DcZMuzk8OYbhw4cJdH/iD8J1wRx9QwoULF 4mbtUiE4X3 ECDCxfuaNzIRQSK6s4NC1y4cOFef/5/IhK4Y05/4cKFOw7X7A9cuHANXLhwDdzX5gftJbZzydpYAwAAAABJRU5ErkJggg==";
+
+        boolean str = false;
+        try {
+            str = Img2Base64Util.GenerateImage(dd,"E:/aaaa/11.png");
+            str = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(str);
+    }
 }

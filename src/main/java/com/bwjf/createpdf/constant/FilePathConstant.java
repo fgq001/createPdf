@@ -1,5 +1,10 @@
 package com.bwjf.createpdf.constant;
 
+import com.bwjf.createpdf.entity.Porper;
+import com.bwjf.createpdf.service.XMLDomService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.File;
 
 public class FilePathConstant {

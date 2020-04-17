@@ -278,12 +278,12 @@ public class CreatePdfServiceImpl implements CreatePdfService{
                 TextAlign.setSimpleTextLeft("收购", 97.0F, 345.0F, 185.0F, 359.0F, fontST12, over1);
             }
 
-            TextAlign.setSimpleTextLeft(xxfp.getFpdm(), 475.0F, 372.0F, 585.0F, 381.0F, courier10, over1);
-            TextAlign.setSimpleTextLeft(xxfp.getFphm(), 475.0F, 343.5F, 585.0F, 363.5F, courier10, over1);
+            TextAlign.setSimpleTextLeft(xxfp.getFpdm(), 475.0F, 372.0F, 650.0F, 381.0F, courier10, over1);
+            TextAlign.setSimpleTextLeft(xxfp.getFphm(), 475.0F, 343.5F, 650.0F, 363.5F, courier10, over1);
             String kprq = xxfp.getKprq().substring(0, 4) + "  " + xxfp.getKprq().substring(4, 6) + "  "
                     + xxfp.getKprq().substring(6, 8);
             TextAlign.setSimpleTextLeft(kprq, 476.0F, 334.0F, 585.0F, 346.0F, courier10, over1);
-            TextAlign.setSimpleTextLeft(NumberUtil.Tostr(xxfp.getJym()), 475.0F, 319.5F, 585.0F, 329.5F, courier8, over1);
+            TextAlign.setSimpleTextLeft(NumberUtil.Tostr(xxfp.getJym()), 475.0F, 319.5F, 650.0F, 329.5F, courier8, over1);
             TextAlign.setSimpleTextLeft(xxfp.getJqbh(), 74.0F, 308.0F, 220.0F, 328.0F, courier11, over1);
 
             String skm1 = xxfp.getSkm().substring(0, 28);

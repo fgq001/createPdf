@@ -6,6 +6,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeWriter;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.junit.Test;
 import org.springframework.web.multipart.MultipartFile;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -242,6 +243,8 @@ public class EWMbase64util {
 		}
 	}
 
+
+
 	/**
 	 * 将base64编码转换成PDF
 	 *
@@ -251,11 +254,12 @@ public class EWMbase64util {
 	 *            3.建立从底层输入流中读取数据的BufferedInputStream缓冲输出流对象；
 	 *            4.使用BufferedOutputStream和FileOutputSteam输出数据到指定的文件中
 	 */
-	public static String base64ToPDF(String base64sString ,String filename) {
+	public synchronized static String base64ToPDF(String base64sString ,String filename) {
 		String code  = "";
 		BufferedInputStream bin = null;
 		FileOutputStream fout = null;
 		BufferedOutputStream bout = null;
+		PDDocument pdDocument = null;
 		try {
 			// 将base64编码的字符串解码成字节数组
 			BASE64Decoder decoder = new BASE64Decoder();
@@ -282,13 +286,13 @@ public class EWMbase64util {
 			// 刷新此输出流并强制写出所有缓冲的输出字节，必须这行代码，否则有可能有问题
 			bout.flush();
 			code = "success";
-			PDDocument pdDocument = PDDocument.load(file);
-			pdDocument.close();
+			pdDocument = PDDocument.load(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 			code = "failure";
 		} finally {
 			try {
+				pdDocument.close();
 				bin.close();
 				fout.close();
 				bout.close();

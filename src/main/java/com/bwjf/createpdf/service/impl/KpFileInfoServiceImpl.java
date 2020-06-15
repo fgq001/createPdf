@@ -6,6 +6,7 @@ package com.bwjf.createpdf.service.impl;
 //import com.bwjf.fp365.service.KpFileInfoService;
 import com.bwjf.createpdf.dao.KpFileInfoDao;
 import com.bwjf.createpdf.entity.BackupBwjfKpOutsideInteBaseInfoBean;
+import com.bwjf.createpdf.entity.KpCustomerInfo;
 import com.bwjf.createpdf.entity.KpFileInfo;
 import com.bwjf.createpdf.service.KpFileInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,5 +36,15 @@ public class KpFileInfoServiceImpl implements KpFileInfoService {
 	@Override
 	public int saveBackupBaseInfo(BackupBwjfKpOutsideInteBaseInfoBean baseInfoBean) {
 		return kpFileInfoDao.saveBackupBaseInfo(baseInfoBean);
+	}
+
+	@Override
+	public int saveBackupCustInfo(KpCustomerInfo customerInfo) {
+		return kpFileInfoDao.saveBackupCustInfo(customerInfo);
+	}
+
+	@Override
+	public List<KpFileInfo> kpFileInfoErrorAll(int limNum) {
+		return kpFileInfoDao.kpFileInfoErrorAll(limNum);
 	}
 }

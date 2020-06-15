@@ -1,0 +1,829 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bwjf.createpdf.dao.KpOutsideInteBaseinfoDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo" id="kpOutsideInteBaseinfoMap">
+        <result property="id" column="id"/>
+        <result property="koibFpdm" column="KOIB_FPDM"/>
+        <result property="koibFplxdm" column="KOIB_FPLXDM"/>
+        <result property="koibFphm" column="KOIB_FPHM"/>
+        <result property="koibFpzt" column="KOIB_FPZT"/>
+        <result property="koibScbz" column="KOIB_SCBZ"/>
+        <result property="koibKprq" column="KOIB_KPRQ"/>
+        <result property="koibJqbh" column="KOIB_JQBH"/>
+        <result property="koibSkm" column="KOIB_SKM"/>
+        <result property="koibDel" column="KOIB_DEL"/>
+        <result property="koibCreatetime" column="KOIB_CREATETIME"/>
+        <result property="koibDatasource" column="KOIB_DATASOURCE"/>
+        <result property="koibXsfId" column="KOIB_XSF_ID"/>
+        <result property="koibGmfId" column="KOIB_GMF_ID"/>
+        <result property="koibOrderno" column="KOIB_ORDERNO"/>
+        <result property="koibJym" column="KOIB_JYM"/>
+        <result property="koibBbh" column="KOIB_BBH"/>
+        <result property="koibBmbbbh" column="KOIB_BMBBBH"/>
+        <result property="koibZsfs" column="KOIB_ZSFS"/>
+        <result property="koibFyxmId" column="KOIB_FYXM_ID"/>
+        <result property="koibZhsl" column="KOIB_ZHSL"/>
+        <result property="koibHjje" column="KOIB_HJJE"/>
+        <result property="koibHjse" column="KOIB_HJSE"/>
+        <result property="koibJshj" column="KOIB_JSHJ"/>
+        <result property="koibBz" column="KOIB_BZ"/>
+        <result property="koibSkr" column="KOIB_SKR"/>
+        <result property="koibFhr" column="KOIB_FHR"/>
+        <result property="koibKpr" column="KOIB_KPR"/>
+        <result property="koibQpm" column="KOIB_QPM"/>
+        <result property="koibSender" column="KOIB_SENDER"/>
+        <result property="koibEmail" column="KOIB_EMAIL"/>
+        <result property="koibField1" column="KOIB_FIELD1"/>
+        <result property="koibField2" column="KOIB_FIELD2"/>
+        <result property="koibField3" column="KOIB_FIELD3"/>
+        <result property="koibField4" column="KOIB_FIELD4"/>
+        <result property="koibSkpbh" column="KOIB_SKPBH"/>
+        <result property="koibFpqqlsh" column="KOIB_FPQQLSH"/>
+        <result property="koibKplx" column="KOIB_KPLX"/>
+        <result property="koibTspz" column="KOIB_TSPZ"/>
+        <result property="koibKpstatus" column="KOIB_KPSTATUS"/>
+        <result property="koibKce" column="KOIB_KCE"/>
+        <result property="koibYfphm" column="KOIB_YFPHM"/>
+        <result property="koibYfpdm" column="KOIB_YFPDM"/>
+        <result property="koibPdfStatus" column="KOIB_PDFSTATUS"/>
+    </resultMap>
+
+    <sql id="BaseKpBaseInfo_Column_List">
+		KOIB_FPDM AS koibFpdm,
+		KOIB_FPHM AS koibFphm,
+		KOIB_FPLXDM AS KoibFplxdm,
+		KOIB_FPZT AS koibFpzt,
+		KOIB_SCBZ AS koibScbz,
+		KOIB_KPRQ AS koibKprq,
+		KOIB_JQBH AS koibJqbh,
+		KOIB_SKM AS koibSkm,
+		KOIB_DEL AS koibDel,
+		KOIB_CREATETIME AS koibCreatetime,
+		KOIB_DATASOURCE AS koibDatasource,
+		KOIB_XSF_ID AS koibXsfId,
+		KOIB_GMF_ID AS koibGmfId,
+		KOIB_ORDERNO AS koibOrderno,
+		KOIB_JYM AS koibJym,
+		KOIB_BBH AS koibBbh,
+		KOIB_BMBBBH AS koibBmbbbh,
+		KOIB_ZSFS AS koibZsfs,
+		KOIB_ZHSL AS koibZhsl,
+		KOIB_HJJE AS koibHjje,
+		KOIB_HJSE AS koibHjse,
+		KOIB_JSHJ AS koibJshj,
+		KOIB_BZ AS koibBz,
+		KOIB_SKR AS koibSkr,
+		KOIB_FHR AS koibFhr,
+		KOIB_KPR AS koibKpr,
+		KOIB_QPM AS koibQpm,
+		KOIB_SENDER AS koibSender,
+		KOIB_EMAIL AS koibEmail,
+		KOIB_FPQQLSH AS koibFpqqlsh,
+		KOIB_KPLX AS koibKplx,
+		KOIB_TSPZ AS koibTspz,
+		KOIB_KPSTATUS AS koibKpstatus,
+		KOIB_KCE as koibKce,
+		KOIB_YFPHM as koibYfphm,
+		KOIB_YFPDM as koibYfpdm,
+		KOIB_PDFSTATUS as koibPdfStatus
+	</sql>
+
+
+    <select id="get" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+		select * from kp_outside_inte_baseinfo_backNew where id = #{value}
+	</select>
+
+
+    <!--(SELECT kci.kci_name FROM kp_customer_info kci WHERE kci.koib_id = t.id AND kci.kci_type = '0' AND kci.kci_del = '0') AS xsfName,
+    (SELECT kci.kci_nrsbrbh FROM kp_customer_info kci WHERE kci.koib_id = t.id AND kci.kci_type = '0' AND kci.kci_del = '0') AS xsfNsrsbh,
+    (SELECT kci.kci_name FROM kp_customer_info kci WHERE kci.koib_id = t.id AND kci.kci_type = '1' AND kci.kci_del = '0') AS gmfName,
+    (SELECT kci.kci_nrsbrbh FROM kp_customer_info kci WHERE kci.koib_id = t.id AND kci.kci_type = '1' AND kci.kci_del = '0') AS gmfNsrsbh,
+    (select count(*) from kp_outside_inte_fyxm fyxm where fyxm.koib_id = t.id) as kpxmsl-->
+
+    <select id="getList" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        select t.id,
+        <include refid="BaseKpBaseInfo_Column_List"/>
+        from kp_outside_inte_baseinfo_backNew t
+        left join kp_customer_info kci on kci.koib_id = t.id
+        <include refid="where_clause"/>
+        and t.KOIB_FPLXDM= 026
+        AND kci.KCI_TYPE = '0'
+
+        <if test="koibFphm != null and koibFphm != ''">
+            and t.KOIB_FPHM = #{koibFphm}
+        </if>
+        <if test="koibFpdm != null and koibFpdm != ''">
+            and t.KOIB_FPDM = #{koibFpdm}
+        </if>
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = t.id
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            AND kci.KCI_TYPE = '0'
+            )
+        </if>
+        <if test="koibStarttime != null and koibStarttime != ''">
+            and SUBSTRING(t.KOIB_KPRQ, 1, 8) &gt; #{koibStarttime}
+        </if>
+        <if test="koibEndtime != null and koibEndtime != ''">
+            and SUBSTRING(t.KOIB_KPRQ, 1, 8) &lt;= #{koibEndtime}
+        </if>
+
+        <if test="userId != null and userId != ''">
+            and kci.KCI_NRSBRBH IN
+            (SELECT tc.vnuitedcode FROM tcrm_customerinfo tc WHERE tc.CREATE_USER IN (
+            SELECT su.user_id FROM sys_user su WHERE su.user_id = #{userId}))
+        </if>
+
+
+        and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = t.id
+        <if test="gmfName != null and gmfName != ''">
+            and kci.KCI_NAME like concat('%',#{gmfName},'%')
+        </if>
+        <!--<if test="koibType != null and koibType != ''">-->
+        and kci.KCI_TYPE = '1'
+        <!--</if>-->
+        <if test="gmfNsrsbh != null and gmfNsrsbh != ''">
+            and kci.KCI_NRSBRBH = #{gmfNsrsbh}
+        </if>
+        )
+
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+
+    <select id="getInvoiceInfoByVnuitedcode" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        select t.id,
+        <include refid="BaseKpBaseInfo_Column_List"/>
+        from kp_outside_inte_baseinfo_backNew t
+        left join kp_customer_info kci on kci.koib_id = t.id
+        <include refid="where_clause"/>
+        and kci.koib_id = t.id
+        and t.KOIB_FPLXDM= 026
+        AND kci.KCI_TYPE = '0'
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            and kci.KCI_TYPE = '0'
+        </if>
+        <if test="koibFphm != null and koibFphm != ''">
+            and t.KOIB_FPHM = #{koibFphm}
+        </if>
+        <if test="koibFpdm != null and koibFpdm != ''">
+            and t.KOIB_FPDM = #{koibFpdm}
+        </if>
+        and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = t.id
+        <if test="gmfName != null and gmfName != ''">
+            and kci.KCI_NAME like concat('%',#{gmfName},'%')
+        </if>
+        <if test="koibType != null and koibType != ''">
+            and kci.KCI_TYPE = #{koibType}
+        </if>
+        <if test="gmfNsrsbh != null and gmfNsrsbh != ''">
+            and kci.KCI_NRSBRBH = #{gmfNsrsbh}
+        </if>
+        )
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="getPdfInfoById" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        select t.id,
+        <include refid="BaseKpBaseInfo_Column_List"/>,
+        (select count(*) from kp_outside_inte_fyxm fyxm where fyxm.koib_id = t.id) as kpxmsl
+        from kp_outside_inte_baseinfo_backNew t
+        where t.id = #{id}
+
+    </select>
+
+    <select id="getCount" resultType="int">
+        select count(*) from kp_outside_inte_baseinfo_backNew t
+        left join kp_customer_info kci on kci.koib_id = t.id
+        <include refid="where_clause"/>
+        and kci.koib_id = t.id
+        and t.KOIB_FPLXDM= 026
+        AND kci.KCI_TYPE = '0'
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = t.id
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            AND kci.KCI_TYPE = '0'
+            )
+        </if>
+        <if test="koibStarttime != null and koibStarttime != ''">
+            and SUBSTRING(t.KOIB_KPRQ, 1, 8) &gt; #{koibStarttime}
+        </if>
+        <if test="koibEndtime != null and koibEndtime != ''">
+            and SUBSTRING(t.KOIB_KPRQ, 1, 8) &lt;= #{koibEndtime}
+        </if>
+        <if test="koibFphm != null and koibFphm != ''">
+            and t.KOIB_FPHM = #{koibFphm}
+        </if>
+        <if test="koibFpdm != null and koibFpdm != ''">
+            and t.KOIB_FPDM = #{koibFpdm}
+        </if>
+        <if test="userId != null and userId != ''">
+            and kci.KCI_NRSBRBH IN
+            (SELECT tc.vnuitedcode FROM tcrm_customerinfo tc WHERE tc.CREATE_USER IN (
+            SELECT su.user_id FROM sys_user su WHERE su.user_id = #{userId}))
+        </if>
+
+        and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = t.id
+        <if test="gmfName != null and gmfName != ''">
+            and kci.KCI_NAME like concat('%',#{gmfName},'%')
+        </if>
+        <!--<if test="koibType != null and koibType != ''">-->
+        and kci.KCI_TYPE = '1'
+        <!--</if>-->
+        <if test="gmfNsrsbh != null and gmfNsrsbh != ''">
+            and kci.KCI_NRSBRBH = #{gmfNsrsbh}
+        </if>
+        )
+
+    </select>
+
+
+    <select id="getInvoiceCountByVnuitedcode" resultType="int">
+        select count(*) from kp_outside_inte_baseinfo_backNew t
+        left join kp_customer_info kci on kci.koib_id = t.id
+        <include refid="where_clause"/>
+
+        and t.KOIB_FPLXDM= 026
+        and t.KOIB_DEL = '0'
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            and kci.KCI_TYPE = '0'
+        </if>
+        <if test="koibStarttime != null and koibStarttime != ''">
+            and SUBSTRING(t.KOIB_KPRQ, 1, 8) &gt; #{koibStarttime}
+        </if>
+        <if test="koibEndtime != null and koibEndtime != ''">
+            and SUBSTRING(t.KOIB_KPRQ, 1, 8) &lt;= #{koibEndtime}
+        </if>
+        and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = t.id
+        <if test="gmfName != null and gmfName != ''">
+            and kci.KCI_NAME like concat('%',#{gmfName},'%')
+        </if>
+        <if test="koibType != null and koibType != ''">
+            and kci.KCI_TYPE = #{koibType}
+        </if>
+        <if test="gmfNsrsbh != null and gmfNsrsbh != ''">
+            and kci.KCI_NRSBRBH = #{gmfNsrsbh}
+        </if>
+        )
+    </select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''">and t.id = #{id}</if>
+            <if test="idVague != null and idVague != ''">and t.id like concat('%',#{idVague},'%')</if>
+            <if test="koibFpdm != null and koibFpdm != ''">and t.KOIB_FPDM = #{koibFpdm}</if>
+            <if test="koibFpdmVague != null and koibFpdmVague != ''">and t.KOIB_FPDM like
+                concat('%',#{koibFpdmVague},'%')
+            </if>
+            <if test="koibFplxdm != null and koibFplxdm != ''">and t.KOIB_FPLXDM = #{koibFplxdm}</if>
+            <if test="koibFplxdmVague != null and koibFplxdmVague != ''">and t.KOIB_FPLXDM like
+                concat('%',#{koibFplxdmVague},'%')
+            </if>
+            <if test="koibFphm != null and koibFphm != ''">and t.KOIB_FPHM = #{koibFphm}</if>
+            <if test="koibFphmVague != null and koibFphmVague != ''">and t.KOIB_FPHM like
+                concat('%',#{koibFphmVague},'%')
+            </if>
+            <if test="koibFpzt != null and koibFpzt != ''">and t.KOIB_FPZT = #{koibFpzt}</if>
+            <if test="koibFpztVague != null and koibFpztVague != ''">and t.KOIB_FPZT like
+                concat('%',#{koibFpztVague},'%')
+            </if>
+            <if test="koibScbz != null and koibScbz != ''">and t.KOIB_SCBZ = #{koibScbz}</if>
+            <if test="koibScbzVague != null and koibScbzVague != ''">and t.KOIB_SCBZ like
+                concat('%',#{koibScbzVague},'%')
+            </if>
+            <if test="koibKprq != null and koibKprq != ''">and t.KOIB_KPRQ = #{koibKprq}</if>
+            <if test="koibKprqVague != null and koibKprqVague != ''">and t.KOIB_KPRQ like
+                concat('%',#{koibKprqVague},'%')
+            </if>
+            <if test="koibJqbh != null and koibJqbh != ''">and t.KOIB_JQBH = #{koibJqbh}</if>
+            <if test="koibJqbhVague != null and koibJqbhVague != ''">and t.KOIB_JQBH like
+                concat('%',#{koibJqbhVague},'%')
+            </if>
+            <if test="koibSkm != null and koibSkm != ''">and t.KOIB_SKM = #{koibSkm}</if>
+            <if test="koibSkmVague != null and koibSkmVague != ''">and t.KOIB_SKM like concat('%',#{koibSkmVague},'%')
+            </if>
+            <if test="koibDel != null and koibDel != ''">and t.KOIB_DEL = #{koibDel}</if>
+            <if test="koibDelVague != null and koibDelVague != ''">and t.KOIB_DEL like concat('%',#{koibDelVague},'%')
+            </if>
+            <if test="koibCreatetime != null and koibCreatetime != ''">and t.KOIB_CREATETIME = #{koibCreatetime}</if>
+            <if test="koibCreatetimeVague != null and koibCreatetimeVague != ''">and t.KOIB_CREATETIME like
+                concat('%',#{koibCreatetimeVague},'%')
+            </if>
+            <if test="koibDatasource != null and koibDatasource != ''">and t.KOIB_DATASOURCE = #{koibDatasource}</if>
+            <if test="koibDatasourceVague != null and koibDatasourceVague != ''">and t.KOIB_DATASOURCE like
+                concat('%',#{koibDatasourceVague},'%')
+            </if>
+            <if test="koibXsfId != null and koibXsfId != ''">and t.KOIB_XSF_ID = #{koibXsfId}</if>
+            <if test="koibXsfIdVague != null and koibXsfIdVague != ''">and t.KOIB_XSF_ID like
+                concat('%',#{koibXsfIdVague},'%')
+            </if>
+            <if test="koibGmfId != null and koibGmfId != ''">and t.KOIB_GMF_ID = #{koibGmfId}</if>
+            <if test="koibGmfIdVague != null and koibGmfIdVague != ''">and t.KOIB_GMF_ID like
+                concat('%',#{koibGmfIdVague},'%')
+            </if>
+            <if test="koibOrderno != null and koibOrderno != ''">and t.KOIB_ORDERNO = #{koibOrderno}</if>
+            <if test="koibOrdernoVague != null and koibOrdernoVague != ''">and t.KOIB_ORDERNO like
+                concat('%',#{koibOrdernoVague},'%')
+            </if>
+            <if test="koibJym != null and koibJym != ''">and t.KOIB_JYM = #{koibJym}</if>
+            <if test="koibJymVague != null and koibJymVague != ''">and t.KOIB_JYM like concat('%',#{koibJymVague},'%')
+            </if>
+            <if test="koibBbh != null and koibBbh != ''">and t.KOIB_BBH = #{koibBbh}</if>
+            <if test="koibBbhVague != null and koibBbhVague != ''">and t.KOIB_BBH like concat('%',#{koibBbhVague},'%')
+            </if>
+            <if test="koibBmbbbh != null and koibBmbbbh != ''">and t.KOIB_BMBBBH = #{koibBmbbbh}</if>
+            <if test="koibBmbbbhVague != null and koibBmbbbhVague != ''">and t.KOIB_BMBBBH like
+                concat('%',#{koibBmbbbhVague},'%')
+            </if>
+            <if test="koibZsfs != null and koibZsfs != ''">and t.KOIB_ZSFS = #{koibZsfs}</if>
+            <if test="koibZsfsVague != null and koibZsfsVague != ''">and t.KOIB_ZSFS like
+                concat('%',#{koibZsfsVague},'%')
+            </if>
+            <if test="koibFyxmId != null and koibFyxmId != ''">and t.KOIB_FYXM_ID = #{koibFyxmId}</if>
+            <if test="koibFyxmIdVague != null and koibFyxmIdVague != ''">and t.KOIB_FYXM_ID like
+                concat('%',#{koibFyxmIdVague},'%')
+            </if>
+            <if test="koibZhsl != null and koibZhsl != ''">and t.KOIB_ZHSL = #{koibZhsl}</if>
+            <if test="koibZhslVague != null and koibZhslVague != ''">and t.KOIB_ZHSL like
+                concat('%',#{koibZhslVague},'%')
+            </if>
+            <if test="koibHjje != null and koibHjje != ''">and t.KOIB_HJJE = #{koibHjje}</if>
+            <if test="koibHjjeVague != null and koibHjjeVague != ''">and t.KOIB_HJJE like
+                concat('%',#{koibHjjeVague},'%')
+            </if>
+            <if test="koibHjse != null and koibHjse != ''">and t.KOIB_HJSE = #{koibHjse}</if>
+            <if test="koibHjseVague != null and koibHjseVague != ''">and t.KOIB_HJSE like
+                concat('%',#{koibHjseVague},'%')
+            </if>
+            <if test="koibJshj != null and koibJshj != ''">and t.KOIB_JSHJ = #{koibJshj}</if>
+            <if test="koibJshjVague != null and koibJshjVague != ''">and t.KOIB_JSHJ like
+                concat('%',#{koibJshjVague},'%')
+            </if>
+            <if test="koibBz != null and koibBz != ''">and t.KOIB_BZ = #{koibBz}</if>
+            <if test="koibBzVague != null and koibBzVague != ''">and t.KOIB_BZ like concat('%',#{koibBzVague},'%')</if>
+            <if test="koibSkr != null and koibSkr != ''">and t.KOIB_SKR = #{koibSkr}</if>
+            <if test="koibSkrVague != null and koibSkrVague != ''">and t.KOIB_SKR like concat('%',#{koibSkrVague},'%')
+            </if>
+            <if test="koibFhr != null and koibFhr != ''">and t.KOIB_FHR = #{koibFhr}</if>
+            <if test="koibFhrVague != null and koibFhrVague != ''">and t.KOIB_FHR like concat('%',#{koibFhrVague},'%')
+            </if>
+            <if test="koibKpr != null and koibKpr != ''">and t.KOIB_KPR = #{koibKpr}</if>
+            <if test="koibKprVague != null and koibKprVague != ''">and t.KOIB_KPR like concat('%',#{koibKprVague},'%')
+            </if>
+            <if test="koibQpm != null and koibQpm != ''">and t.KOIB_QPM = #{koibQpm}</if>
+            <if test="koibQpmVague != null and koibQpmVague != ''">and t.KOIB_QPM like concat('%',#{koibQpmVague},'%')
+            </if>
+            <if test="koibSender != null and koibSender != ''">and t.KOIB_SENDER = #{koibSender}</if>
+            <if test="koibSenderVague != null and koibSenderVague != ''">and t.KOIB_SENDER like
+                concat('%',#{koibSenderVague},'%')
+            </if>
+            <if test="koibEmail != null and koibEmail != ''">and t.KOIB_EMAIL = #{koibEmail}</if>
+            <if test="koibEmailVague != null and koibEmailVague != ''">and t.KOIB_EMAIL like
+                concat('%',#{koibEmailVague},'%')
+            </if>
+            <if test="koibField1 != null and koibField1 != ''">and t.KOIB_FIELD1 = #{koibField1}</if>
+            <if test="koibField1Vague != null and koibField1Vague != ''">and t.KOIB_FIELD1 like
+                concat('%',#{koibField1Vague},'%')
+            </if>
+            <if test="koibField2 != null and koibField2 != ''">and t.KOIB_FIELD2 = #{koibField2}</if>
+            <if test="koibField2Vague != null and koibField2Vague != ''">and t.KOIB_FIELD2 like
+                concat('%',#{koibField2Vague},'%')
+            </if>
+            <if test="koibField3 != null and koibField3 != ''">and t.KOIB_FIELD3 = #{koibField3}</if>
+            <if test="koibField3Vague != null and koibField3Vague != ''">and t.KOIB_FIELD3 like
+                concat('%',#{koibField3Vague},'%')
+            </if>
+            <if test="koibField4 != null and koibField4 != ''">and t.KOIB_FIELD4 = #{koibField4}</if>
+            <if test="koibField4Vague != null and koibField4Vague != ''">and t.KOIB_FIELD4 like
+                concat('%',#{koibField4Vague},'%')
+            </if>
+            <if test="koibSkpbh != null and koibSkpbh != ''">and t.KOIB_SKPBH = #{koibSkpbh}</if>
+            <if test="koibSkpbhVague != null and koibSkpbhVague != ''">and t.KOIB_SKPBH like
+                concat('%',#{koibSkpbhVague},'%')
+            </if>
+            <if test="koibFpqqlsh != null and koibFpqqlsh != ''">and t.KOIB_FPQQLSH = #{koibFpqqlsh}</if>
+            <if test="koibFpqqlshVague != null and koibFpqqlshVague != ''">and t.KOIB_FPQQLSH like
+                concat('%',#{koibFpqqlshVague},'%')
+            </if>
+            <if test="koibKplx != null and koibKplx != ''">and t.KOIB_KPLX = #{koibKplx}</if>
+            <if test="koibKplxVague != null and koibKplxVague != ''">and t.KOIB_KPLX like
+                concat('%',#{koibKplxVague},'%')
+            </if>
+            <if test="koibTspz != null and koibTspz != ''">and t.KOIB_TSPZ = #{koibTspz}</if>
+            <if test="koibTspzVague != null and koibTspzVague != ''">and t.KOIB_TSPZ like
+                concat('%',#{koibTspzVague},'%')
+            </if>
+            <if test="koibKpstatus != null and koibKpstatus != ''">and t.KOIB_KPSTATUS = #{koibKpstatus}</if>
+            <if test="koibKpstatusVague != null and koibKpstatusVague != ''">and t.KOIB_KPSTATUS like
+                concat('%',#{koibKpstatusVague},'%')
+            </if>
+            <if test="koibKce != null and koibKce != ''">and t.KOIB_KCE = #{koibKce}</if>
+            <if test="koibKceVague != null and koibKceVague != ''">and t.KOIB_KCE like concat('%',#{koibKceVague},'%')
+            </if>
+            <if test="koibYfphm != null and koibYfphm != ''">and t.KOIB_YFPHM = #{koibYfphm}</if>
+            <if test="koibYfphmVague != null and koibYfphmVague != ''">and t.KOIB_YFPHM like
+                concat('%',#{koibYfphmVague},'%')
+            </if>
+            <if test="koibYfpdm != null and koibYfpdm != ''">and t.KOIB_YFPDM = #{koibYfpdm}</if>
+            <if test="koibYfpdmVague != null and koibYfpdmVague != ''">and t.KOIB_YFPDM like
+                concat('%',#{koibYfpdmVague},'%')
+            </if>
+
+            <!-- <if test="koibStarttime != null and koibStarttime != ''">
+                 and t.KOIB_CREATETIME &gt; #{koibStarttime}
+             </if>
+
+             <if test="koibEndtime != null and koibEndtime != ''">
+                 and t.KOIB_CREATETIME &lt;= #{koibEndtime}
+             </if>-->
+
+
+        </where>
+    </sql>
+
+    <insert id="save" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo" useGeneratedKeys="true" keyProperty="id">
+		insert into kp_outside_inte_baseinfo_backNew
+		(
+		    `id`,
+			`KOIB_FPDM`, 
+			`KOIB_FPLXDM`, 
+			`KOIB_FPHM`, 
+			`KOIB_FPZT`, 
+			`KOIB_SCBZ`, 
+			`KOIB_KPRQ`, 
+			`KOIB_JQBH`, 
+			`KOIB_SKM`, 
+			`KOIB_DEL`, 
+			`KOIB_CREATETIME`, 
+			`KOIB_DATASOURCE`, 
+			`KOIB_XSF_ID`, 
+			`KOIB_GMF_ID`, 
+			`KOIB_ORDERNO`, 
+			`KOIB_JYM`, 
+			`KOIB_BBH`, 
+			`KOIB_BMBBBH`, 
+			`KOIB_ZSFS`, 
+			`KOIB_FYXM_ID`, 
+			`KOIB_ZHSL`, 
+			`KOIB_HJJE`, 
+			`KOIB_HJSE`, 
+			`KOIB_JSHJ`, 
+			`KOIB_BZ`, 
+			`KOIB_SKR`, 
+			`KOIB_FHR`, 
+			`KOIB_KPR`, 
+			`KOIB_QPM`, 
+			`KOIB_SENDER`, 
+			`KOIB_EMAIL`, 
+			`KOIB_FIELD1`, 
+			`KOIB_FIELD2`, 
+			`KOIB_FIELD3`, 
+			`KOIB_FIELD4`, 
+			`KOIB_SKPBH`, 
+			`KOIB_FPQQLSH`, 
+			`KOIB_KPLX`, 
+			`KOIB_TSPZ`, 
+			`KOIB_KPSTATUS`, 
+			`KOIB_KCE`, 
+			`KOIB_YFPHM`, 
+			`KOIB_YFPDM`,
+			KOIB_PDFSTATUS
+		)
+		values
+		(
+		    #{id},
+			#{koibFpdm}, 
+			#{koibFplxdm}, 
+			#{koibFphm}, 
+			#{koibFpzt}, 
+			#{koibScbz}, 
+			#{koibKprq}, 
+			#{koibJqbh}, 
+			#{koibSkm}, 
+			#{koibDel}, 
+			#{koibCreatetime}, 
+			#{koibDatasource}, 
+			#{koibXsfId}, 
+			#{koibGmfId}, 
+			#{koibOrderno}, 
+			#{koibJym}, 
+			#{koibBbh}, 
+			#{koibBmbbbh}, 
+			#{koibZsfs}, 
+			#{koibFyxmId}, 
+			#{koibZhsl}, 
+			#{koibHjje}, 
+			#{koibHjse}, 
+			#{koibJshj}, 
+			#{koibBz}, 
+			#{koibSkr}, 
+			#{koibFhr}, 
+			#{koibKpr}, 
+			#{koibQpm}, 
+			#{koibSender}, 
+			#{koibEmail}, 
+			#{koibField1}, 
+			#{koibField2}, 
+			#{koibField3}, 
+			#{koibField4}, 
+			#{koibSkpbh}, 
+			#{koibFpqqlsh}, 
+			#{koibKplx}, 
+			#{koibTspz}, 
+			#{koibKpstatus}, 
+			#{koibKce}, 
+			#{koibYfphm}, 
+			#{koibYfpdm},
+			#{koibPdfstatus}
+		)
+	</insert>
+
+    <update id="update" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        update kp_outside_inte_baseinfo_backNew
+        <set>
+            <if test="koibFpdm != null">`KOIB_FPDM` = #{koibFpdm},</if>
+            <if test="koibFplxdm != null">`KOIB_FPLXDM` = #{koibFplxdm},</if>
+            <if test="koibFphm != null">`KOIB_FPHM` = #{koibFphm},</if>
+            <if test="koibFpzt != null">`KOIB_FPZT` = #{koibFpzt},</if>
+            <if test="koibScbz != null">`KOIB_SCBZ` = #{koibScbz},</if>
+            <if test="koibKprq != null">`KOIB_KPRQ` = #{koibKprq},</if>
+            <if test="koibJqbh != null">`KOIB_JQBH` = #{koibJqbh},</if>
+            <if test="koibSkm != null">`KOIB_SKM` = #{koibSkm},</if>
+            <if test="koibDel != null">`KOIB_DEL` = #{koibDel},</if>
+            <if test="koibCreatetime != null">`KOIB_CREATETIME` = #{koibCreatetime},</if>
+            <if test="koibDatasource != null">`KOIB_DATASOURCE` = #{koibDatasource},</if>
+            <if test="koibXsfId != null">`KOIB_XSF_ID` = #{koibXsfId},</if>
+            <if test="koibGmfId != null">`KOIB_GMF_ID` = #{koibGmfId},</if>
+            <if test="koibOrderno != null">`KOIB_ORDERNO` = #{koibOrderno},</if>
+            <if test="koibJym != null">`KOIB_JYM` = #{koibJym},</if>
+            <if test="koibBbh != null">`KOIB_BBH` = #{koibBbh},</if>
+            <if test="koibBmbbbh != null">`KOIB_BMBBBH` = #{koibBmbbbh},</if>
+            <if test="koibZsfs != null">`KOIB_ZSFS` = #{koibZsfs},</if>
+            <if test="koibFyxmId != null">`KOIB_FYXM_ID` = #{koibFyxmId},</if>
+            <if test="koibZhsl != null">`KOIB_ZHSL` = #{koibZhsl},</if>
+            <if test="koibHjje != null">`KOIB_HJJE` = #{koibHjje},</if>
+            <if test="koibHjse != null">`KOIB_HJSE` = #{koibHjse},</if>
+            <if test="koibJshj != null">`KOIB_JSHJ` = #{koibJshj},</if>
+            <if test="koibBz != null">`KOIB_BZ` = #{koibBz},</if>
+            <if test="koibSkr != null">`KOIB_SKR` = #{koibSkr},</if>
+            <if test="koibFhr != null">`KOIB_FHR` = #{koibFhr},</if>
+            <if test="koibKpr != null">`KOIB_KPR` = #{koibKpr},</if>
+            <if test="koibQpm != null">`KOIB_QPM` = #{koibQpm},</if>
+            <if test="koibSender != null">`KOIB_SENDER` = #{koibSender},</if>
+            <if test="koibEmail != null">`KOIB_EMAIL` = #{koibEmail},</if>
+            <if test="koibField1 != null">`KOIB_FIELD1` = #{koibField1},</if>
+            <if test="koibField2 != null">`KOIB_FIELD2` = #{koibField2},</if>
+            <if test="koibField3 != null">`KOIB_FIELD3` = #{koibField3},</if>
+            <if test="koibField4 != null">`KOIB_FIELD4` = #{koibField4},</if>
+            <if test="koibSkpbh != null">`KOIB_SKPBH` = #{koibSkpbh},</if>
+            <if test="koibFpqqlsh != null">`KOIB_FPQQLSH` = #{koibFpqqlsh},</if>
+            <if test="koibKplx != null">`KOIB_KPLX` = #{koibKplx},</if>
+            <if test="koibTspz != null">`KOIB_TSPZ` = #{koibTspz},</if>
+            <if test="koibKpstatus != null">`KOIB_KPSTATUS` = #{koibKpstatus},</if>
+            <if test="koibKce != null">`KOIB_KCE` = #{koibKce},</if>
+            <if test="koibYfphm != null">`KOIB_YFPHM` = #{koibYfphm},</if>
+            <if test="koibYfpdm != null">`KOIB_YFPDM` = #{koibYfpdm}</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="delete">
+		update from kp_outside_inte_baseinfo_backNew set istatus = '-1' where id = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        update kp_outside_inte_baseinfo_backNew set istatus = '-1' where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <!-- 根据发票id 获取发票相关信息以及pdf文件 -->
+    <select id="getKpBaseInfoById" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        SELECT
+        <include refid="BaseKpBaseInfo_Column_List"/>,
+        kfi.KOIF_FILE_ADDR AS koifFileAddr,
+        koib.id as id
+        FROM kp_outside_inte_baseinfo_backNew koib
+        INNER JOIN kp_file_info kfi ON kfi.KOIB_ID = koib.id
+        WHERE kfi.KOIF_DEL = '0' AND koib.KOIB_DEL = '0'
+        AND kfi.KOIF_TYPE = '1'
+        <if test="id != null">
+            AND koib.id = #{id}
+        </if>
+    </select>
+
+    <select id="getInvoiceById" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        SELECT
+        <include refid="BaseKpBaseInfo_Column_List"/>
+        FROM kp_outside_inte_baseinfo_backNew koib
+        where koib.KOIB_DEL = '0'
+        <if test="id != null">
+            AND koib.id = #{id}
+        </if>
+    </select>
+
+    <select id="get7DayskpCount" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        SELECT COUNT(1) as kpCount,koib.KOIB_CREATETIME FROM kp_outside_inte_baseinfo_backNew koib
+        left join kp_customer_info kci on kci.koib_id = koib.id
+        WHERE koib.KOIB_CREATETIME BETWEEN DATE_SUB(NOW(),INTERVAL 7 DAY)
+        AND NOW()
+        and koib.KOIB_FPLXDM = '026' and koib.KOIB_DEL = '0'
+        <if test="userId != null and userId != ''">
+            and kci.KCI_NRSBRBH IN
+            (SELECT tc.vnuitedcode FROM tcrm_customerinfo tc WHERE tc.CREATE_USER IN (
+            SELECT su.user_id FROM sys_user su WHERE su.user_id = #{userId}))
+        </if>
+        and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = koib.id
+        <if test="koibType != null and koibType != ''">
+            and kci.KCI_TYPE = #{koibType}
+        </if>
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+        </if>
+        )
+        GROUP BY DATE_FORMAT(koib.KOIB_CREATETIME,'%m-%d-%Y')
+    </select>
+
+    <select id="getfpLxCount" resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        SELECT
+        (
+        SELECT COUNT(koib.id) FROM kp_outside_inte_baseinfo_backNew koib WHERE koib.KOIB_FPLXDM= '004'
+        and koib.KOIB_DEL = '0'
+        <!-- <if test="userId != null and userId != ''">
+             and kci.KCI_NRSBRBH IN
+             (SELECT tc.vnuitedcode FROM tcrm_customerinfo tc WHERE tc.CREATE_USER IN (
+             SELECT su.user_id FROM sys_user su WHERE su.user_id = #{userId}))
+         </if>-->
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = koib.id
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            <if test="koibType != null and koibType != ''">
+                and kci.KCI_TYPE = #{koibType}
+            </if>
+            )
+        </if>
+        ) AS zpdzfp,
+        (SELECT COUNT(koib.id) FROM kp_outside_inte_baseinfo_backNew koib WHERE koib.KOIB_FPLXDM= '007'
+        and koib.KOIB_DEL = '0'
+        <!--<if test="userId != null and userId != ''">
+            and kci.KCI_NRSBRBH IN
+            (SELECT tc.vnuitedcode FROM tcrm_customerinfo tc WHERE tc.CREATE_USER IN (
+            SELECT su.user_id FROM sys_user su WHERE su.user_id = #{userId}))
+        </if>-->
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = koib.id
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            <if test="koibType != null and koibType != ''">
+                and kci.KCI_TYPE = #{koibType}
+            </if>
+            )
+        </if>
+        ) AS ppdzfp,
+        (SELECT COUNT(koib.id) FROM kp_outside_inte_baseinfo_backNew koib WHERE koib.KOIB_FPLXDM= '025'
+        and koib.KOIB_DEL = '0'
+        <!--<if test="userId != null and userId != ''">
+            and kci.KCI_NRSBRBH IN
+            (SELECT tc.vnuitedcode FROM tcrm_customerinfo tc WHERE tc.CREATE_USER IN (
+            SELECT su.user_id FROM sys_user su WHERE su.user_id = #{userId}))
+        </if>-->
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = koib.id
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            <if test="koibType != null and koibType != ''">
+                and kci.KCI_TYPE = #{koibType}
+            </if>
+            )
+        </if>
+        ) AS jpdzfp,
+        (SELECT COUNT(koib.id) FROM kp_outside_inte_baseinfo_backNew koib WHERE koib.KOIB_FPLXDM= '026'
+        and koib.KOIB_DEL = '0'
+        <!--<if test="userId != null and userId != ''">
+            and kci.KCI_NRSBRBH IN
+            (SELECT tc.vnuitedcode FROM tcrm_customerinfo tc WHERE tc.CREATE_USER IN (
+            SELECT su.user_id FROM sys_user su WHERE su.user_id = #{userId}))
+        </if>-->
+        <if test="xsfNsrsbh != null and xsfNsrsbh != ''">
+            and EXISTS(select kci.KOIB_ID from kp_customer_info kci where kci.KOIB_ID = koib.id
+            and kci.KCI_NRSBRBH = #{xsfNsrsbh}
+            <if test="koibType != null and koibType != ''">
+                and kci.KCI_TYPE = #{koibType}
+            </if>
+            )
+        </if>
+        ) AS dpdzfp
+        FROM kp_outside_inte_baseinfo_backNew koib
+        LEFT JOIN kp_customer_info kci ON kci.koib_id = koib.id
+        GROUP BY koib.KOIB_FPLXDM
+    </select>
+
+
+    <!-- 根据请求流水号修改发票信息  -->
+    <update id="updateKpBaseInfoByFpqqlsh" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        UPDATE
+        kp_outside_inte_baseinfo_backNew t
+        SET
+        <if test="koibFpdm != null">
+            t.KOIB_FPDM = #{koibFpdm},
+        </if>
+        <if test="koibFphm != null">
+            t.KOIB_FPHM = #{koibFphm},
+        </if>
+        <if test="koibJqbh != null">
+            t.KOIB_JQBH = #{koibJqbh},
+        </if>
+        <if test="koibKprq != null">
+            t.KOIB_KPRQ = #{koibKprq},
+        </if>
+        <if test="koibJym != null">
+            t.KOIB_JYM = #{koibJym},
+        </if>
+        <if test="koibBz != null">
+            t.KOIB_BZ = #{koibBz},
+        </if>
+        <if test="koibHeadtype != null">
+            t.koib_headtype = #{koibHeadtype},
+        </if>
+        <!-- 		  t.KOIB_DATASOURCE = '0',-->
+        t.KOIB_KPSTATUS = '1',
+        t.KOIB_UPLOADSTATUS = '1'
+        WHERE t.KOIB_FPQQLSH = #{koibFpqqlsh}
+        AND t.KOIB_DEL = '0'
+    </update>
+
+    <select id="getBaseInfoByFpqqlsh" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo"
+            resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        select
+        <include refid="BaseKpBaseInfo_Column_List"/>
+        from
+        kp_outside_inte_baseinfo_backNew
+        where KOIB_DEL = '0'
+        and KOIB_FPQQLSH = #{koibFpqqlsh}
+    </select>
+
+
+    <update id="updateStatusById" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        UPDATE
+        kp_outside_inte_baseinfo_backNew ko
+        <set>
+            <if test="koibKpstatus != null">
+                ko.KOIB_KPSTATUS = #{koibKpstatus},
+            </if>
+            <if test="koibPdfstatus != null">
+                ko.KOIB_PDFSTATUS = #{koibPdfstatus},
+            </if>
+        </set>
+        WHERE ko.KOIB_DEL = '0'
+        <if test="id != null">
+            AND ko.id = #{id}
+        </if>
+    </update>
+
+
+    <select id="getBaseInfoByYfpdmAndhm" parameterType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo"
+            resultType="com.bwjf.createpdf.entity.KpOutsideInteBaseinfo">
+        select
+        id,
+        <include refid="BaseKpBaseInfo_Column_List"/>
+        from
+        kp_outside_inte_baseinfo_backNew koib
+        WHERE koib.koib_kpstatus = '1'
+        AND koib.koib_del = '0'
+        AND koib.koib_kplx = '1'
+        <if test="koibYfphm != null">
+            AND koib.KOIB_YFPHM = #{koibYfphm}
+        </if>
+        <if test="koibYfpdm != null">
+            AND koib.KOIB_YFPDM = #{koibYfpdm}
+        </if>
+    </select>
+
+</mapper>

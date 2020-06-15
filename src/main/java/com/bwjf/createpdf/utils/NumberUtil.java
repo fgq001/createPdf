@@ -155,7 +155,7 @@ public class NumberUtil
   }
 
   public static String formatToNumber(BigDecimal obj) {
-		DecimalFormat df = new DecimalFormat("#.00");
+		DecimalFormat df = new DecimalFormat("0.00");
 		if(obj.compareTo(BigDecimal.ZERO)==0) {
 			return "0.00";
 		}else if(obj.compareTo(BigDecimal.ZERO)>0&&obj.compareTo(new BigDecimal(1))<0){

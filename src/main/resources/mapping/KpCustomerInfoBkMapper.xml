@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bwjf.createpdf.dao.KpFileInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.bwjf.createpdf.entity.KpCustomerInfo" id="kpCustomerInfoMap">
+        <result property="id" column="ID"/>
+        <result property="kciNrsbrbh" column="KCI_NRSBRBH"/>
+        <result property="kciName" column="KCI_NAME"/>
+        <result property="kciYhzh" column="KCI_YHZH"/>
+        <result property="kciDzdh" column="KCI_DZDH"/>
+        <result property="kciDel" column="KCI_DEL"/>
+        <result property="kciCreatetime" column="KCI_CREATETIME"/>
+        <result property="kciType" column="KCI_TYPE"/>
+        <result property="koibId" column="KOIB_ID"/>
+    </resultMap>
+
+	<select id="get" resultType="com.bwjf.createpdf.entity.KpCustomerInfo">
+		select * from kp_customer_info_bkNew where ID = #{value}
+	</select>
+
+	<select id="getList" resultType="com.bwjf.createpdf.entity.KpCustomerInfo">
+		select * from kp_customer_info_bkNew t <include refid="where_clause" />
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="getCount" resultType="int">
+		select count(*) from kp_customer_info_bkNew t  <include refid="where_clause" />
+	</select>
+
+    <!-- 搜索数据区域 -->
+    <sql id="where_clause">
+        <where>
+            1=1
+            <if test="id != null and id != ''"> and t.ID = #{id} </if>
+    		<if test="idVague != null and idVague != ''"> and t.ID like concat('%',#{idVague},'%') </if>
+            <if test="kciNrsbrbh != null and kciNrsbrbh != ''"> and t.KCI_NRSBRBH = #{kciNrsbrbh} </if>
+    		<if test="kciNrsbrbhVague != null and kciNrsbrbhVague != ''"> and t.KCI_NRSBRBH like concat('%',#{kciNrsbrbhVague},'%') </if>
+            <if test="kciName != null and kciName != ''"> and t.KCI_NAME = #{kciName} </if>
+    		<if test="kciNameVague != null and kciNameVague != ''"> and t.KCI_NAME like concat('%',#{kciNameVague},'%') </if>
+            <if test="kciYhzh != null and kciYhzh != ''"> and t.KCI_YHZH = #{kciYhzh} </if>
+    		<if test="kciYhzhVague != null and kciYhzhVague != ''"> and t.KCI_YHZH like concat('%',#{kciYhzhVague},'%') </if>
+            <if test="kciDzdh != null and kciDzdh != ''"> and t.KCI_DZDH = #{kciDzdh} </if>
+    		<if test="kciDzdhVague != null and kciDzdhVague != ''"> and t.KCI_DZDH like concat('%',#{kciDzdhVague},'%') </if>
+            <if test="kciDel != null and kciDel != ''"> and t.KCI_DEL = #{kciDel} </if>
+    		<if test="kciDelVague != null and kciDelVague != ''"> and t.KCI_DEL like concat('%',#{kciDelVague},'%') </if>
+            <if test="kciCreatetime != null and kciCreatetime != ''"> and t.KCI_CREATETIME = #{kciCreatetime} </if>
+    		<if test="kciCreatetimeVague != null and kciCreatetimeVague != ''"> and t.KCI_CREATETIME like concat('%',#{kciCreatetimeVague},'%') </if>
+            <if test="kciType != null and kciType != ''"> and t.KCI_TYPE = #{kciType} </if>
+    		<if test="kciTypeVague != null and kciTypeVague != ''"> and t.KCI_TYPE like concat('%',#{kciTypeVague},'%') </if>
+            <if test="koibId != null and koibId != ''"> and t.KOIB_ID = #{koibId} </if>
+    		<if test="koibIdVague != null and koibIdVague != ''"> and t.KOIB_ID like concat('%',#{koibIdVague},'%') </if>
+        </where>
+    </sql>
+	 
+	<insert id="saveBackupCustInfo" parameterType="com.bwjf.createpdf.entity.KpCustomerInfo">
+		insert into kp_customer_info_bkNew
+		(
+			`KCI_NRSBRBH`, 
+			`KCI_NAME`, 
+			`KCI_YHZH`, 
+			`KCI_DZDH`, 
+			`KCI_DEL`, 
+			`KCI_CREATETIME`, 
+			`KCI_TYPE`, 
+			`KOIB_ID`
+		)
+		values
+		(
+			#{kciNrsbrbh}, 
+			#{kciName}, 
+			#{kciYhzh}, 
+			#{kciDzdh}, 
+			#{kciDel}, 
+			#{kciCreatetime}, 
+			#{kciType}, 
+			#{koibId}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.bwjf.createpdf.entity.KpCustomerInfo">
+		update kp_customer_info_bkNew 
+		<set>
+			<if test="kciNrsbrbh != null">`KCI_NRSBRBH` = #{kciNrsbrbh}, </if>
+			<if test="kciName != null">`KCI_NAME` = #{kciName}, </if>
+			<if test="kciYhzh != null">`KCI_YHZH` = #{kciYhzh}, </if>
+			<if test="kciDzdh != null">`KCI_DZDH` = #{kciDzdh}, </if>
+			<if test="kciDel != null">`KCI_DEL` = #{kciDel}, </if>
+			<if test="kciCreatetime != null">`KCI_CREATETIME` = #{kciCreatetime}, </if>
+			<if test="kciType != null">`KCI_TYPE` = #{kciType}, </if>
+			<if test="koibId != null">`KOIB_ID` = #{koibId}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		update from kp_customer_info_bkNew set istatus = '-1' where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		update kp_customer_info_bkNew set istatus = '-1' where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

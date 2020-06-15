@@ -83,24 +83,53 @@
 
 
 
+        <!--(koif.id BETWEEN 1695656 and 1746305)-->
+    <select id="kpFileInfoErrorAll" resultType="com.bwjf.createpdf.entity.KpFileInfo">
+        select koif.id,koif.KOIF_FILE_ADDR , koif.KOIF_TYPE , koif.KOIB_ID
+        from kp_file_info koif
+        left join kp_customer_info cu  on koif.KOIB_ID = cu.KOIB_ID
+        where
+        (koif.id BETWEEN 1647188 and 1697227)
+        and cu.KCI_TYPE = '1'
+        and cu.KCI_DEL = '0'
+        and koif.KOIF_TYPE = '1'
+        and koif.KOIF_FILE_ADDR is not null
+        and koif.KOIF_FILE_ADDR != ''
+        GROUP BY koif.id
+        ORDER BY koif.id
+        limit #{limNum},1000
+	</select>
+
+    <!--<select id="getFileInfoAll" resultType="com.bwjf.createpdf.entity.KpFileInfo">-->
+        <!--select file.* from new_kp_outside_inte_bas einfo koib-->
+        <!--right join kp_file_info file on koib.id=file.KOIB_ID-->
+        <!--where file.KOIF_TYPE='2'-->
+        <!--and  koib.KOIB_FPHM='51551336'-->
+        <!--and koib.KOIB_DATASOURCE='nebula'-->
+        <!--and koib.KOIB_FPLXDM='026'-->
+        <!--and koib.KOIB_DEL='0'-->
+        <!--and  file.KOIF_FILE_ADDR is not null-->
+        <!--and file.KOIF_FILE_ADDR != ''-->
+        <!--limit #{limNum},1000-->
+	<!--</select>-->
 
     <select id="getFileInfoAll" resultType="com.bwjf.createpdf.entity.KpFileInfo">
-        select file.* from new_kp_outside_inte_baseinfo koib
-        right join kp_file_info file on koib.id=file.KOIB_ID
-        where file.KOIF_TYPE='2'
-        and  koib.KOIB_FPHM='51551336'
-        and koib.KOIB_DATASOURCE='nebula'
-        and koib.KOIB_FPLXDM='026'
-        and koib.KOIB_DEL='0'
-        and  file.KOIF_FILE_ADDR is not null
-        and file.KOIF_FILE_ADDR != ''
+        select koif.id,koif.koib_ID,koif.KOIF_FILE_ADDR
+        from  kp_outside_inte_baseinfo koib
+        left join kp_customer_info kci on kci.KOIB_ID = koib.id
+        left join kp_file_info koif on koif.KOIB_ID  = kci.KOIB_ID
+        where
+        koib.KOIB_FPLXDM = '026' and koib.KOIB_DEL = '0'
+        and koif.KOIF_TYPE ='1' and koif.KOIF_DEL='0'
+        and kci.KCI_DEL = '0' and kci.KCI_TYPE='1'
+        and kci.KCI_NAME like '%?%'
         limit #{limNum},1000
 	</select>
 
     <!--新增操作-->
     <insert id="saveBackupBaseInfo" parameterType="com.bwjf.createpdf.entity.BackupBwjfKpOutsideInteBaseInfoBean">
         INSERT INTO by_ewm_backup
-        <trim prefix="(" suffix=")" suffixOverrides=",">
+        <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="id != null">
                 id,
             </if>
@@ -388,5 +417,6 @@
             </if>
         </trim>
     </insert>
+
 
 </mapper>

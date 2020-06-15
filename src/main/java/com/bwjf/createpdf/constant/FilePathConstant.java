@@ -12,7 +12,7 @@ public class FilePathConstant {
 	/**
 	 * 日志文件 输出路径
 	 */
-	public static final String LogFilePath = "E:/onLineData1/";
+	public static final String LogFilePath = "E:/onLineData/";
 	
 	/**
 	 * 创建PDF相关路径 

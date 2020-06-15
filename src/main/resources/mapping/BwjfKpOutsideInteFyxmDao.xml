@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--namespace就是与此文件对应的Dao接口的全路径-->
+<mapper namespace="com.bwjf.createpdf.dao.BwjfKpOutsideInteFyxmDao">
+    <!--如下type的User就是mybatis-config.xml中配置的user-->
+    <resultMap id="BaseResultMap" type="com.bwjf.createpdf.entity.BwjfKpOutsideInteFyxmBean">
+        <id column="ID" property="id" jdbcType="INTEGER"/>
+        <id column="KOIB_ID" property="koibId" jdbcType="INTEGER"/>
+        <id column="KOIF_FPHXZ" property="koifFphxz" jdbcType="VARCHAR"/>
+        <id column="KOIF_SPMC" property="koifSpmc" jdbcType="VARCHAR"/>
+        <id column="KOIF_SPSM" property="koifSpsm" jdbcType="VARCHAR"/>
+        <id column="KOIF_GGXH" property="koifGgxh" jdbcType="VARCHAR"/>
+        <id column="KOIF_DW" property="koifDw" jdbcType="VARCHAR"/>
+        <id column="KOIF_SPSL" property="koifSpsl" jdbcType="VARCHAR"/>
+        <id column="KOIF_DJ" property="koifDj" jdbcType="VARCHAR"/>
+        <id column="KOIF_JE" property="koifJe" jdbcType="VARCHAR"/>
+        <id column="KOIF_SL" property="koifSl" jdbcType="VARCHAR"/>
+        <id column="KOIF_SE" property="koifSe" jdbcType="VARCHAR"/>
+        <id column="KOIF_HSBZ" property="koifHsbz" jdbcType="VARCHAR"/>
+        <id column="KOIF_SPBM" property="koifSpbm" jdbcType="VARCHAR"/>
+        <id column="KOIF_ZXBM" property="koifZxbm" jdbcType="VARCHAR"/>
+        <id column="KOIF_YHZCBS" property="koifYhzcbs" jdbcType="VARCHAR"/>
+        <id column="KOIF_LSLBS" property="koifLslbs" jdbcType="VARCHAR"/>
+        <id column="KOIF_ZZSTSGL" property="koifZzstsgl" jdbcType="VARCHAR"/>
+        <id column="KOIF_DEL" property="koifDel" jdbcType="VARCHAR"/>
+        <id column="KOIF_CREATETIME" property="koifCreatetime" jdbcType="DATE"/>
+    </resultMap>
+
+    <sql id="BaseKpFyxm_Column_List">
+        ID AS id,
+        KOIF_FPHXZ AS koifFphxz,
+        KOIF_SPMC AS koifSpmc,
+        KOIF_SPSM AS koifSpsm,
+        KOIF_GGXH AS koifGgxh,
+        KOIF_DW AS koifDw,
+        KOIF_SPSL AS koifSpsl,
+        KOIF_DJ AS koifDj,
+        KOIF_JE AS koifJe,
+        KOIF_SL AS koifSl,
+        KOIF_SE AS koifSe,
+        KOIF_HSBZ AS koifHsbz,
+        KOIF_SPBM AS koifSpbm,
+        KOIF_ZXBM AS koifZxbm,
+        KOIF_YHZCBS AS koifYhzcbs,
+        KOIF_LSLBS AS koifLslbs,
+        KOIF_ZZSTSGL AS koifZzstsgl,
+        KOIF_DEL AS koifDel,
+        KOIF_CREATETIME AS koifCreatetime,
+        KOIB_ID AS koibId
+    </sql>
+
+
+    <!-- 新增商品相关信息 -->
+    <insert id="insertKpFYXMInfo" parameterType="com.bwjf.createpdf.entity.BwjfKpOutsideInteFyxmBean"  useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO kp_outside_inte_fyxm_back
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="koibId != null">
+                KOIB_ID,
+            </if>
+            <if test="koifFphxz != null">
+                KOIF_FPHXZ,
+            </if>
+            <if test="koifSpmc != null">
+                KOIF_SPMC,
+            </if>
+            <if test="koifSpsm != null">
+                KOIF_SPSM,
+            </if>
+            <if test="koifGgxh != null">
+                KOIF_GGXH,
+            </if>
+            <if test="koifDw != null">
+                KOIF_DW,
+            </if>
+            <if test="koifSpsl != null">
+                KOIF_SPSL,
+            </if>
+            <if test="koifDj != null">
+                KOIF_DJ,
+            </if>
+            <if test="koifJe != null">
+                KOIF_JE,
+            </if>
+            <if test="koifSl != null">
+                KOIF_SL,
+            </if>
+            <if test="koifSe != null">
+                KOIF_SE,
+            </if>
+            <if test="koifHsbz != null">
+                KOIF_HSBZ,
+            </if>
+            <if test="koifSpbm != null">
+                KOIF_SPBM,
+            </if>
+            <if test="koifZxbm != null">
+                KOIF_ZXBM,
+            </if>
+            <if test="koifYhzcbs != null">
+                KOIF_YHZCBS,
+            </if>
+            <if test="koifLslbs != null">
+                KOIF_LSLBS,
+            </if>
+            <if test="koifZzstsgl != null">
+                KOIF_ZZSTSGL,
+            </if>
+            <if test="koifDel != null">
+                KOIF_DEL,
+            </if>
+            <if test="koifCreatetime != null">
+                KOIF_CREATETIME,
+            </if>
+        </trim>
+        <trim prefix=" VALUES(" suffix=")" suffixOverrides=",">
+            <if test="koibId != null">
+                #{koibId},
+            </if>
+            <if test="koifFphxz != null">
+                #{koifFphxz},
+            </if>
+            <if test="koifSpmc != null">
+                #{koifSpmc},
+            </if>
+            <if test="koifSpsm != null">
+                #{koifSpsm},
+            </if>
+            <if test="koifGgxh != null">
+                #{koifGgxh},
+            </if>
+            <if test="koifDw != null">
+                #{koifDw},
+            </if>
+            <if test="koifSpsl != null">
+                #{koifSpsl},
+            </if>
+            <if test="koifDj != null">
+                #{koifDj},
+            </if>
+            <if test="koifJe != null">
+                #{koifJe},
+            </if>
+            <if test="koifSl != null">
+                #{koifSl},
+            </if>
+            <if test="koifSe != null">
+                #{koifSe},
+            </if>
+            <if test="koifHsbz != null">
+                #{koifHsbz},
+            </if>
+            <if test="koifSpbm != null">
+                #{koifSpbm},
+            </if>
+            <if test="koifZxbm != null">
+                #{koifZxbm},
+            </if>
+            <if test="koifYhzcbs != null">
+                #{koifYhzcbs},
+            </if>
+            <if test="koifLslbs != null">
+                #{koifLslbs},
+            </if>
+            <if test="koifZzstsgl != null">
+            	#{koifZzstsgl},
+            </if>
+            <if test="koifDel != null">
+                '0',
+            </if>
+            <if test="koifCreatetime != null">
+                #{koifCreatetime},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getkpFyxmInfoByKoibId" parameterType="com.bwjf.createpdf.entity.BwjfKpOutsideInteFyxmBean" resultType="com.bwjf.createpdf.entity.BwjfKpOutsideInteFyxmBean" >
+        SELECT
+        <include refid="BaseKpFyxm_Column_List" />
+        FROM
+        kp_outside_inte_fyxm_back
+        WHERE KOIB_ID = #{koibId}
+        AND KOIF_DEL = '0'
+    </select>
+
+    <!-- 新增商品相关信息 -->
+    <insert id="insertKpFYXMInfoList" parameterType="java.util.List">
+        <selectKey resultType="java.lang.Integer" keyProperty="id"
+                   order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        INSERT INTO kp_outside_inte_fyxm_back
+        (KOIB_ID,KOIF_FPHXZ,KOIF_SPMC,KOIF_SPSM,KOIF_GGXH,KOIF_DW,KOIF_SPSL,KOIF_DJ,KOIF_JE,
+        KOIF_SL,KOIF_SE,KOIF_HSBZ,KOIF_SPBM,KOIF_ZXBM,KOIF_YHZCBS,KOIF_LSLBS,KOIF_ZZSTSGL,
+        KOIF_DEL,KOIF_CREATETIME)
+        VALUES
+        <foreach collection="list" item="fyxm" index="index" separator=",">
+            (#{fyxm.koibId,jdbcType=INTEGER},
+            #{fyxm.koifFphxz,jdbcType=VARCHAR},
+            #{fyxm.koifSpmc,jdbcType=VARCHAR},
+            #{fyxm.koifSpsm,jdbcType=VARCHAR},
+            #{fyxm.koifGgxh,jdbcType=VARCHAR},
+            #{fyxm.koifDw,jdbcType=VARCHAR},
+            #{fyxm.koifSpsl,jdbcType=VARCHAR},
+            #{fyxm.koifDj,jdbcType=VARCHAR},
+            #{fyxm.koifJe,jdbcType=VARCHAR},
+            #{fyxm.koifSl,jdbcType=VARCHAR},
+            #{fyxm.koifSe,jdbcType=VARCHAR},
+            #{fyxm.koifHsbz,jdbcType=VARCHAR},
+            #{fyxm.koifSpbm,jdbcType=VARCHAR},
+            #{fyxm.koifZxbm,jdbcType=VARCHAR},
+            #{fyxm.koifYhzcbs,jdbcType=VARCHAR},
+            #{fyxm.koifLslbs,jdbcType=VARCHAR},
+            #{fyxm.koifZzstsgl,jdbcType=VARCHAR},
+            #{fyxm.koifDel,jdbcType=VARCHAR},
+            #{fyxm.koifCreatetime,jdbcType=DATE})
+        </foreach>
+    </insert>
+
+</mapper>
